@@ -2,20 +2,69 @@
 //
 
 #include <iostream>
+#include <fstream>
+#include <string>
+
+//#include "Dictionary.h"
+using namespace std;
+
+void menu();
 
 int main()
 {
     //File I/O
+    ifstream myFile;
+    myFile.open("Bookings.csv");
+    string str;
+    getline(myFile, str);
+    while (myFile.good())
+    {
+        string line;
+        getline(myFile, line, ',');
+        cout << line << endl; // reads row by row in excel
+
+    }
+
     //Menu
+    int option;
+    menu();
+    cin >> option;
+    //if (option == 1)
+    //    //check in guest function
+    //else if (option == 2)
+    //    // add booking function
+    //else if (option == 3)
+    //    // display guest staying in hotel function
+    //else if (option == 4)
+    //    // display room occupied by month function
+    //else if (option == 5)
+    //    // delete booking function
+    //else if (option == 6)
+    //    // search most popular room type function
+    //else if (option == 7)
+    //    // check in guest without booking function
+    //else if (option == 8)
+    //    // display bookings given range function
+    //else if (option == 0)
+    //    return 0;
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+void menu() 
+{
+    cout << endl;
+    // Basic Features
+    cout << "Data Structure and Algorithm Assignment \n";
+    cout << "--------------------------------\n";
+    cout << "1. Check in Guest       \n";
+    cout << "2. Add Booking          \n";
+    cout << "3. Display Guest staying in Hotel \n";
+    cout << "4. Display rooms occupied - by month \n";
+    // Additional Features
+    cout << "5. Delete Booking       \n";
+    cout << "6. Search most popular room type \n";
+    cout << "7. Check in Guest without booking  \n";
+    cout << "8. Display bookings given range \n";
+    cout << "0 Exit                             \n";
+    cout << "--------------------------------\n";
+    cout << "Enter option : ";
+}
