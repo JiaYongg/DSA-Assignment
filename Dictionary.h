@@ -4,7 +4,7 @@
 #include<iostream>
 using namespace std;
 
-const int MAX_SIZE = 12;
+const int MAX_SIZE = 181;
 typedef string KeyType;
 typedef BST ItemType;
 
@@ -12,14 +12,14 @@ typedef BST ItemType;
 class Dictionary
 {
 private:
-	struct Node
-	{
-		KeyType	 key;   // search key
-		ItemType item;	// data item
-		Node     *next;	// pointer pointing to next item with same search key
-	};
+	//struct Node
+	//{
+	//	KeyType	 key;   // search key
+	//	ItemType item;	// data item
+	//	Node     *next;	// pointer pointing to next item with same search key
+	//};
 
-	Node *items[MAX_SIZE];
+	BST *items[MAX_SIZE];
 	int  size;			// number of items in the Dictionary
 
 public:

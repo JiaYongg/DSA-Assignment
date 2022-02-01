@@ -144,12 +144,14 @@
     <ClCompile Include="DateTimeApp.cpp" />
     <ClCompile Include="Dictionary.cpp" />
     <ClCompile Include="DSA Assignment.cpp" />
+    <ClCompile Include="RoomDateDictionary.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AVL_Tree.h" />
     <ClInclude Include="BinaryNode.h" />
     <ClInclude Include="BST.h" />
     <ClInclude Include="Dictionary.h" />
+    <ClInclude Include="RoomDateDictionary.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Bookings.csv" />
