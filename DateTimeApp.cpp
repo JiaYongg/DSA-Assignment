@@ -18,4 +18,10 @@ int main()
     printf("tm_mday:  %d\n", result.tm_mday);
     printf("tm_mon:  %d\n", result.tm_mon);
     printf("tm_year:  %d\n", result.tm_year);
+
+    result.tm_year -= 1900;
+    result.tm_mon -= 1;
+
+    time_t time = mktime(&result);
+    cout << time << '\n';
 }
