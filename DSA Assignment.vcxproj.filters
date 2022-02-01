@@ -30,7 +30,14 @@
     <ClCompile Include="Dictionary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RoomDateDictionary.cpp">
+        <ClCompile Include="Rooms.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Bookings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+
+        <ClCompile Include="RoomDateDictionary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -45,9 +52,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Dictionary.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RoomDateDictionary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
