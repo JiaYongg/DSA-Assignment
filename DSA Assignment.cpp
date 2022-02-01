@@ -4,14 +4,43 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "Dictionary.h"
+#include "RoomDateDictionary.h"
+#include "Rooms.h"
 
 //#include "Dictionary.h"
 using namespace std;
 
 void menu();
 
+Dictionary bookingDictionary;
+RoomDateDictionary dynamicRoomNameDictionary; (dynamic number of this)
+Delu
+Exec
+Presi
+Rooms roomArray[dynamic]
+
+//include string linked list for dates
+//linked list (roomType, count)
+
+//array size 20 of [roomNumber,string concat dates]
+[roomDateDictionaries] > items
+items > [Node, 1, 2, 3, 4]
+Node > take guest , date, store into array
+void printDate(tm Date);
+
+//array size 20 of [roomNumber,string concat dates]
+[roomDateDictionaries] > items
+items > [Node, 1, 2, 3, 4]
+Node > take roomNo,date, store into array 
+void printMonth(/*month*/);
+
+
 int main()
 {
+    //Date changer
+    //When date change, we need to cancel bookings that are overdue checkYstdOverdue()
+    
     //File I/O
     ifstream myFile;
     myFile.open("Bookings.csv");
@@ -22,8 +51,12 @@ int main()
         string line;
         getline(myFile, line, ',');
         cout << line << endl; // reads row by row in excel
-
+        //room
+        //ignore checkout
+        //check if overdue, mark as cancel
+        //load into main and room hashtable
     }
+
 
     //Menu
     int option;

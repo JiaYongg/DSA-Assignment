@@ -1,11 +1,12 @@
 #pragma once
 
 #include "BST.h"
+#include "Bookings.h"
 #include<iostream>
 using namespace std;
 
 const int MAX_SIZE = 181;
-typedef string KeyType;
+typedef tm KeyType;
 typedef BST ItemType;
 
 
@@ -25,37 +26,51 @@ private:
 public:
 
 	// constructor
+	//set to null
 	Dictionary();
 
 	// destructor
 	~Dictionary();
 
+	//hash unix time from checkInDate
 	int hash(KeyType key);
 
 	// add a new item with the specified key to the Dictionary
 	// pre : none
 	// post: new item is added to the Dictionary
 	//       size of Dictionary is increased by 1
-	bool add(KeyType newKey, ItemType newItem);
+	//
+	// hash, add to tree
+	bool add(Bookings b);
 
 	// remove an item with the specified key in the Dictionary
 	// pre : key must exist in the Dictionary
 	// post: item is removed from the Dictionary
 	//       size of Dictionary is decreased by 1
-	void remove(KeyType key);
+	//
+	// hash, remove from tree, remove from room date dict
+	void remove(KeyType key, string guestName, string roomType, RoomDateDictionary rdd);
 
 
 	// get an item with the specified key in the Dictionary (retrieve)
 	// pre : key must exist in the dictionary
 	// post: none
 	// return the item with the specified key from the Dictionary
-	ItemType get(KeyType key);
+	//
+	//hash, return booking
+	Bookings get(KeyType key, string guestName, string roomType);
 
 	// get an item with the specified key in the Dictionary (retrieve)
 	// pre : key must exist in the dictionary
 	// post: none
 	// return the item with the specified key from the Dictionary
-	bool checkIn(KeyType key);
+	//
+	// change status from booked to checked in
+	bool checkIn(KeyType key, string guestName, string roomType);
+
+
+	//hash, check yesterday overdue
+	void checkYtdOverdue(tm currentDate);
 
 	// check if the Dictionary is empty
 	// pre : none
@@ -68,19 +83,19 @@ public:
 	// post: none
 	// return the number of items in the Dictionary
 	int getLength();
+	
 
+	//loop through all booking, add to linkedlist, print most popular
+	void printPopular();
 	//------------------- Other useful functions -----------------
 
-	// display the items in the Dictionary
-	void print();
+	//// display the items in the Dictionary
+	//void print();
 
-	void printDate(/*date*/);
 
-	void printMonth(/*month*/);
 
+
+	//loop through all booking in that range, print
 	void printRange(/*date,date*/);
 
-	void printPopular(/*month*/);
-	// void replace(KeyType key, ItemType item);
-	// bool contains(KeyType key);
 };

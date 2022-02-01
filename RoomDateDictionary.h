@@ -1,6 +1,7 @@
 #pragma once
 
 #include "BST.h"
+#include "List.h"
 #include<iostream>
 using namespace std;
 
@@ -11,13 +12,15 @@ typedef string KeyType;
 class RoomDateDictionary
 {
 private:
-
+	//max number of available rooms
 	int MaxRoom;
-	int items[MAX_SIZE];
+	//[3,[roomInfo,roomInfo,roomInfo]]
+	List items[MAX_SIZE];
+
 public:
 
 	// constructor
-	// set maxroom, items array to all null
+	// set maxroom, items array to occupiedNumber to null
 	RoomDateDictionary(int maxRoom);
 
 	// destructor
@@ -31,7 +34,7 @@ public:
 	// post: new item is added to the RoomDateDictionary
 	//       size of RoomDateDictionary is increased by 1
 	// 
-	//hash, increment value
+	// hash, check if null, add info to list
 	bool add(KeyType newKey);
 
 	// remove an item with the specified key in the RoomDateDictionary
@@ -39,7 +42,7 @@ public:
 	// post: item is removed from the RoomDateDictionary
 	//       size of RoomDateDictionary is decreased by 1
 	//
-	//hash, decrement values
+	//hash, check if null, remove info to list
 	void remove(KeyType key);
 
 
@@ -47,13 +50,13 @@ public:
 	// pre : key must exist in the RoomDateDictionary
 	// post: none
 	// return the item with the specified key from the RoomDateDictionary
-	ItemType get(KeyType key);
+	//
+	//hash, check if null, get MaxValue - list.size
+	ItemType getAvailableRoomNumber(KeyType key);
 
-	// get an item with the specified key in the RoomDateDictionary (retrieve)
-	// pre : key must exist in the RoomDateDictionary
-	// post: none
-	// return the item with the specified key from the RoomDateDictionary
-	bool checkIn(KeyType key);
+	//hash, get list of stayees and the room they are in
+	List getRoomDateInfo(KeyType key);
+
 
 	// check if the RoomDateDictionary is empty
 	// pre : none
@@ -61,24 +64,4 @@ public:
 	// return true if the RoomDateDictionary is empty; otherwise returns false
 	bool isEmpty();
 
-	// check the size of the RoomDateDictionary
-	// pre : none
-	// post: none
-	// return the number of items in the RoomDateDictionary
-	int getLength();
-
-	//------------------- Other useful functions -----------------
-
-	// display the items in the RoomDateDictionary
-	void print();
-
-	void printDate(/*date*/);
-
-	void printMonth(/*month*/);
-
-	void printRange(/*date,date*/);
-
-	void printPopular(/*month*/);
-	// void replace(KeyType key, ItemType item);
-	// bool contains(KeyType key);
 };
