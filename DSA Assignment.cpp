@@ -7,6 +7,7 @@
 #include "Dictionary.h"
 #include "RoomDateDictionary.h"
 #include "Rooms.h"
+#include <vector>
 
 //#include "Dictionary.h"
 using namespace std;
@@ -42,20 +43,57 @@ int main()
     //When date change, we need to cancel bookings that are overdue checkYstdOverdue()
     
     //File I/O
-    ifstream myFile;
-    myFile.open("Bookings.csv");
-    string str;
-    getline(myFile, str);
-    while (myFile.good())
+    fstream myFile("Bookings.csv", ios::in);
+    vector<vector<string>> content;
+    vector<string> row;
+    string line, word;
+
+    if (myFile.is_open())
     {
-        string line;
-        getline(myFile, line, ',');
-        cout << line << endl; // reads row by row in excel
+        while (getline(myFile, line))
+        {
+            row.clear();
+
+            stringstream str(line);
+
+            while (getline(str, word, ','))
+                row.push_back(word);
+            content.push_back(row);
+        }
+    }
+
+    for (int i = 1; i < content.size(); i++)
+    {
+        Bookings b;
+        tm date;
+        b.bookingID = stoi(content[i][0]); // stoi converts string to int
+        sscanf_s(content[i][1].c_str(), "%d/%d/%4d  %d:%d:%d", &date.tm_mday, &date.tm_mon, &date.tm_year, &date.tm_hour, &date.tm_min, &date.tm_sec);
+        b.bookingDate = date;
+        b.bookingGuestName = content[i][2];
+        b.bookingRoomNumber = content[i][3];
+        b.bookingRoomType = content[i][4];
+        b.bookingStatus = content[i][5];
+        sscanf_s(content[i][6].c_str(), "%d/%d/%4d  %d:%d:%d", &date.tm_mday, &date.tm_mon, &date.tm_year, &date.tm_hour, &date.tm_min, &date.tm_sec);
+        b.checkinDate = date;
+        sscanf_s(content[i][7].c_str(), "%d/%d/%4d  %d:%d:%d", &date.tm_mday, &date.tm_mon, &date.tm_year, &date.tm_hour, &date.tm_min, &date.tm_sec);
+        b.checkOutDate = date;
+        b.bookingGuestNumber = stoi(content[i][8]);
+        b.bookingSpecialRequest = content[i][9];
+
+        // list.add(b)
+        cout << "\n";
+    }
+
+
+
+        // reads row by row in excel
         //room
         //ignore checkout
         //check if overdue, mark as cancel
         //load into main and room hashtable
-    }
+
+
+
 
 
     //Menu
