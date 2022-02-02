@@ -36,10 +36,13 @@
     <ClCompile Include="Bookings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RoomDateDictionary.cpp">
+    <ClCompile Include="RoomScheduleDictionary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="List.cpp">
+    <ClCompile Include="RoomScheduleLinkedList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DSA Assignment DE.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -59,13 +62,13 @@
     <ClInclude Include="Bookings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RoomDateDictionary.h">
+    <ClInclude Include="RoomScheduleDictionary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Rooms.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="List.h">
+    <ClInclude Include="RoomScheduleLinkedList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
