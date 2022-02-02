@@ -5,8 +5,9 @@
 #include <fstream>
 #include <string>
 #include "BookingDict.h"
-#include "RoomDateDictionary.h"
+#include "RoomScheduleDictionary.h"
 #include "Room.h"
+#include "Booking.h"
 #include <string.h>
 #include <vector>
 #include <chrono>
@@ -17,27 +18,27 @@ using namespace std;
 
 void menu();
 
-Dictionary bookingDictionary;
-RoomDateDictionary dynamicRoomNameDictionary; //(dynamic number of this)
-Delu
-Exec
-Presi
-Rooms roomArray[dynamic]
-
-//include string linked list for dates
-//linked list (roomType, count)
-
-//array size 20 of [roomNumber,string concat dates]
-[roomDateDictionaries] > items
-items > [Node, 1, 2, 3, 4]
-Node > take guest , date, store into array
-void printDate(tm Date);
-
-//array size 20 of [roomNumber,string concat dates]
-[roomDateDictionaries] > items
-items > [Node, 1, 2, 3, 4]
-Node > take roomNo,date, store into array 
-void printMonth(/*month*/);
+BookingDict bookingDictionary;
+RoomScheduleDictionary dynamicRoomNameDictionary; //(dynamic number of this)
+//Delu
+//Exec
+//Presi
+//Rooms roomArray[dynamic]
+//
+////include string linked list for dates
+////linked list (roomType, count)
+//
+////array size 20 of [roomNumber,string concat dates]
+//[roomDateDictionaries] > items/
+//items > [Node, 1, 2, 3, 4]
+//Node > take guest , date, store into array
+//void printDate(tm Date);
+//
+////array size 20 of [roomNumber,string concat dates]
+//[roomDateDictionaries] > items
+//items > [Node, 1, 2, 3, 4]
+//Node > take roomNo,date, store into array 
+//void printMonth(/*month*/);
 
 
 int main()

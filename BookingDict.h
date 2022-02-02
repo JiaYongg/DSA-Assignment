@@ -1,7 +1,8 @@
 #pragma once
 
 #include "BST.h"
-#include "Bookings.h"
+#include "Booking.h"
+#include "RoomScheduleDictionary.h"
 #include<iostream>
 using namespace std;
 
@@ -41,7 +42,7 @@ public:
 	//       size of Dictionary is increased by 1
 	//
 	// hash, add to tree
-	bool add(Bookings b);
+	bool add(Booking b);
 
 	// remove an item with the specified key in the Dictionary
 	// pre : key must exist in the Dictionary
@@ -49,7 +50,7 @@ public:
 	//       size of Dictionary is decreased by 1
 	//
 	// hash, remove from tree, remove from room date dict
-	void remove(KeyType key, string guestName, string roomType, RoomDateDictionary rdd);
+	void remove(KeyType key, string guestName, string roomType, RoomScheduleDictionary rdd);
 
 
 	// get an item with the specified key in the Dictionary (retrieve)
