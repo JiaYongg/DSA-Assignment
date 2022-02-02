@@ -24,22 +24,10 @@
     <ClCompile Include="BST.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DateTimeApp.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="BookingDict.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Booking.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RoomScheduleDictionary.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RoomScheduleLinkedList.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DSA Assignment DE.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Room.cpp">
@@ -47,6 +35,15 @@
     </ClCompile>
     <ClCompile Include="BookingDict.h">
       <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DSA Assignment DE.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomScheduleLinkedList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomScheduleDictionary.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -62,10 +59,10 @@
     <ClInclude Include="Booking.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RoomScheduleDictionary.h">
+    <ClInclude Include="Room.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Room.h">
+    <ClInclude Include="RoomScheduleDictionary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RoomScheduleLinkedList.h">
