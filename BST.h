@@ -21,8 +21,8 @@ public:
 	BinaryNode* search(BinaryNode* t, tm date, string guestName, string roomType);
 
 	// insert an item to the binary search tree
-	void insert(ItemType item);
-	void insert(BinaryNode* &root, ItemType item);
+	void insert(Booking b);
+	void insert(BinaryNode* &root, Booking b);
 
 	// delete an item from the binary search tree
 	void remove(tm date, string guestName, string roomType);

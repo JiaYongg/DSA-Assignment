@@ -8,7 +8,6 @@ using namespace std;
 
 const int MAX_SIZE = 181;
 typedef tm KeyType;
-typedef BST ItemType;
 
 
 class BookingDict

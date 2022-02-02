@@ -22,11 +22,14 @@ BinaryNode* BST::search(BinaryNode* t, tm date, string guestName, string roomTyp
 		return NULL;
 	else
 	{
-		if (t->item.checkinDate == date && t->item.bookingGuestName == guestName && t->item.bookingRoomType == roomType)// item found
+		time_t checkindate = mktime(&t->item.checkinDate);
+		time_t inputdate = mktime(&date);
+		double diff = difftime(checkindate, inputdate);
+		// use difftime to find the difference between the input date and the current iteration date
+		if (diff == 0 && t->item.bookingGuestName == guestName && t->item.bookingRoomType == roomType)// item found
 			return t;
 		else
-			// might need to use difftime to find the difference between the input date and the current iteration date
-			if (date < t->item.checkinDate)	// search in left subtree
+			if (diff < 0)	// search in left subtree
 				return search(t->left, date, guestName, roomType);
 			else					// search in right subtree
 				return search(t->right, date, guestName, roomType);
@@ -35,25 +38,28 @@ BinaryNode* BST::search(BinaryNode* t, tm date, string guestName, string roomTyp
 
 
 // insert an item to the binary search tree
-void BST::insert(ItemType item)
+void BST::insert(Booking b)
 {
-	insert(root, item);
+	insert(root, b);
 }
 
-void BST::insert(BinaryNode* &t, ItemType item)
+void BST::insert(BinaryNode* &t, Booking b)
 {
+	time_t checkindate = mktime(&t->item.checkinDate);
+	time_t inputdate = mktime(&b.checkinDate);
+	double diff = difftime(checkindate, inputdate);
 	if (t == NULL)
 	{
 		BinaryNode *newNode = new BinaryNode;
-		newNode->item = item;
+		newNode->item = b;
 		newNode->left = NULL;
 		newNode->right = NULL;
 		t = newNode;
 	}
-	else if (item < t->item)
-		insert(t->left, item);  // insert in left subtree
+	else if (diff < 0)
+		insert(t->left, b);  // insert in left subtree
 	else
-		insert(t->right, item); // insert in right subtree	
+		insert(t->right, b); // insert in right subtree	
 
 	t = balance(t);				// balance the tree (AVL Tree function)
 }
@@ -186,9 +192,12 @@ void BST::remove(BinaryNode* &t, tm date, string guestName, string roomType)
 {
 	if (t != NULL)
 	{
-		if (date < t->item.checkinDate)			// search in left subtree
+		time_t checkindate = mktime(&t->item.checkinDate);
+		time_t inputdate = mktime(&date);
+		double diff = difftime(checkindate, inputdate);
+		if (diff < 0)			// search in left subtree
 			remove(t->left, date, guestName, roomType);
-		else if (date > t->item.checkinDate)	// search in right subtree
+		else if (diff > 0)	// search in right subtree
 			remove(t->right, date, guestName, roomType);
 		else						// item == t->item (found) - base case
 		{
