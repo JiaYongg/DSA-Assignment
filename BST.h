@@ -17,16 +17,16 @@ public:
 	BST();
 
 	// search an item in the binary search tree
-	BinaryNode* search(ItemType target);
-	BinaryNode* search(BinaryNode* root, ItemType target);
+	BinaryNode* search(tm date, string guestName, string roomType);
+	BinaryNode* search(BinaryNode* t, tm date, string guestName, string roomType);
 
 	// insert an item to the binary search tree
 	void insert(ItemType item);
 	void insert(BinaryNode* &root, ItemType item);
 
 	// delete an item from the binary search tree
-	void remove(ItemType target);
-	void remove(BinaryNode* &root, ItemType target);
+	void remove(tm date, string guestName, string roomType);
+	void remove(BinaryNode* &root, tm date, string guestName, string roomType);
 
 	// traverse the binary search tree in inorder
 	void inorder();
@@ -54,5 +54,8 @@ public:
 	// check if the binary search tree is balanced
 	bool isBalanced();
 	bool isBalanced(BinaryNode *t);
+
+	// change status from booked to checked in
+	bool checkIn(KeyType key, string guestName, string roomType)
 };
 

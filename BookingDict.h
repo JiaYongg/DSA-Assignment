@@ -36,6 +36,14 @@ public:
 	//hash unix time from checkInDate
 	int hash(KeyType key);
 
+	// get an item with the specified key in the Dictionary (retrieve)
+	// pre : key must exist in the dictionary
+	// post: none
+	// return the item with the specified key from the Dictionary
+	//
+	// change status from booked to checked in
+	bool checkIn(KeyType key, string guestName, string roomType);
+
 	// add a new item with the specified key to the Dictionary
 	// pre : none
 	// post: new item is added to the Dictionary
@@ -50,7 +58,7 @@ public:
 	//       size of Dictionary is decreased by 1
 	//
 	// hash, remove from tree, remove from room date dict
-	void remove(KeyType key, string guestName, string roomType, RoomScheduleDictionary rdd);
+	void remove(KeyType key, string guestName, string roomType, RoomScheduleDictionary rsd);
 
 
 	// get an item with the specified key in the Dictionary (retrieve)
@@ -60,14 +68,6 @@ public:
 	//
 	//hash, return booking
 	Booking get(KeyType key, string guestName, string roomType);
-
-	// get an item with the specified key in the Dictionary (retrieve)
-	// pre : key must exist in the dictionary
-	// post: none
-	// return the item with the specified key from the Dictionary
-	//
-	// change status from booked to checked in
-	bool checkIn(KeyType key, string guestName, string roomType);
 
 
 	//hash, check yesterday overdue
@@ -94,9 +94,7 @@ public:
 	//void print();
 
 
-
-
 	//loop through all booking in that range, print
-	void printRange(/*date,date*/);
+	void printRange(tm start, tm end);
 
 };

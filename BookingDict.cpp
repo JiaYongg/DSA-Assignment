@@ -1,154 +1,104 @@
 #include "BookingDict.h"
 #include <string>
 // constructor
-BookingDict::BookingDict() {
-	for (int i = 0; i < MAX_SIZE;i++)
-	{
-		items[i] = NULL;
-	}
-	size = 0;
+BookingDict::BookingDict() 
+{
+	items[MAX_SIZE] = NULL;
+	size = NULL;
 };
 
 // destructor is to remove dynamic memory
 // static memory is destroyed when program ends. But not dynamic memory
 // auto called by program, programmer does not call this destructor
-BookingDict::~BookingDict(){
-	for (int i = 0; i < MAX_SIZE; i++)
-	{
-		if (items[i] != NULL)
-		{
-			Node* temp = items[i];
-			while (temp != NULL)
-			{
-				items[i] = temp->next;
-				temp->next = NULL;
-				delete temp;
-				temp = items[i];
-			}
-		}
-	}
+BookingDict::~BookingDict()
+{
+
 };
 
-int charvalue(char c)
+//hash unix time from checkInDate
+int BookingDict::hash(KeyType key)
 {
-	if (isalpha(c))
+	//int total = charvalue(key[0]);
+	//for (int i = 1;i < key.length();i++) {
+	//	total = total * 52 + charvalue(key[i]);
+	//	total %= MAX_SIZE;
+	//}
+	//return total;
+	key.tm_year -= 1900;
+	key.tm_mon -= 1;
+	time_t time = mktime(&key);
+	return time % MAX_SIZE;
+};
+
+// change status from booked to checked in
+bool BookingDict::checkIn(KeyType key, string guestName, string roomType)
+{
+	int index = hash(key);
+
+	if (items[index] != NULL)
 	{
-		if (isupper(c))
-			return (int)c - (int)'A';
-		else
-			return (int)c - (int)'a' + 26;
+		// handle error if the guy is alr checked in
+		items[index]->checkIn(key, guestName, roomType);
 	}
-	else
-		return -1;
+	return true;
 }
 
+// hash, add to tree
+bool BookingDict::add(Booking b)
+{
+	int index = hash(b.checkinDate);
 
-int BookingDict::hash(KeyType key){
-	int total = charvalue(key[0]);
-	for (int i = 1;i < key.length();i++) {
-		total = total * 52 + charvalue(key[i]);
-		total %= MAX_SIZE;
+	if (items[index] == NULL)
+	{
+		items[index] = new BST(); // instantiate a new BST for the index
+		BinaryNode* newBinaryNode;
+		newBinaryNode->item = b;
+		items[index]->insert(b);
 	}
-	return total;
-};
+	else
+		items[index]->insert(b);
 
-// add a new item with the specified key to the Dictionary
-// pre : none
-// post: new item is added to the Dictionary
-//       size of Dictionary is increased by 1
-bool BookingDict::add(KeyType newKey, ItemType newItem){
-	int index = hash(newKey);
-	Node* newNode = new Node;
-	newNode->item = newItem;
-	newNode->key = newKey;
-	newNode->next = NULL;
-	if (items[index]==NULL) {
-		items[index] = newNode;
-	}
-	else {
-		Node* currentNode = items[index];
-		if (currentNode->key == newKey) {
-			return false;
-		}
-		while (currentNode->next!=NULL)
-		{
-			currentNode = currentNode->next;
-			if (currentNode->key == newKey) {
-				return false;
-			}
-		}
-		currentNode->next = newNode;
-	}
-	size += 1;
 	return true;
 };
 
-// remove an item with the specified key in the Dictionary
-// pre : key must exist in the Dictionary
-// post: item is removed from the Dictionary
-//       size of Dictionary is decreased by 1
-void BookingDict::remove(KeyType key){
+//hash, remove from tree, remove from room date dict
+void BookingDict::remove(KeyType key, string guestName, string roomType, RoomScheduleDictionary rsd)
+{
 	int index = hash(key);
-	if (items[index] != NULL) {
-		Node* currentNode = items[index];
-		//more than one
-		if(currentNode->next!=NULL) {
-			//first Node
-			if (currentNode->key == key) {
-				items[index] = currentNode->next;
-				delete currentNode;
-			}
-			//rest
-			else {
-				while (currentNode->next != NULL)
-				{
-					Node* nextNode = currentNode->next;
-					if (nextNode->key == key) {
-						currentNode->next = nextNode->next;
-						//nextNode->item = nullptr;
-						delete nextNode;
-					}
-				}
-			}
-		}
-		//for one only
-		else {
-			if (currentNode->key == key) {
-				items[index] = NULL;
-				delete currentNode;
-			}
-		}
-		size -= 1;
+
+	if (items[index] != NULL)
+	{
+		items[index]->remove(key, guestName, roomType);
+		rsd.remove(key);
 	}
 };
 
 
-// get an item with the specified key in the Dictionary (retrieve)
-// pre : key must exist in the dictionary
-// post: none
-// return the item with the specified key from the Dictionary
-ItemType BookingDict::get(KeyType key){
+//hash, return booking
+Booking BookingDict::get(KeyType key, string guestName, string roomType)
+{
 	int index = hash(key);
-	if (items[index] != NULL) {
-		Node* currentNode = items[index];
-		if (currentNode->key == key) {
-			return currentNode->item;
-		}
-		while (currentNode->next != NULL)
-		{
-			currentNode = currentNode->next;
-			if (currentNode->key == key) {
-				return currentNode->item;
-			}
-		}
+
+	if (items[index] != NULL)
+	{
+		// handle error if the guy is alr checked in
+		BinaryNode* newBinaryNode = items[index]->search(key, guestName, roomType);
+		return newBinaryNode->item;
 	}
-};
+}
+
+//hash, check yesterday overdue
+void BookingDict::checkYtdOverdue(tm currentDate)
+{
+
+}
 
 // check if the Dictionary is empty
 // pre : none
 // post: none
-// return true if the Dictionary is empty{}; otherwise returns false
-bool BookingDict::isEmpty(){
+// return true if the Dictionary is empty; otherwise returns false
+bool BookingDict::isEmpty()
+{
 	return size == 0;
 };
 
@@ -162,18 +112,14 @@ int BookingDict::getLength(){
 
 //------------------- Other useful functions -----------------
 
-// display the items in the Dictionary
-void BookingDict::print(){
-	string s;
-	for (int i = 0;i < MAX_SIZE;i++) {
-		if (items[i] != NULL) {
-			Node* currentNode = items[i];
-			s += currentNode->key + ":" + currentNode->item + ",";
-			while (currentNode->next != NULL) {
-				currentNode = currentNode->next;
-				s += currentNode->key + ":" + currentNode->item + ",";
-			}
-		}
-	}
-	std::cout << s<<endl;
-};
+//loop through all booking, add to linkedlist, print most popular
+void BookingDict::printPopular()
+{
+
+}
+
+//loop through all booking in that range, print
+void BookingDict::printRange(tm start, tm end)
+{
+
+}

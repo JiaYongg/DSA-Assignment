@@ -1,6 +1,7 @@
 #pragma once
+#include "BookingDict.h"
 
-typedef int ItemType;
+typedef Booking ItemType;
 
 struct BinaryNode
 {
