@@ -14,8 +14,9 @@ private:
 		ItemType guestName;	// data item
 		ItemType roomNumber;
 		tm date;
-	};
 		Node* next;	// pointer pointing to next item
+	};
+
 
 	Node* firstNode;	// point to the first item
 	int  size;			// number of items in the RoomScheduleLinkedList
@@ -31,14 +32,14 @@ public:
 	// pre : size < MAX_SIZE
 	// post: new item is added to the back of the RoomScheduleLinkedList
 	//       size of RoomScheduleLinkedList is increased by 1
-	bool add(ItemType guestName, ItemType roomType, tm date);
+	bool add(ItemType guestName, ItemType roomNumber, tm date);
 
 	// remove an item at a specified position in the RoomScheduleLinkedList
 	// pre : 1 <= index <= size
 	// post: item is removed the specified position in the RoomScheduleLinkedList
 	//       items after the position are shifted forward by 1 position
 	//       size of RoomScheduleLinkedList is decreased by 1
-	void remove(ItemType guestName, ItemType roomType, tm date);
+	void remove(ItemType guestName, ItemType roomNumber, tm date);
 
 	// get an item at a specified position of the RoomScheduleLinkedList (retrieve)
 	// pre : 1 <= index <= size

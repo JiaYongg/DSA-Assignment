@@ -9,9 +9,10 @@ RoomScheduleLinkedList::RoomScheduleLinkedList() {
 //RoomScheduleLinkedList::~RoomScheduleLinkedList() {};
 
 // add an item to the back of the RoomScheduleLinkedList (append)
-bool RoomScheduleLinkedList::add(ItemType item) {
+bool RoomScheduleLinkedList::add(ItemType guestName, ItemType roomNumber, tm date) {
 	Node* newNode = new Node;
-	newNode->item = item;
+	newNode->date=date ;
+	newNode->guestName = guestName;
 	newNode->next = NULL;
 
 	if (size == 0) {
@@ -28,73 +29,38 @@ bool RoomScheduleLinkedList::add(ItemType item) {
 	return true;
 };
 
-// add an item at a specified position in the RoomScheduleLinkedList (insert)
-bool RoomScheduleLinkedList::add(int index, ItemType item) {
-	if (index <= size &&index>=0) {
-		Node* newNode = new Node;
-		newNode->item = item;
-		newNode->next = NULL;
-
-
-		if (index == 0) {
-			newNode->next = firstNode;
-			firstNode = newNode;
-		}
-		else {
-			Node* current = firstNode;
-			for (int i = 0;i < index - 1;i++) {
-				current = current->next;
-			}
-			newNode->next = current->next;
-			current->next = newNode;
-		}
-		size++;
-		return true;
-	}
-	else {
-		return false;
-	}
-};
-
 // remove an item at a specified position in the RoomScheduleLinkedList
-void RoomScheduleLinkedList::remove(int index) {
-	if (index <= size && index >= 0) {
-		
-
-		if (index == 0) {
-			if (size == 1) {
-				firstNode = NULL;
+void RoomScheduleLinkedList::remove(ItemType guestName, ItemType roomNumber, tm date) {
+	Node* current = firstNode;
+	while (current != NULL) {
+		if (current->guestName == guestName && current->roomNumber == roomNumber && current->date == date) {
+			if (size==1) {
+				current = NULL;
+			}
+			else if (size == 2){
+				current = current->next;
 			}
 			else {
-				//Node* temp = firstNode;
-				//temp = firstNode;
-				firstNode = firstNode->next;
-				//delete[] temp;
+				current->next = current->next->next;
 			}
+			size--;
+			return;
 		}
-		else {
-			Node* current = firstNode;
-			for (int i = 0;i < index - 1;i++) {
-				current = current->next;
-			}
-			//Node* temp = current->next;
-			current->next = current->next->next;
-			//delete[] temp;
-		}
-		size--;
+		current = current->next;
 	}
+	return;
 };
 
-// get an item at a specified position of the RoomScheduleLinkedList (retrieve)
-ItemType RoomScheduleLinkedList::get(int index) {
-	if (index <= size && index >= 0) {
-		Node* current = firstNode;
-		for (int i = 0;i < index ;i++) {
-			current = current->next;
-		}
-		return current->item;
-	}
-};
+//// get an item at a specified position of the RoomScheduleLinkedList (retrieve)
+//ItemType RoomScheduleLinkedList::get(int index) {
+//	if (index <= size && index >= 0) {
+//		Node* current = firstNode;
+//		for (int i = 0;i < index ;i++) {
+//			current = current->next;
+//		}
+//		return current->item;
+//	}
+//};
 
 // check if the RoomScheduleLinkedList is empty
 bool RoomScheduleLinkedList::isEmpty() {
@@ -113,7 +79,7 @@ int RoomScheduleLinkedList::getLength() {
 void RoomScheduleLinkedList::print() {
 	Node* current = firstNode;
 	while (current != NULL) {
-		std::cout << current->item << endl;
+		std::cout << current->roomNumber << endl;
 		current = current->next;
 	}
 };
