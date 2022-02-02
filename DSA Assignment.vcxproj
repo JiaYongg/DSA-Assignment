@@ -140,11 +140,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AVL_Tree.cpp" />
-    <ClCompile Include="Bookings.cpp" />
+    <ClCompile Include="Booking.cpp" />
     <ClCompile Include="BST.cpp" />
     <ClCompile Include="DateTimeApp.cpp" />
-   <ClCompile Include="BookingDict.cpp" />
-   <ClCompile Include="DSA Assignment DE.cpp" />
+    <ClCompile Include="BookingDict.cpp" />
+    <ClCompile Include="DSA Assignment DE.cpp" />
     <ClCompile Include="DSA Assignment.cpp" />
     <ClCompile Include="RoomScheduleLinkedList.cpp" />
     <ClCompile Include="Room.cpp" />
@@ -156,7 +156,7 @@
     <ClInclude Include="Booking.h" />
     <ClInclude Include="BST.h" />
     <ClInclude Include="RoomScheduleDictionary.h" />
-	<ClCompile Include="BookingDict.h" />
+    <ClCompile Include="BookingDict.h" />
     <ClInclude Include="RoomScheduleLinkedList.h" />
     <ClInclude Include="Room.h" />
   </ItemGroup>
