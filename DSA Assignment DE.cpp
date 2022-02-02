@@ -4,9 +4,10 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "Dictionary.h"
-#include "RoomDateDictionary.h"
-#include "Rooms.h"
+//#include "BookingDict.h"
+//#include "RoomScheduleDictionary.h"
+#include "Room.h"
+#include "Booking.h"
 #include <string.h>
 #include <vector>
 #include <chrono>
@@ -17,27 +18,27 @@ using namespace std;
 
 void menu();
 
-Dictionary bookingDictionary;
-RoomDateDictionary dynamicRoomNameDictionary; //(dynamic number of this)
-Delu
-Exec
-Presi
-Rooms roomArray[dynamic]
-
-//include string linked list for dates
-//linked list (roomType, count)
-
-//array size 20 of [roomNumber,string concat dates]
-[roomDateDictionaries] > items
-items > [Node, 1, 2, 3, 4]
-Node > take guest , date, store into array
-void printDate(tm Date);
-
-//array size 20 of [roomNumber,string concat dates]
-[roomDateDictionaries] > items
-items > [Node, 1, 2, 3, 4]
-Node > take roomNo,date, store into array 
-void printMonth(/*month*/);
+//Dictionary bookingDictionary;
+//RoomDateDictionary dynamicRoomNameDictionary; //(dynamic number of this)
+//Delu
+//Exec
+//Presi
+//Rooms roomArray[dynamic]
+//
+////include string linked list for dates
+////linked list (roomType, count)
+//
+////array size 20 of [roomNumber,string concat dates]
+//[roomDateDictionaries] > items
+//items > [Node, 1, 2, 3, 4]
+//Node > take guest , date, store into array
+//void printDate(tm Date);
+//
+////array size 20 of [roomNumber,string concat dates]
+//[roomDateDictionaries] > items
+//items > [Node, 1, 2, 3, 4]
+//Node > take roomNo,date, store into array 
+//void printMonth(/*month*/);
 
 
 int main()
@@ -46,47 +47,47 @@ int main()
     //When date change, we need to cancel bookings that are overdue checkYstdOverdue()
     
     //File I/O Bookings.csv
-    fstream bookingsFile("Bookings.csv", ios::in);
-    vector<vector<string>> content;
-    vector<string> row;
-    string line, word;
+    //fstream bookingsFile("Bookings.csv", ios::in);
+    //vector<vector<string>> content;
+    //vector<string> row;
+    //string line, word;
 
-    if (bookingsFile.is_open())
-    {
-        while (getline(bookingsFile, line))
-        {
-            row.clear();
+    //if (bookingsFile.is_open())
+    //{
+    //    while (getline(bookingsFile, line))
+    //    {
+    //        row.clear();
 
-            stringstream str(line);
+    //        stringstream str(line);
 
-            while (getline(str, word, ','))
-                row.push_back(word);
-            content.push_back(row);
-        }
-    }
+    //        while (getline(str, word, ','))
+    //            row.push_back(word);
+    //        content.push_back(row);
+    //    }
+    //}
 
-    for (int i = 1; i < content.size(); i++)
-    {
-        Bookings b;
-        tm date;
-        b.bookingID = stoi(content[i][0]); // stoi converts string to int
-        sscanf_s(content[i][1].c_str(), "%d/%d/%4d  %d:%d:%d", &date.tm_mday, &date.tm_mon, &date.tm_year, &date.tm_hour, &date.tm_min, &date.tm_sec);
-        b.bookingDate = date;
-        b.bookingGuestName = content[i][2];
-        b.bookingRoomNumber = content[i][3];
-        b.bookingRoomType = content[i][4];
-        b.bookingStatus = content[i][5];
-        sscanf_s(content[i][6].c_str(), "%d/%d/%4d  %d:%d:%d", &date.tm_mday, &date.tm_mon, &date.tm_year, &date.tm_hour, &date.tm_min, &date.tm_sec);
-        b.checkinDate = date;
-        sscanf_s(content[i][7].c_str(), "%d/%d/%4d  %d:%d:%d", &date.tm_mday, &date.tm_mon, &date.tm_year, &date.tm_hour, &date.tm_min, &date.tm_sec);
-        b.checkOutDate = date;
-        b.bookingGuestNumber = stoi(content[i][8]);
-        b.bookingSpecialRequest = content[i][9];
+    //for (int i = 1; i < content.size(); i++)
+    //{
+    //    Bookings b;
+    //    tm date;
+    //    b.bookingID = stoi(content[i][0]); // stoi converts string to int
+    //    sscanf_s(content[i][1].c_str(), "%d/%d/%4d  %d:%d:%d", &date.tm_mday, &date.tm_mon, &date.tm_year, &date.tm_hour, &date.tm_min, &date.tm_sec);
+    //    b.bookingDate = date;
+    //    b.bookingGuestName = content[i][2];
+    //    b.bookingRoomNumber = content[i][3];
+    //    b.bookingRoomType = content[i][4];
+    //    b.bookingStatus = content[i][5];
+    //    sscanf_s(content[i][6].c_str(), "%d/%d/%4d  %d:%d:%d", &date.tm_mday, &date.tm_mon, &date.tm_year, &date.tm_hour, &date.tm_min, &date.tm_sec);
+    //    b.checkinDate = date;
+    //    sscanf_s(content[i][7].c_str(), "%d/%d/%4d  %d:%d:%d", &date.tm_mday, &date.tm_mon, &date.tm_year, &date.tm_hour, &date.tm_min, &date.tm_sec);
+    //    b.checkOutDate = date;
+    //    b.bookingGuestNumber = stoi(content[i][8]);
+    //    b.bookingSpecialRequest = content[i][9];
 
-        // list.add(b)
-        bookingDictionary.add(b);
-        cout << "\n";
-    }
+    //    // list.add(b)
+    //    bookingDictionary.add(b);
+    //    cout << "\n";
+    //}
 
     // File I/O Rooms.csv
     fstream roomsFile("Rooms.csv", ios::in);

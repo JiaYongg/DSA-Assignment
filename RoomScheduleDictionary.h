@@ -1,7 +1,7 @@
 #pragma once
 
 #include "BST.h"
-#include "List.h"
+#include "RoomScheduleLinkedList.h"
 #include<iostream>
 using namespace std;
 
@@ -15,7 +15,7 @@ private:
 	//max number of available rooms
 	int MaxRoom;
 	//[3,[roomInfo,roomInfo,roomInfo]]
-	List items[MAX_SIZE];
+	RoomScheduleLinkedList items[MAX_SIZE];
 
 public:
 
@@ -55,7 +55,7 @@ public:
 	ItemType getAvailableRoomNumber(KeyType key);
 
 	//hash, get list of stayees and the room they are in
-	List getRoomDateInfo(KeyType key);
+	RoomScheduleLinkedList getRoomDateInfo(KeyType key);
 
 
 	// check if the RoomScheduleDictionary is empty
