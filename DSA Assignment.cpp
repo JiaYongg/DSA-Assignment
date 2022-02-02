@@ -7,7 +7,10 @@
 #include "Dictionary.h"
 #include "RoomDateDictionary.h"
 #include "Rooms.h"
+#include <string.h>
 #include <vector>
+#include <chrono>
+
 
 //#include "Dictionary.h"
 using namespace std;
@@ -15,7 +18,7 @@ using namespace std;
 void menu();
 
 Dictionary bookingDictionary;
-RoomDateDictionary dynamicRoomNameDictionary; (dynamic number of this)
+RoomDateDictionary dynamicRoomNameDictionary; //(dynamic number of this)
 Delu
 Exec
 Presi
@@ -42,15 +45,15 @@ int main()
     //Date changer
     //When date change, we need to cancel bookings that are overdue checkYstdOverdue()
     
-    //File I/O
-    fstream myFile("Bookings.csv", ios::in);
+    //File I/O Bookings.csv
+    fstream bookingsFile("Bookings.csv", ios::in);
     vector<vector<string>> content;
     vector<string> row;
     string line, word;
 
-    if (myFile.is_open())
+    if (bookingsFile.is_open())
     {
-        while (getline(myFile, line))
+        while (getline(bookingsFile, line))
         {
             row.clear();
 
@@ -81,18 +84,46 @@ int main()
         b.bookingSpecialRequest = content[i][9];
 
         // list.add(b)
+        bookingDictionary.add(b);
         cout << "\n";
     }
 
+    // File I/O Rooms.csv
+    fstream roomsFile("Rooms.csv", ios::in);
+    vector<vector<string>> roomsContent;
+    vector<string> roomsRow;
+    string line, word;
 
+    if (roomsFile.is_open())
+    {
+        while (getline(roomsFile, line))
+        {
+            roomsRow.clear();
 
+            stringstream str(line);
+
+            while (getline(str, word, ','))
+                roomsRow.push_back(word);
+            roomsContent.push_back(roomsRow);
+        }
+    }
+
+    for (int i = 1; i < roomsContent.size(); i++)
+    {
         // reads row by row in excel
         //room
         //ignore checkout
         //check if overdue, mark as cancel
         //load into main and room hashtable
+        Rooms r;
+        r.roomNumber = roomsContent[i][0];
+        r.roomTypeName = roomsContent[i][1];
+        r.roomTypeCost = stoi(roomsContent[i][2]);
 
 
+        dynamicRoomNameDictionary.add(r);
+        cout << "\n";
+    }
 
 
 
