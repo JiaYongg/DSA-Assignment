@@ -1,7 +1,7 @@
-#include "Dictionary.h"
+#include "RoomScheduleDictionary.h"
 #include <string>
 // constructor
-Dictionary::Dictionary() {
+RoomScheduleDictionary::RoomScheduleDictionary() {
 	for (int i = 0; i < MAX_SIZE;i++)
 	{
 		items[i] = NULL;
@@ -12,7 +12,7 @@ Dictionary::Dictionary() {
 // destructor is to remove dynamic memory
 // static memory is destroyed when program ends. But not dynamic memory
 // auto called by program, programmer does not call this destructor
-Dictionary::~Dictionary(){
+RoomScheduleDictionary::~RoomScheduleDictionary(){
 	for (int i = 0; i < MAX_SIZE; i++)
 	{
 		if (items[i] != NULL)
@@ -43,7 +43,7 @@ int charvalue(char c)
 }
 
 
-int Dictionary::hash(KeyType key){
+int RoomScheduleDictionary::hash(KeyType key){
 	int total = charvalue(key[0]);
 	for (int i = 1;i < key.length();i++) {
 		total = total * 52 + charvalue(key[i]);
@@ -52,11 +52,11 @@ int Dictionary::hash(KeyType key){
 	return total;
 };
 
-// add a new item with the specified key to the Dictionary
+// add a new item with the specified key to the RoomScheduleDictionary
 // pre : none
-// post: new item is added to the Dictionary
-//       size of Dictionary is increased by 1
-bool Dictionary::add(KeyType newKey, ItemType newItem){
+// post: new item is added to the RoomScheduleDictionary
+//       size of RoomScheduleDictionary is increased by 1
+bool RoomScheduleDictionary::add(KeyType newKey, ItemType newItem){
 	int index = hash(newKey);
 	Node* newNode = new Node;
 	newNode->item = newItem;
@@ -83,11 +83,11 @@ bool Dictionary::add(KeyType newKey, ItemType newItem){
 	return true;
 };
 
-// remove an item with the specified key in the Dictionary
-// pre : key must exist in the Dictionary
-// post: item is removed from the Dictionary
-//       size of Dictionary is decreased by 1
-void Dictionary::remove(KeyType key){
+// remove an item with the specified key in the RoomScheduleDictionary
+// pre : key must exist in the RoomScheduleDictionary
+// post: item is removed from the RoomScheduleDictionary
+//       size of RoomScheduleDictionary is decreased by 1
+void RoomScheduleDictionary::remove(KeyType key){
 	int index = hash(key);
 	if (items[index] != NULL) {
 		Node* currentNode = items[index];
@@ -123,11 +123,11 @@ void Dictionary::remove(KeyType key){
 };
 
 
-// get an item with the specified key in the Dictionary (retrieve)
-// pre : key must exist in the dictionary
+// get an item with the specified key in the RoomScheduleDictionary (retrieve)
+// pre : key must exist in the RoomScheduleDictionary
 // post: none
-// return the item with the specified key from the Dictionary
-ItemType Dictionary::get(KeyType key){
+// return the item with the specified key from the RoomScheduleDictionary
+ItemType RoomScheduleDictionary::get(KeyType key){
 	int index = hash(key);
 	if (items[index] != NULL) {
 		Node* currentNode = items[index];
@@ -144,26 +144,26 @@ ItemType Dictionary::get(KeyType key){
 	}
 };
 
-// check if the Dictionary is empty
+// check if the RoomScheduleDictionary is empty
 // pre : none
 // post: none
-// return true if the Dictionary is empty{}; otherwise returns false
-bool Dictionary::isEmpty(){
+// return true if the RoomScheduleDictionary is empty{}; otherwise returns false
+bool RoomScheduleDictionary::isEmpty(){
 	return size == 0;
 };
 
-// check the size of the Dictionary
+// check the size of the RoomScheduleDictionary
 // pre : none
 // post: none
-// return the number of items in the Dictionary
-int Dictionary::getLength(){
+// return the number of items in the RoomScheduleDictionary
+int RoomScheduleDictionary::getLength(){
 	return size;
 };
 
 //------------------- Other useful functions -----------------
 
-// display the items in the Dictionary
-void Dictionary::print(){
+// display the items in the RoomScheduleDictionary
+void RoomScheduleDictionary::print(){
 	string s;
 	for (int i = 0;i < MAX_SIZE;i++) {
 		if (items[i] != NULL) {

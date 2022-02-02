@@ -1,15 +1,15 @@
-#include "List.h"
+#include "RoomScheduleLinkedList.h"
 // constructor
-List::List() {
+RoomScheduleLinkedList::RoomScheduleLinkedList() {
 	firstNode = NULL;
 	size = 0;
 };
 
 // destructor
-//List::~List() {};
+//RoomScheduleLinkedList::~RoomScheduleLinkedList() {};
 
-// add an item to the back of the list (append)
-bool List::add(ItemType item) {
+// add an item to the back of the RoomScheduleLinkedList (append)
+bool RoomScheduleLinkedList::add(ItemType item) {
 	Node* newNode = new Node;
 	newNode->item = item;
 	newNode->next = NULL;
@@ -28,8 +28,8 @@ bool List::add(ItemType item) {
 	return true;
 };
 
-// add an item at a specified position in the list (insert)
-bool List::add(int index, ItemType item) {
+// add an item at a specified position in the RoomScheduleLinkedList (insert)
+bool RoomScheduleLinkedList::add(int index, ItemType item) {
 	if (index <= size &&index>=0) {
 		Node* newNode = new Node;
 		newNode->item = item;
@@ -56,8 +56,8 @@ bool List::add(int index, ItemType item) {
 	}
 };
 
-// remove an item at a specified position in the list
-void List::remove(int index) {
+// remove an item at a specified position in the RoomScheduleLinkedList
+void RoomScheduleLinkedList::remove(int index) {
 	if (index <= size && index >= 0) {
 		
 
@@ -85,8 +85,8 @@ void List::remove(int index) {
 	}
 };
 
-// get an item at a specified position of the list (retrieve)
-ItemType List::get(int index) {
+// get an item at a specified position of the RoomScheduleLinkedList (retrieve)
+ItemType RoomScheduleLinkedList::get(int index) {
 	if (index <= size && index >= 0) {
 		Node* current = firstNode;
 		for (int i = 0;i < index ;i++) {
@@ -96,21 +96,21 @@ ItemType List::get(int index) {
 	}
 };
 
-// check if the list is empty
-bool List::isEmpty() {
+// check if the RoomScheduleLinkedList is empty
+bool RoomScheduleLinkedList::isEmpty() {
 	if (size == 0) {
 		return true;
 	}
 	return false;
 };
 
-// check the size of the list
-int List::getLength() {
+// check the size of the RoomScheduleLinkedList
+int RoomScheduleLinkedList::getLength() {
 	return size;
 };
 
-// display all the items in the list
-void List::print() {
+// display all the items in the RoomScheduleLinkedList
+void RoomScheduleLinkedList::print() {
 	Node* current = firstNode;
 	while (current != NULL) {
 		std::cout << current->item << endl;
