@@ -59,7 +59,7 @@ public:
 	// return the item with the specified key from the Dictionary
 	//
 	//hash, return booking
-	Bookings get(KeyType key, string guestName, string roomType);
+	Booking get(KeyType key, string guestName, string roomType);
 
 	// get an item with the specified key in the Dictionary (retrieve)
 	// pre : key must exist in the dictionary
