@@ -17,8 +17,8 @@ class RoomScheduleDictionary
 private:
 	//struct Node
 	//{
-	//	ItemType guestName;	// data item
-	//	ItemType roomNumber;
+	//	string guestName;	// data item
+	//	string roomNumber;
 	//	tm date;
 	//	Node* next;
 	//};
@@ -48,7 +48,7 @@ public:
 	//       size of RoomScheduleDictionary is increased by 1
 	// 
 	// hash, check if null, add info to list
-	bool add(KeyType newKey, ItemType guestName, ItemType roomNumber);
+	bool add(KeyType newKey, string guestName, string roomNumber);
 
 	// remove an item with the specified key in the RoomScheduleDictionary
 	// pre : key must exist in the RoomScheduleDictionary
@@ -56,7 +56,7 @@ public:
 	//       size of RoomScheduleDictionary is decreased by 1
 	//
 	//hash, check if null, remove info to list
-	void remove(KeyType newKey, ItemType guestName, ItemType roomNumber);
+	void remove(KeyType newKey, string guestName, string roomNumber);
 
 
 	// get an item with the specified key in the RoomScheduleDictionary (retrieve)
