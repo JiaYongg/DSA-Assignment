@@ -68,8 +68,10 @@ void BookingDict::remove(KeyType key, string guestName, string roomType, RoomSch
 
 	if (items[index] != NULL)
 	{
+		BinaryNode* newBinaryNode = items[index]->search(key, guestName, roomType);
+		string roomNum = newBinaryNode->item.bookingRoomNumber;
+		rsd.remove(key, guestName, roomNum);
 		items[index]->remove(key, guestName, roomType);
-		rsd.remove(key);
 	}
 };
 
