@@ -9,7 +9,7 @@ RoomScheduleLinkedList::RoomScheduleLinkedList() {
 //RoomScheduleLinkedList::~RoomScheduleLinkedList() {};
 
 // add an item to the back of the RoomScheduleLinkedList (append)
-bool RoomScheduleLinkedList::add(ItemType guestName, ItemType roomNumber, tm date) {
+bool RoomScheduleLinkedList::add(string guestName, string roomNumber, tm date) {
 	Node* newNode = new Node;
 	newNode->date=date ;
 	newNode->guestName = guestName;
@@ -30,7 +30,7 @@ bool RoomScheduleLinkedList::add(ItemType guestName, ItemType roomNumber, tm dat
 };
 
 // remove an item at a specified position in the RoomScheduleLinkedList
-void RoomScheduleLinkedList::remove(ItemType guestName, ItemType roomNumber, tm date) {
+void RoomScheduleLinkedList::remove(string guestName, string roomNumber, tm date) {
 	Node* current = firstNode;
 	while (current != NULL) {
 		if (current->guestName == guestName && current->roomNumber == roomNumber && current->date == date) {
@@ -52,7 +52,7 @@ void RoomScheduleLinkedList::remove(ItemType guestName, ItemType roomNumber, tm 
 };
 
 //// get an item at a specified position of the RoomScheduleLinkedList (retrieve)
-//ItemType RoomScheduleLinkedList::get(int index) {
+//string RoomScheduleLinkedList::get(int index) {
 //	if (index <= size && index >= 0) {
 //		Node* current = firstNode;
 //		for (int i = 0;i < index ;i++) {

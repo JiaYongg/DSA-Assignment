@@ -44,7 +44,7 @@ int RoomScheduleDictionary::hash(KeyType key){
 // pre : none
 // post: new item is added to the RoomScheduleDictionary
 //       size of RoomScheduleDictionary is increased by 1
-bool RoomScheduleDictionary::add(KeyType newKey, ItemType guestName, ItemType roomNumber){
+bool RoomScheduleDictionary::add(KeyType newKey, string guestName, string roomNumber){
 	int index = hash(newKey);
 	//Node* newNode = new Node;
 	//newNode->date= newKey;
@@ -64,7 +64,7 @@ bool RoomScheduleDictionary::add(KeyType newKey, ItemType guestName, ItemType ro
 // pre : key must exist in the RoomScheduleDictionary
 // post: item is removed from the RoomScheduleDictionary
 //       size of RoomScheduleDictionary is decreased by 1
-void RoomScheduleDictionary::remove(KeyType newKey, ItemType guestName, ItemType roomNumber){
+void RoomScheduleDictionary::remove(KeyType newKey, string guestName, string roomNumber){
 	int index = hash(newKey);
 	//Node* newNode = new Node;
 	//newNode->date = newKey;
@@ -100,7 +100,7 @@ RoomScheduleLinkedList RoomScheduleDictionary::getRoomDateInfo(KeyType key) {
 // pre : key must exist in the RoomScheduleDictionary
 // post: none
 // return the item with the specified key from the RoomScheduleDictionary
-//ItemType RoomScheduleDictionary::get(KeyType key){
+//string RoomScheduleDictionary::get(KeyType key){
 //	int index = hash(key);
 //	if (items[index] != NULL) {
 //		Node* currentNode = items[index];

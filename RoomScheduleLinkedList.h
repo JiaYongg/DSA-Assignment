@@ -4,15 +4,15 @@
 #include<iostream>
 using namespace std;
 
-typedef string ItemType;
+//typedef string string;
 
 class RoomScheduleLinkedList
 {
 private:
 	struct Node
 	{
-		ItemType guestName;	// data item
-		ItemType roomNumber;
+		string guestName;	// data item
+		string roomNumber;
 		tm date;
 		Node* next;	// pointer pointing to next item
 	};
@@ -32,20 +32,20 @@ public:
 	// pre : size < MAX_SIZE
 	// post: new item is added to the back of the RoomScheduleLinkedList
 	//       size of RoomScheduleLinkedList is increased by 1
-	bool add(ItemType guestName, ItemType roomNumber, tm date);
+	bool add(string guestName, string roomNumber, tm date);
 
 	// remove an item at a specified position in the RoomScheduleLinkedList
 	// pre : 1 <= index <= size
 	// post: item is removed the specified position in the RoomScheduleLinkedList
 	//       items after the position are shifted forward by 1 position
 	//       size of RoomScheduleLinkedList is decreased by 1
-	void remove(ItemType guestName, ItemType roomNumber, tm date);
+	void remove(string guestName, string roomNumber, tm date);
 
 	// get an item at a specified position of the RoomScheduleLinkedList (retrieve)
 	// pre : 1 <= index <= size
 	// post: none
 	// return the item in the specified index of the RoomScheduleLinkedList
-	ItemType get(int index);
+	string get(int index);
 
 	// check if the RoomScheduleLinkedList is empty
 	// pre : none
@@ -64,6 +64,6 @@ public:
 	// display the items in the RoomScheduleLinkedList
 	void print();
 
-	// void replace(int index, ItemType item);
-	// int search(ItemType item);
+	// void replace(int index, string item);
+	// int search(string item);
 };
