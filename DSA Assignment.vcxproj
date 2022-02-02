@@ -147,7 +147,7 @@
    <ClCompile Include="DSA Assignment DE.cpp" />
     <ClCompile Include="DSA Assignment.cpp" />
     <ClCompile Include="RoomScheduleLinkedList.cpp" />
-    <ClCompile Include="Rooms.cpp" />
+    <ClCompile Include="Room.cpp" />
     <ClCompile Include="RoomScheduleDictionary.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -155,10 +155,10 @@
     <ClInclude Include="BinaryNode.h" />
     <ClInclude Include="Booking.h" />
     <ClInclude Include="BST.h" />
-    <ClInclude Include="Dictionary.h" />
-    <ClInclude Include="List.h" />
-    <ClInclude Include="RoomDateDictionary.h" />
-    <ClInclude Include="Rooms.h" />
+    <ClInclude Include="RoomScheduleDictionary.h" />
+	<ClCompile Include="BookingDict.h" />
+    <ClInclude Include="RoomScheduleLinkedList.h" />
+    <ClInclude Include="Room.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Bookings.csv" />
