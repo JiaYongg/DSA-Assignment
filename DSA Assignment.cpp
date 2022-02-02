@@ -4,9 +4,9 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "Dictionary.h"
+#include "BookingDict.h"
 #include "RoomDateDictionary.h"
-#include "Rooms.h"
+#include "Room.h"
 #include <string.h>
 #include <vector>
 #include <chrono>
@@ -67,7 +67,7 @@ int main()
 
     for (int i = 1; i < content.size(); i++)
     {
-        Bookings b;
+        Booking b;
         tm date;
         b.bookingID = stoi(content[i][0]); // stoi converts string to int
         sscanf_s(content[i][1].c_str(), "%d/%d/%4d  %d:%d:%d", &date.tm_mday, &date.tm_mon, &date.tm_year, &date.tm_hour, &date.tm_min, &date.tm_sec);
@@ -115,7 +115,7 @@ int main()
         //ignore checkout
         //check if overdue, mark as cancel
         //load into main and room hashtable
-        Rooms r;
+        Room r;
         r.roomNumber = roomsContent[i][0];
         r.roomTypeName = roomsContent[i][1];
         r.roomTypeCost = stoi(roomsContent[i][2]);

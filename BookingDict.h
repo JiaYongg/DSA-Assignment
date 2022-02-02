@@ -10,7 +10,7 @@ typedef tm KeyType;
 typedef BST ItemType;
 
 
-class Dictionary
+class BookingDict
 {
 private:
 	//struct Node
@@ -27,10 +27,10 @@ public:
 
 	// constructor
 	//set to null
-	Dictionary();
+	BookingDict();
 
 	// destructor
-	~Dictionary();
+	~BookingDict();
 
 	//hash unix time from checkInDate
 	int hash(KeyType key);

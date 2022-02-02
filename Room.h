@@ -3,13 +3,13 @@
 #include <string>
 using namespace std;
 
-class Rooms
+class Room
 {
 public:
 	string roomNumber;
 	string roomTypeName;
 	int roomTypeCost;
 	// constructor
-	Rooms();
+	Room();
 };
 

@@ -1,7 +1,7 @@
-#include "Dictionary.h"
+#include "BookingDict.h"
 #include <string>
 // constructor
-Dictionary::Dictionary() {
+BookingDict::BookingDict() {
 	for (int i = 0; i < MAX_SIZE;i++)
 	{
 		items[i] = NULL;
@@ -12,7 +12,7 @@ Dictionary::Dictionary() {
 // destructor is to remove dynamic memory
 // static memory is destroyed when program ends. But not dynamic memory
 // auto called by program, programmer does not call this destructor
-Dictionary::~Dictionary(){
+BookingDict::~BookingDict(){
 	for (int i = 0; i < MAX_SIZE; i++)
 	{
 		if (items[i] != NULL)
@@ -43,7 +43,7 @@ int charvalue(char c)
 }
 
 
-int Dictionary::hash(KeyType key){
+int BookingDict::hash(KeyType key){
 	int total = charvalue(key[0]);
 	for (int i = 1;i < key.length();i++) {
 		total = total * 52 + charvalue(key[i]);
@@ -56,7 +56,7 @@ int Dictionary::hash(KeyType key){
 // pre : none
 // post: new item is added to the Dictionary
 //       size of Dictionary is increased by 1
-bool Dictionary::add(KeyType newKey, ItemType newItem){
+bool BookingDict::add(KeyType newKey, ItemType newItem){
 	int index = hash(newKey);
 	Node* newNode = new Node;
 	newNode->item = newItem;
@@ -87,7 +87,7 @@ bool Dictionary::add(KeyType newKey, ItemType newItem){
 // pre : key must exist in the Dictionary
 // post: item is removed from the Dictionary
 //       size of Dictionary is decreased by 1
-void Dictionary::remove(KeyType key){
+void BookingDict::remove(KeyType key){
 	int index = hash(key);
 	if (items[index] != NULL) {
 		Node* currentNode = items[index];
@@ -127,7 +127,7 @@ void Dictionary::remove(KeyType key){
 // pre : key must exist in the dictionary
 // post: none
 // return the item with the specified key from the Dictionary
-ItemType Dictionary::get(KeyType key){
+ItemType BookingDict::get(KeyType key){
 	int index = hash(key);
 	if (items[index] != NULL) {
 		Node* currentNode = items[index];
@@ -148,7 +148,7 @@ ItemType Dictionary::get(KeyType key){
 // pre : none
 // post: none
 // return true if the Dictionary is empty{}; otherwise returns false
-bool Dictionary::isEmpty(){
+bool BookingDict::isEmpty(){
 	return size == 0;
 };
 
@@ -156,14 +156,14 @@ bool Dictionary::isEmpty(){
 // pre : none
 // post: none
 // return the number of items in the Dictionary
-int Dictionary::getLength(){
+int BookingDict::getLength(){
 	return size;
 };
 
 //------------------- Other useful functions -----------------
 
 // display the items in the Dictionary
-void Dictionary::print(){
+void BookingDict::print(){
 	string s;
 	for (int i = 0;i < MAX_SIZE;i++) {
 		if (items[i] != NULL) {

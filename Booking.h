@@ -3,7 +3,7 @@
 #include <string>
 using namespace std;
 
-class Bookings
+class Booking
 {
 public:
 	int bookingID;
@@ -17,5 +17,5 @@ public:
 	int bookingGuestNumber;
 	string bookingSpecialRequest;
 	// constructor
-	Bookings();
+	Booking();
 };

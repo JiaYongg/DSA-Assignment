@@ -27,7 +27,7 @@
     <ClCompile Include="DateTimeApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Dictionary.cpp">
+    <ClCompile Include="BookingDict.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Rooms.cpp">
@@ -53,16 +53,16 @@
     <ClInclude Include="BST.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Dictionary.h">
+    <ClInclude Include="BookingDict.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Bookings.h">
+    <ClInclude Include="Booking.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RoomDateDictionary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Rooms.h">
+    <ClInclude Include="Room.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="List.h">
