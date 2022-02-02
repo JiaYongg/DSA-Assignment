@@ -11,7 +11,7 @@
 #include <string.h>
 #include <vector>
 #include <chrono>
-
+#include <sstream>
 
 //#include "Dictionary.h"
 using namespace std;
