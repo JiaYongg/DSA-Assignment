@@ -121,8 +121,9 @@ int main()
         r.roomNumber = roomsContent[i][0];
         r.roomTypeName = roomsContent[i][1];
         r.roomTypeCost = stoi(roomsContent[i][2]);
-        int index = (int) r.roomNumber.substr(5, 3);
-        roomArray[index] = r;
+        string roomNo = r.roomNumber.substr(5, 3);
+        int index = stoi(roomNo);
+        roomArray[index] = &r;
         //dynamicRoomNameDictionary.add(r);
         cout <<r.roomNumber<< "\n";
     }

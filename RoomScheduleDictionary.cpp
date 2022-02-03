@@ -35,7 +35,7 @@ int RoomScheduleDictionary::hash(KeyType key){
 	key.tm_mon -= 1;
 	time_t time = mktime(&key) / 86400;
 	if (firstHash == NULL) {
-		firstHash = time;
+		firstHash = (int) time;
 	}
 	return time-firstHash;
 };

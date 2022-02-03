@@ -33,7 +33,9 @@ bool RoomScheduleLinkedList::add(string guestName, string roomNumber, tm date) {
 void RoomScheduleLinkedList::remove(string guestName, string roomNumber, tm date) {
 	Node* current = firstNode;
 	while (current != NULL) {
-		if (current->guestName == guestName && current->roomNumber == roomNumber && current->date == date) {
+		time_t currentDate = mktime(&current->date);
+		time_t compareDate = mktime(&date);
+		if (current->guestName == guestName && current->roomNumber == roomNumber && difftime(currentDate,compareDate)==0) {
 			if (size==1) {
 				current = NULL;
 			}
