@@ -1,5 +1,6 @@
 #include  "RoomScheduleLinkedList.h"
 #include <iostream>
+#include<map>
 using namespace std;
 // constructor
 RoomScheduleLinkedList::RoomScheduleLinkedList() {
@@ -92,9 +93,17 @@ void RoomScheduleLinkedList::print() {
 //print guests which are staying on that date
 void RoomScheduleLinkedList::printDateGuests() {
 	Node* current = firstNode;
-	tm result =  firstNode->date;
 	while (current != NULL) {
 		cout << current->guestName << endl;
 		current = current->next;
+	}
+};
+
+//return map with dates that each room is filled
+void  RoomScheduleLinkedList::getOccupiedDatesFromDay(map<string, string>& roomOccupiedDates, tm date) {
+	Node* current = firstNode;
+	while (current != NULL) {
+		string dates = roomOccupiedDates[current->roomNumber];
+		dates += ", " + current->date.tm_mday;
 	}
 };

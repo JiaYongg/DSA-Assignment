@@ -2,6 +2,7 @@
 
 #include<string>
 #include<iostream>
+#include<map>
 using namespace std;
 
 //typedef string string;
@@ -63,6 +64,8 @@ public:
 	// return the number of items in the RoomScheduleLinkedList
 	int getLength();
 
+	//return map with dates that each room is filled
+	void getOccupiedDatesFromDay(map<string, string>& roomOccupiedDates, tm date);
 
 	//print guests which are staying on that date
 	void printDateGuests();

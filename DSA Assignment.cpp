@@ -48,7 +48,7 @@ int main()
 {
 
     //Contains all rooms (index = room no. -101)
-    Room* roomArray[20];
+    Room roomArray[20];
     //Contains all room types and count of how many rooms they have, used to dynamically generate RoomScheduleDictionaries
     map<string, int> roomTypeMap;
     //Contains all RoomScheduleDictionaries 
@@ -83,7 +83,7 @@ int main()
         r.roomTypeCost = stoi(roomsContent[i][2]);
         string roomNo = r.roomNumber.substr(5, 3);
         int index = stoi(roomNo)-101;
-        roomArray[index] = &r;
+        roomArray[index] = r;
         roomTypeMap[r.roomTypeName] += 1;
     }
 
@@ -263,6 +263,30 @@ int main()
 
             case 4:
             {
+                tm selectedDate;
+                char selectedDateInput[] = "";
+                // display guest staying in hotel function
+                cout << "Enter Date (mm/yyyy): ";
+                cin >> selectedDateInput;
+                selectedDate.tm_min = 0;
+                selectedDate.tm_sec = 0;
+                selectedDate.tm_hour = 0;
+                sscanf_s(selectedDateInput, "%d/%4d", &selectedDate.tm_mon, &selectedDate.tm_year);
+                map<string, string> roomOccupiedDates;
+                for (int i = 0; i < 20; i++) {
+                    string roomNumber = roomArray[i].roomNumber;
+                    roomOccupiedDates[roomNumber] = "";
+                }
+                for (const auto& p : roomTypeMap)
+                {
+                    roomScheduleMap[p.first].getOccupiedDatesFromMonth(roomOccupiedDates, selectedDate);
+                }
+                cout <<"Marker"<<endl;
+                for (const auto& p :roomOccupiedDates)
+                {
+                    cout<< p.first << '\t' << p.second << std::endl;
+                }
+                cout << endl;
                 // display room occupied by month function
                 break;
             }
@@ -328,6 +352,9 @@ int main()
 
                 bookingDictionary.get(checkInDate, guestName, roomType);
                 break;
+            }
+            case 10: {
+                //easter egg
             }
             case 0:
             {

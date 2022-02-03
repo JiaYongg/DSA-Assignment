@@ -6,6 +6,7 @@
 #include "Booking.h"
 #include <string.h>
 using namespace std;
+#include<map>
 
 const int MAX_SIZE = 181;
 typedef tm KeyType;
@@ -77,5 +78,8 @@ public:
 	// post: none
 	// return true if the RoomScheduleDictionary is empty; otherwise returns false
 	/*bool isEmpty();*/
+
+	//return map of room no. and occupied dates
+	void getOccupiedDatesFromMonth(map<string, string> &roomOccupiedDates, tm month);
 
 };

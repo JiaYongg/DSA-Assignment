@@ -1,5 +1,6 @@
 #include "RoomScheduleDictionary.h"
 #include <string>
+#include<map>
 // constructor
 RoomScheduleDictionary::RoomScheduleDictionary(int maxRoom, string roomType) {
 	MaxRoom = maxRoom;
@@ -131,6 +132,41 @@ void RoomScheduleDictionary::printDateGuests(tm key) {
 	int index = hash(key);
 	if (items[index] != NULL) {
 		items[index]->printDateGuests();
+	}
+};
+
+//return map of room no. and occupied dates
+void RoomScheduleDictionary::getOccupiedDatesFromMonth(map<string, string> &roomOccupiedDates, tm month) {
+	//change to time_t for comparsion and looping
+	tm endOfMonth;
+	endOfMonth = month;
+	//get first date of month
+	month.tm_year -= 1900;
+	month.tm_mon -= 1;
+	month.tm_mday = 1;
+	month.tm_min = 0;
+	month.tm_sec = 0;
+	month.tm_hour = 0;
+	//get last date of month by going to next month and minusing 1 day
+	endOfMonth.tm_year -= 1900;
+	endOfMonth.tm_mday = 0;
+	endOfMonth.tm_min = 0;
+	endOfMonth.tm_sec = 0;
+	endOfMonth.tm_hour = 0;
+	time_t startMonthTime = mktime(&month);
+	time_t endMonthTime = mktime(&endOfMonth) - 86400;
+	//change checkInDate back to original date to be hashed later
+	month.tm_year += 1900;
+	month.tm_mon += 1;
+	tm currentDate = month;
+	//add for all dates from checkInDate to checkOutDate
+	while (startMonthTime <= endMonthTime) {
+		int index = hash(currentDate);
+		if (items[index] != NULL) {
+			items[index]->getOccupiedDatesFromDay(roomOccupiedDates, currentDate);
+		}
+		currentDate.tm_mday += 1;
+		startMonthTime += 86400;
 	}
 };
 // get an item with the specified key in the RoomScheduleDictionary (retrieve)
