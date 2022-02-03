@@ -9,7 +9,7 @@ using namespace std;
 
 const int MAX_SIZE = 181;
 typedef tm KeyType;
-int firstHashRoom = NULL;
+static int firstHashRoom = NULL;
 
 class RoomScheduleDictionary
 {
