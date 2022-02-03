@@ -122,7 +122,7 @@ int main()
         r.roomTypeCost = stoi(roomsContent[i][2]);
 
 
-        dynamicRoomNameDictionary.add(r);
+        //dynamicRoomNameDictionary.add(r);
         cout << "\n";
     }
 

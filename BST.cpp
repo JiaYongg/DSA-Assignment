@@ -65,61 +65,61 @@ void BST::insert(BinaryNode* &t, Booking b)
 }
 
 
-// traverse the binary search tree in inorder
-void BST::inorder()
-{
-	if (isEmpty())
-		cout << "No item found" << endl;
-	else
-		inorder(root);
-}
-
-void BST::inorder(BinaryNode* t)
-{
-	if (t != NULL)
-	{
-		inorder(t->left);
-		cout << t->item << endl;
-		inorder(t->right);
-	}
-}
-// traverse the binary search tree in preorder
-void BST::preorder()
-{
-	if (isEmpty())
-		cout << "No item found" << endl;
-	else
-		preorder(root);
-}
-
-void BST::preorder(BinaryNode* t)
-{
-	if (t != NULL)
-	{
-		cout << t->item << endl;
-		preorder(t->left);
-		preorder(t->right);
-	}
-}
-
-// traverse the binary search tree in postorder
-void BST::postorder()
-{
-	if (isEmpty())
-		cout << "No item found" << endl;
-	else
-		postorder(root);
-}
-
-void BST::postorder(BinaryNode* t)
-{
-	if (t != NULL)
-	{
-		postorder(t->left);
-		postorder(t->right);
-		cout << t->item << endl;
-	}
-}
+//// traverse the binary search tree in inorder
+//void BST::inorder()
+//{
+//	if (isEmpty())
+//		cout << "No item found" << endl;
+//	else
+//		inorder(root);
+//}
+//
+//void BST::inorder(BinaryNode* t)
+//{
+//	if (t != NULL)
+//	{
+//		inorder(t->left);
+//		cout << t->item << endl;
+//		inorder(t->right);
+//	}
+//}
+//// traverse the binary search tree in preorder
+//void BST::preorder()
+//{
+//	if (isEmpty())
+//		cout << "No item found" << endl;
+//	else
+//		preorder(root);
+//}
+//
+//void BST::preorder(BinaryNode* t)
+//{
+//	if (t != NULL)
+//	{
+//		cout << t->item << endl;
+//		preorder(t->left);
+//		preorder(t->right);
+//	}
+//}
+//
+//// traverse the binary search tree in postorder
+//void BST::postorder()
+//{
+//	if (isEmpty())
+//		cout << "No item found" << endl;
+//	else
+//		postorder(root);
+//}
+//
+//void BST::postorder(BinaryNode* t)
+//{
+//	if (t != NULL)
+//	{
+//		postorder(t->left);
+//		postorder(t->right);
+//		cout << t->item << endl;
+//	}
+//}
 
 // check if the binary search tree is empty
 bool BST::isEmpty()

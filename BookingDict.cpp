@@ -26,7 +26,9 @@ int BookingDict::hash(KeyType key)
 	//return total;
 	key.tm_year -= 1900;
 	key.tm_mon -= 1;
-	time_t time = mktime(&key);
+	time_t time = mktime(&key) / 86400;
+	if (firstHash == NULL)
+		firstHash = time;
 	return time % MAX_SIZE;
 };
 
