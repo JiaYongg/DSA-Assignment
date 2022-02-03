@@ -14,6 +14,12 @@ static int firstHash = 18686;
 class BookingDict
 {
 private:
+	struct BinaryNode
+	{
+		Booking item;
+		BinaryNode* left;	// pointer pointing to left subtree
+		BinaryNode* right;	// pointer pointing to right subtree
+	};
 	BST *items[MAX_SIZE];
 	int  size;			// number of items in the Dictionary
 

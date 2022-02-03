@@ -240,13 +240,29 @@ int main()
             case 5:
             {
                 // delete booking function
+                tm checkInDate;
+                char checkInInput[] = "";
+                string guestName, roomType;
+
+                cout << "Enter Guest Name: ";
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                getline(cin, guestName);
+
+                cout << "Enter Room Type: ";
+                getline(cin, roomType);
+
+                cout << "Enter Check In Date: ";
+                cin >> checkInInput;
+                sscanf_s(checkInInput, "%d/%d/%4d", &checkInDate.tm_mday, &checkInDate.tm_mon, &checkInDate.tm_year);
+
+                bookingDictionary.remove(checkInDate, guestName, roomType, dynamicRoomNameDictionary);
+
                 break;
             }
 
             case 6:
             {
                 // search most popular room type function
-                break;
             }
 
             case 7:
@@ -261,6 +277,28 @@ int main()
                 break;
             }
 
+            case 9:
+            {
+                // get guest (FOR TESTING PURPOSES TO REMOVE AFTER.)
+
+                tm checkInDate;
+                char checkInInput[] = "";
+                string guestName, roomType;
+
+                cout << "Enter Guest Name: ";
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                getline(cin, guestName);
+
+                cout << "Enter Room Type: ";
+                getline(cin, roomType);
+
+                cout << "Enter Check In Date: ";
+                cin >> checkInInput;
+                sscanf_s(checkInInput, "%d/%d/%4d", &checkInDate.tm_mday, &checkInDate.tm_mon, &checkInDate.tm_year);
+
+                bookingDictionary.get(checkInDate, guestName, roomType);
+                break;
+            }
             case 0:
             {
                 flag = false;
@@ -285,6 +323,7 @@ void menu()
     cout << "[6] Search most popular room type\n";
     cout << "[7] Check in Guest without booking\n";
     cout << "[8] Display bookings given range\n";
+    cout << "[9] Get guest (use breakpoint to see result)\n";
     cout << "[0] Exit\n";
     cout << "----------------------------------------------\n";
 }

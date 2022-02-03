@@ -1,3 +1,4 @@
+#pragma once
 #include "BookingDict.h"
 #include <string>
 // constructor
@@ -87,8 +88,8 @@ void BookingDict::remove(KeyType key, string guestName, string roomType, RoomSch
 
 	if (items[index] != NULL)
 	{
-		BinaryNode* newBinaryNode = items[index]->search(key, guestName, roomType);
-		string roomNum = newBinaryNode->item.bookingRoomNumber;
+		Booking b = items[index]->search(key, guestName, roomType)->item;
+		string roomNum = b.bookingRoomNumber;
 		rsd.remove(key, guestName, roomNum);
 		items[index]->remove(key, guestName, roomType);
 	}
@@ -104,9 +105,9 @@ Booking BookingDict::get(KeyType key, string guestName, string roomType)
 
 	if (items[index] != NULL)
 	{
-		// handle error if the guy is alr checked in
-		BinaryNode* newBinaryNode = items[index]->search(key, guestName, roomType);
-		return newBinaryNode->item;
+		// remove booking > get that removed booking = error - need to handle/fix
+		Booking b = items[index]->search(key, guestName, roomType)->item;
+		return b;
 	}
 }
 
