@@ -10,6 +10,13 @@ RoomScheduleDictionary::RoomScheduleDictionary(int maxRoom, string roomType) {
 	}
 };
 
+RoomScheduleDictionary::RoomScheduleDictionary() {
+	for (int i = 0; i < MAX_SIZE; i++)
+	{
+		items[i] = NULL;
+	}
+};
+
 // destructor is to remove dynamic memory
 // static memory is destroyed when program ends. But not dynamic memory
 // auto called by program, programmer does not call this destructor
@@ -43,22 +50,42 @@ int RoomScheduleDictionary::hash(KeyType key){
 	return time-firstHashRoom;
 };
 
+
+
 // add a new item with the specified key to the RoomScheduleDictionary
 // pre : none
 // post: new item is added to the RoomScheduleDictionary
-//       size of RoomScheduleDictionary is increased by 1
-bool RoomScheduleDictionary::add(KeyType newKey, string guestName, string roomNumber){
-	int index = hash(newKey);
-	//Node* newNode = new Node;
-	//newNode->date= newKey;
-	//newNode->guestName = guestName;
-	//newNode->next = NULL;
-	if (items[index]==NULL) {
-		items[index] = new RoomScheduleLinkedList();
-		items[index]->add(guestName, roomNumber, newKey);
-	}
-	else {
-		items[index]->add(guestName, roomNumber, newKey);
+	// add entry for every date from checkin to checkout exclusive, check if null, add info to list
+bool RoomScheduleDictionary::add(tm checkInDate, tm checkOutDate, string guestName, string roomNumber){
+	//change to time_t for comparsion and looping
+	checkInDate.tm_year -= 1900;
+	checkInDate.tm_mon -= 1;
+	checkInDate.tm_min = 0;
+	checkInDate.tm_sec = 0;
+	checkInDate.tm_hour = 0;
+	checkOutDate.tm_year -= 1900;
+	checkOutDate.tm_mon -= 1;
+	checkOutDate.tm_min = 0;
+	checkOutDate.tm_sec = 0;
+	checkOutDate.tm_hour = 0;
+	time_t checkInTime = mktime(&checkInDate);
+	time_t checkOutTime = mktime(&checkOutDate);
+	//change checkInDate back to original date to be hashed later
+	checkInDate.tm_year += 1900;
+	checkInDate.tm_mon += 1;
+	tm currentDate = checkInDate;
+	//add for all dates from checkInDate to checkOutDate
+	while (checkInTime < checkOutTime) {
+		int index = hash(currentDate);
+		if (items[index] == NULL) {
+			items[index] = new RoomScheduleLinkedList();
+			items[index]->add(guestName, roomNumber, currentDate);
+		}
+		else {
+			items[index]->add(guestName, roomNumber, currentDate);
+		}
+		currentDate.tm_mday += 1;
+		checkInTime += 86400;
 	}
 	return true;
 };
@@ -94,11 +121,18 @@ int RoomScheduleDictionary::getAvailableRoomNumber(KeyType key) {
 };
 
 //hash, get list of stayees and the room they are in
-RoomScheduleLinkedList RoomScheduleDictionary::getRoomDateInfo(KeyType key) {
-	int index = hash(key);
-	return *items[index];
-};
+//RoomScheduleLinkedList RoomScheduleDictionary::getRoomDateInfo(KeyType key) {
+//	int index = hash(key);
+//	return *items[index];
+//};
 
+//print guests which are staying on that date
+void RoomScheduleDictionary::printDateGuests(tm key) {
+	int index = hash(key);
+	if (items[index] != NULL) {
+		items[index]->printDateGuests();
+	}
+};
 // get an item with the specified key in the RoomScheduleDictionary (retrieve)
 // pre : key must exist in the RoomScheduleDictionary
 // post: none

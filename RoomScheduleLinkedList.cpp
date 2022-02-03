@@ -1,21 +1,24 @@
-#include "RoomScheduleLinkedList.h"
+#include  "RoomScheduleLinkedList.h"
+#include <iostream>
+using namespace std;
 // constructor
 RoomScheduleLinkedList::RoomScheduleLinkedList() {
 	firstNode = NULL;
-	size = 0;
+	roomScheduleLinkedListSize = 0;
 };
 
 // destructor
-//RoomScheduleLinkedList::~RoomScheduleLinkedList() {};
+RoomScheduleLinkedList::~RoomScheduleLinkedList() {};
 
 // add an item to the back of the RoomScheduleLinkedList (append)
 bool RoomScheduleLinkedList::add(string guestName, string roomNumber, tm date) {
 	Node* newNode = new Node;
 	newNode->date=date ;
 	newNode->guestName = guestName;
+	newNode->roomNumber = roomNumber;
 	newNode->next = NULL;
 
-	if (size == 0) {
+	if (roomScheduleLinkedListSize == 0) {
 		firstNode = newNode;
 	}
 	else {
@@ -25,7 +28,7 @@ bool RoomScheduleLinkedList::add(string guestName, string roomNumber, tm date) {
 		}
 		current->next = newNode;
 	}
-	size++;
+	roomScheduleLinkedListSize++;
 	return true;
 };
 
@@ -36,16 +39,16 @@ void RoomScheduleLinkedList::remove(string guestName, string roomNumber, tm date
 		time_t currentDate = mktime(&current->date);
 		time_t compareDate = mktime(&date);
 		if (current->guestName == guestName && current->roomNumber == roomNumber && difftime(currentDate,compareDate)==0) {
-			if (size==1) {
+			if (roomScheduleLinkedListSize==1) {
 				current = NULL;
 			}
-			else if (size == 2){
+			else if (roomScheduleLinkedListSize == 2){
 				current = current->next;
 			}
 			else {
 				current->next = current->next->next;
 			}
-			size--;
+			roomScheduleLinkedListSize--;
 			return;
 		}
 		current = current->next;
@@ -55,7 +58,7 @@ void RoomScheduleLinkedList::remove(string guestName, string roomNumber, tm date
 
 //// get an item at a specified position of the RoomScheduleLinkedList (retrieve)
 //string RoomScheduleLinkedList::get(int index) {
-//	if (index <= size && index >= 0) {
+//	if (index <= roomScheduleLinkedListSize && index >= 0) {
 //		Node* current = firstNode;
 //		for (int i = 0;i < index ;i++) {
 //			current = current->next;
@@ -66,15 +69,15 @@ void RoomScheduleLinkedList::remove(string guestName, string roomNumber, tm date
 
 // check if the RoomScheduleLinkedList is empty
 bool RoomScheduleLinkedList::isEmpty() {
-	if (size == 0) {
+	if (roomScheduleLinkedListSize == 0) {
 		return true;
 	}
 	return false;
 };
 
-// check the size of the RoomScheduleLinkedList
+// check the roomScheduleLinkedListSize of the RoomScheduleLinkedList
 int RoomScheduleLinkedList::getLength() {
-	return size;
+	return roomScheduleLinkedListSize;
 };
 
 // display all the items in the RoomScheduleLinkedList
@@ -82,6 +85,16 @@ void RoomScheduleLinkedList::print() {
 	Node* current = firstNode;
 	while (current != NULL) {
 		std::cout << current->roomNumber << endl;
+		current = current->next;
+	}
+};
+
+//print guests which are staying on that date
+void RoomScheduleLinkedList::printDateGuests() {
+	Node* current = firstNode;
+	tm result =  firstNode->date;
+	while (current != NULL) {
+		cout << current->guestName << endl;
 		current = current->next;
 	}
 };

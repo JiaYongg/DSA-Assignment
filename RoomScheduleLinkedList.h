@@ -19,7 +19,7 @@ private:
 
 
 	Node* firstNode;	// point to the first item
-	int  size;			// number of items in the RoomScheduleLinkedList
+	int  roomScheduleLinkedListSize;			// number of items in the RoomScheduleLinkedList
 
 public:
 
@@ -27,6 +27,10 @@ public:
 
 	// constructor
 	RoomScheduleLinkedList();
+
+
+	// destructor
+	~RoomScheduleLinkedList();
 
 	// add a new item to the back of the RoomScheduleLinkedList (append)
 	// pre : size < MAX_SIZE
@@ -59,7 +63,9 @@ public:
 	// return the number of items in the RoomScheduleLinkedList
 	int getLength();
 
-	//------------------- Other useful functions -----------------
+
+	//print guests which are staying on that date
+	void printDateGuests();
 
 	// display the items in the RoomScheduleLinkedList
 	void print();

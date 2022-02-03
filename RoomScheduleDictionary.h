@@ -35,6 +35,7 @@ public:
 	// set maxroom, items array to occupiedNumber to null
 	RoomScheduleDictionary(int maxRoom,string roomType);
 
+	RoomScheduleDictionary();
 	// destructor
 	~RoomScheduleDictionary();
 
@@ -46,8 +47,8 @@ public:
 	// post: new item is added to the RoomScheduleDictionary
 	//       size of RoomScheduleDictionary is increased by 1
 	// 
-	// hash, check if null, add info to list
-	bool add(KeyType newKey, string guestName, string roomNumber);
+	// add entry for every date from checkin to checkout exclusive, check if null, add info to list
+	bool add(tm checkInDate, tm checkOutDate, string guestName, string roomNumber);
 
 	// remove an item with the specified key in the RoomScheduleDictionary
 	// pre : key must exist in the RoomScheduleDictionary
@@ -69,7 +70,8 @@ public:
 	//hash, get list of stayees and the room they are in
 	RoomScheduleLinkedList getRoomDateInfo(KeyType key);
 
-
+	//print guests which are staying on that date
+	void printDateGuests(tm key);
 	// check if the RoomScheduleDictionary is empty
 	// pre : none
 	// post: none

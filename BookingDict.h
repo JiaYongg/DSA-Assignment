@@ -83,7 +83,6 @@ public:
 	// post: none
 	// return the number of items in the Dictionary
 	int getLength();
-	
 
 	//loop through all booking, add to linkedlist, print most popular
 	void printPopular();
