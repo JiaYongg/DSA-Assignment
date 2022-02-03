@@ -65,7 +65,6 @@ void BST::insert(BinaryNode* &t, Booking b)
 			insert(t->right, b); // insert in right subtree	
 	}
 
-
 	t = balance(t);				// balance the tree (AVL Tree function)
 }
 

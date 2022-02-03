@@ -96,88 +96,151 @@ int main()
 
 
     // File I/O Rooms.csv
-    //Room* roomArray[20];
-    //fstream roomsFile("Rooms.csv", ios::in);
-    //vector<vector<string>> roomsContent;
-    //vector<string> roomsRow;
-    //string line, word;
+    Room* roomArray[20];
+    fstream roomsFile("Rooms.csv", ios::in);
+    vector<vector<string>> roomsContent;
+    vector<string> roomsRow;
+    string roomsLine, roomsWord;
 
-    //if (roomsFile.is_open())
-    //{
-    //    while (getline(roomsFile, line))
-    //    {
-    //        roomsRow.clear();
+    if (roomsFile.is_open())
+    {
+        while (getline(roomsFile, roomsLine))
+        {
+            roomsRow.clear();
 
-    //        stringstream str(line);
+            stringstream str(roomsLine);
 
-    //        while (getline(str, word, ','))
-    //            roomsRow.push_back(word);
-    //        roomsContent.push_back(roomsRow);
-    //    }
-    //}
+            while (getline(str, roomsWord, ','))
+                roomsRow.push_back(roomsWord);
+            roomsContent.push_back(roomsRow);
+        }
+    }
 
-    //for (int i = 1; i < roomsContent.size(); i++)
-    //{
-    //    // reads row by row in excel
-    //    //room
-    //    //ignore checkout
-    //    //check if overdue, mark as cancel
-    //    //load into main and room hashtable
-    //    Room r;
-    //    r.roomNumber = roomsContent[i][0];
-    //    r.roomTypeName = roomsContent[i][1];
-    //    r.roomTypeCost = stoi(roomsContent[i][2]);
-    //    string roomNo = r.roomNumber.substr(5, 3);
-    //    int index = stoi(roomNo);
-    //    roomArray[index] = &r;
-    //    //dynamicRoomNameDictionary.add(r);
-    //    cout << r.roomNumber << "\n";
-    //}
+    for (int i = 1; i < roomsContent.size(); i++)
+    {
+        // reads row by row in excel
+        //room
+        //ignore checkout
+        //check if overdue, mark as cancel
+        //load into main and room hashtable
+        Room r;
+        r.roomNumber = roomsContent[i][0];
+        r.roomTypeName = roomsContent[i][1];
+        r.roomTypeCost = stoi(roomsContent[i][2]);
+        string roomNo = r.roomNumber.substr(5, 3);
+        int index = stoi(roomNo);
+        roomArray[index] = &r;
+        //dynamicRoomNameDictionary.add(r);
+        cout << r.roomNumber << "\n";
+    }
 
 
 
     //Menu
-    int option;
-    menu();
-    cin >> option;
-    //if (option == 1)
-    //    //check in guest function
-    //else if (option == 2)
-    //    // add booking function
-    //else if (option == 3)
-    //    // display guest staying in hotel function
-    //else if (option == 4)
-    //    // display room occupied by month function
-    //else if (option == 5)
-    //    // delete booking function
-    //else if (option == 6)
-    //    // search most popular room type function
-    //else if (option == 7)
-    //    // check in guest without booking function
-    //else if (option == 8)
-    //    // display bookings given range function
-    //else if (option == 0)
-    //    return 0;
+    bool flag = true;
+    while (flag)
+    {
+        menu();
+        int option = 0;
+        cout << "Pick an option: ";
+        cin >> option;
+
+        switch (option)
+        {
+            case 1: 
+            {
+                //check in guest function
+                tm checkInDate;
+                char checkInInput[] = "";
+                string guestName, roomType;
+               
+
+                cout << "Enter Check In Date: ";
+                cin >> checkInInput;
+                sscanf_s(checkInInput, "%d/%d/%4d", &checkInDate.tm_mday, &checkInDate.tm_mon, &checkInDate.tm_year);
+
+
+                cout << "Enter Guest Name: ";
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                getline(cin, guestName);
+
+
+                cout << "Enter Room Type: ";
+                //cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                getline(cin, roomType);
+
+                bookingDictionary.checkIn(checkInDate, guestName, roomType);
+                break;
+            }
+                
+            case 2:
+            {
+                // add booking function
+                break;
+            }
+
+            case 3:
+            {
+                // display guest staying in hotel function
+                break;
+            }
+
+            case 4:
+            {
+                // display room occupied by month function
+                break;
+            }
+
+            case 5:
+            {
+                // delete booking function
+                break;
+            }
+
+            case 6:
+            {
+                // search most popular room type function
+                break;
+            }
+
+            case 7:
+            {
+                // check in guest without booking function
+                break;
+            }
+
+            case 8:
+            {
+                // display bookings given range function
+                break;
+            }
+
+            case 0:
+            {
+                flag = false;
+                cout << "Good bye";
+                break;
+            }
+        }
+    }
+    
 }
 
 void menu() 
 {
-    cout << endl;
+    cout << "----------------Main Menu-------------------\n";
     // Basic Features
-    cout << "Data Structure and Algorithm Assignment \n";
-    cout << "--------------------------------\n";
-    cout << "1. Check in Guest       \n";
-    cout << "2. Add Booking          \n";
-    cout << "3. Display Guest staying in Hotel \n";
-    cout << "4. Display rooms occupied - by month \n";
+    cout << "[1] Check in Guest\n";
+    cout << "[2] Add Booking\n";
+    cout << "[3] Display Guest staying in Hotel\n";
+    cout << "[4] Display rooms occupied - by month\n";
     // Additional Features
-    cout << "5. Delete Booking       \n";
-    cout << "6. Search most popular room type \n";
-    cout << "7. Check in Guest without booking  \n";
-    cout << "8. Display bookings given range \n";
-    cout << "0 Exit                             \n";
-    cout << "--------------------------------\n";
-    cout << "Enter option : ";
+    cout << "[5] Delete Booking\n";
+    cout << "[6] Search most popular room type\n";
+    cout << "[7] Check in Guest without booking\n";
+    cout << "[8] Display bookings given range\n";
+    cout << "[0] Exit\n";
+    cout << "----------------------------------------------\n";
 }
 
 

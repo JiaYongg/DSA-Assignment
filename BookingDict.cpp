@@ -22,8 +22,8 @@ int BookingDict::hash(KeyType key)
 	key.tm_mon -= 1;
 	time_t time = mktime(&key) / 86400;
 	if (firstHash == NULL)
-		firstHash = time;
-	return time % MAX_SIZE;
+		firstHash = (int) time;
+	return time - firstHash;
 };
 
 // change status from booked to checked in
