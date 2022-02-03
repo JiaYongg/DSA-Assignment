@@ -12,13 +12,6 @@ typedef tm KeyType;
 class BookingDict
 {
 private:
-	//struct Node
-	//{
-	//	KeyType	 key;   // search key
-	//	ItemType item;	// data item
-	//	Node     *next;	// pointer pointing to next item with same search key
-	//};
-
 	BST *items[MAX_SIZE];
 	int  size;			// number of items in the Dictionary
 

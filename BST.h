@@ -28,17 +28,17 @@ public:
 	void remove(tm date, string guestName, string roomType);
 	void remove(BinaryNode* &root, tm date, string guestName, string roomType);
 
-	// traverse the binary search tree in inorder
-	void inorder();
-	void inorder(BinaryNode* t);
+	//// traverse the binary search tree in inorder
+	//void inorder();
+	//void inorder(BinaryNode* t);
 
-	// traverse the binary search tree in preorder
-	void preorder();
-	void preorder(BinaryNode* t);
+	//// traverse the binary search tree in preorder
+	//void preorder();
+	//void preorder(BinaryNode* t);
 
-	// traverse the binary search tree in postorder
-	void postorder();
-	void postorder(BinaryNode* t);
+	//// traverse the binary search tree in postorder
+	//void postorder();
+	//void postorder(BinaryNode* t);
 
 	// check if the binary search tree is empty
 	bool isEmpty();
