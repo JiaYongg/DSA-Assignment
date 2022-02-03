@@ -10,7 +10,7 @@ BST::BST()
 	root = NULL;
 }
 
-// search an item in the binary search tree
+// search for a Booking in the binary search tree
 BinaryNode* BST::search(tm date, string guestName, string roomType)
 {
 	return search(root, date, guestName, roomType);
@@ -18,7 +18,7 @@ BinaryNode* BST::search(tm date, string guestName, string roomType)
 
 BinaryNode* BST::search(BinaryNode* t, tm date, string guestName, string roomType)
 {
-	if (t == NULL)	// item not found
+	if (t == NULL)	// Booking not found
 		return NULL;
 	else
 	{
@@ -29,6 +29,8 @@ BinaryNode* BST::search(BinaryNode* t, tm date, string guestName, string roomTyp
 		if (diff == 0 && t->item.bookingGuestName == guestName && t->item.bookingRoomType == roomType)// item found
 			return t;
 		else
+			// diff < 0 = unix time difference is negative, therefore search left side of tree
+			// else diff >= 0 = search right side of the tree
 			if (diff < 0)	// search in left subtree
 				return search(t->left, date, guestName, roomType);
 			else					// search in right subtree
@@ -37,7 +39,7 @@ BinaryNode* BST::search(BinaryNode* t, tm date, string guestName, string roomTyp
 }
 
 
-// insert an item to the binary search tree
+// insert a Booking object to the binary search tree
 void BST::insert(Booking b)
 {
 	insert(root, b);
@@ -45,7 +47,7 @@ void BST::insert(Booking b)
 
 void BST::insert(BinaryNode* &t, Booking b)
 {
-	cout << t <<b.bookingGuestName<< endl;
+	//cout << t <<b.bookingGuestName<< endl;
 	if (t == NULL)
 	{
 		BinaryNode *newNode = new BinaryNode;
@@ -186,7 +188,7 @@ bool BST::isBalanced(BinaryNode *t)
 	}
 }
 
-// delete an item from the binary search tree
+// delete a Booking from the binary search tree
 void BST::remove(tm date, string guestName, string roomType)
 {
 	remove(root, date, guestName, roomType);
@@ -204,7 +206,7 @@ void BST::remove(BinaryNode* &t, tm date, string guestName, string roomType)
 			remove(t->left, date, guestName, roomType);
 		else if (diff > 0)	// search in right subtree
 			remove(t->right, date, guestName, roomType);
-		else						// item == t->item (found) - base case
+		else						// diff == 0 (found) - base case
 		{
 			if (t->left == NULL && t->right == NULL) // case 1 : node has 0 child
 			{
@@ -242,17 +244,26 @@ void BST::remove(BinaryNode* &t, tm date, string guestName, string roomType)
 
 				ItemType item = successor->item;	
 				remove(t->left, item.checkinDate, item.bookingGuestName, item.bookingRoomType);  // delete the successor (either case 1 or case 2)
-				t->item = item;					// replace the node’s item with that of the successor
+				t->item = item;					// replace the node’s Booking with that of the successor
 			}
 		}
 	}
 }
 
-// change status from booked to checked in
+// change status from "Booked" to "Checked In" in tree and validates if the status is already "Checked In"
+// check if room is available, assign room to the guest who just checked in if room available
+// else not available, check in fails
 bool BST::checkIn(tm date, string guestName, string roomType)
 {
 	BinaryNode* b = search(date, guestName, roomType);
-	b->item.bookingStatus = "Checked In";
+	if (b->item.bookingStatus == "Checked In")
+		return false;
+	else
+	{
+		b->item.bookingStatus = "Checked In";
+		return true;
+	}
+
 	// need to assign room to the guest who just checked in also need to check if the room is avail.
 	return true;
 }

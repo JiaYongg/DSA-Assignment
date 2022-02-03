@@ -39,24 +39,29 @@ int BookingDict::hash(KeyType key)
 	return time - firstHash;
 };
 
-// change status from booked to checked in
+// called from main method and hash the checkInDate provided
+// once hashed, check if that specific index on the hash table is NULL
+// if not NULL, call the checkIn method from the BST
 bool BookingDict::checkIn(KeyType key, string guestName, string roomType)
 {
 	int index = hash(key);
 
 	if (items[index] != NULL)
 	{
-		// handle error if the guy is alr checked in
 		items[index]->checkIn(key, guestName, roomType);
 	}
 	return true;
 }
 
-// hash, add to tree
+// called from main method and hash the checkInDate provided
+// once hashed, check if that specific index on the hash table is NULL
+// if NULL, add the Booking to the tree as the first node
+// else add the booking to the tree
+//hash, add to tree
 bool BookingDict::add(Booking b)
 {
 	int index = hash(b.checkinDate);
-	cout << index << endl;
+	//cout << index << endl;
 	if (items[index] == NULL)
 	{
 		items[index] = new BST(); // instantiate a new BST for the index
@@ -70,7 +75,12 @@ bool BookingDict::add(Booking b)
 	return true;
 };
 
-//hash, remove from tree, remove from room date dict
+// called from main method and hash the checkInDate provided
+// once hashed, check if that specific index on the hash table is NULL
+// if not NULL, call the search method from the BST to search for the specific Booking object to delete
+// once found, free up the bookingRoomNumber from the Booking by removing from the RoomScheduleDictionary object
+// remove the Booking object from the tree after free-ing up the room
+// hash, remove from tree, remove from room date dict
 void BookingDict::remove(KeyType key, string guestName, string roomType, RoomScheduleDictionary rsd)
 {
 	int index = hash(key);
@@ -84,8 +94,10 @@ void BookingDict::remove(KeyType key, string guestName, string roomType, RoomSch
 	}
 };
 
-
-//hash, return booking
+// called from main method and hash the checkInDate provided
+// once hashed, check if that specific index on the hash table is NULL
+// if not NULL, search for the booking in the BST and return the Booking object
+// hash, return booking
 Booking BookingDict::get(KeyType key, string guestName, string roomType)
 {
 	int index = hash(key);

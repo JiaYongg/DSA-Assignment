@@ -1,5 +1,6 @@
-// DSA Assignment.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+// Group 12
+// Chua Dong En, S10202623A
+// Poh Jia Yong, S10202579J
 
 #include <iostream>
 #include <fstream>
@@ -163,16 +164,63 @@ int main()
 
 
                 cout << "Enter Room Type: ";
-                //cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 getline(cin, roomType);
 
-                bookingDictionary.checkIn(checkInDate, guestName, roomType);
+                bool checkInStatus = bookingDictionary.checkIn(checkInDate, guestName, roomType);
+
+                if (checkInStatus)
+                    cout << "Checked In Sucessfully! \n";
+                else
+                    cout << guestName + " is already checked in \n";
                 break;
             }
                 
             case 2:
             {
                 // add booking function
+                tm bookingDate, checkInDate, checkOutDate;
+                char checkInInput[] = "";
+                char checkOutInput[] = "";
+                string guestName, roomType, status, specialReq;
+                int bookingID, numOfGuest;
+
+                // bookingID is +1 of latest record in excel
+
+                // bookingDate is datetime.now of program's current date
+
+                cout << "Enter Guest Name: ";
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                getline(cin, guestName);
+
+                cout << "Enter Room Type: ";
+                getline(cin, roomType);
+
+                // status defaults to "Booked" upon completion of booking
+
+                cout << "Enter Check In Date: ";
+                cin >> checkInInput;
+                sscanf_s(checkInInput, "%d/%d/%4d", &checkInDate.tm_mday, &checkInDate.tm_mon, &checkInDate.tm_year);
+
+                cout << "Enter Check Out Date: ";
+                cin >> checkInInput;
+                sscanf_s(checkOutInput, "%d/%d/%4d", &checkOutDate.tm_mday, &checkOutDate.tm_mon, &checkOutDate.tm_year);
+
+                cout << "Enter Number of Guest(s): ";
+                cin >> numOfGuest;
+
+                string yn;
+                cout << "Any Special Request?\n y/n";
+                cin >> yn;
+                if (yn == "y")
+                {
+                    cout << "Enter Special Request: ";
+                    getline(cin, specialReq);
+                }
+
+                //Booking b(bookingID, bookingDate, guestName, roomNum, roomType, status, checkInDate, checkOutDate, numOfGuest, specialReq);
+
+                //bookingDictionary.add(b);
+
                 break;
             }
 
