@@ -145,6 +145,7 @@ int main()
 
         switch (option)
         {
+            // Basic Features
             case 1: 
             {
                 //check in guest function
@@ -235,7 +236,7 @@ int main()
                 // display room occupied by month function
                 break;
             }
-
+            // Additional Features
             case 5:
             {
                 // delete booking function
