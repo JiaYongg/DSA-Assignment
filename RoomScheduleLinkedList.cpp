@@ -100,10 +100,16 @@ void RoomScheduleLinkedList::printDateGuests() {
 };
 
 //return map with dates that each room is filled
-void  RoomScheduleLinkedList::getOccupiedDatesFromDay(map<string, string>& roomOccupiedDates, tm date) {
+void  RoomScheduleLinkedList::getOccupiedDatesFromDay(map<string, string> &roomOccupiedDates, tm date) {
 	Node* current = firstNode;
 	while (current != NULL) {
-		string dates = roomOccupiedDates[current->roomNumber];
-		dates += ", " + current->date.tm_mday;
+		if (current->roomNumber != " ") {
+			if (current->roomNumber != "") {
+				string dates = roomOccupiedDates[current->roomNumber];
+				dates += std::to_string(current->date.tm_mday % 31) + ", ";
+				roomOccupiedDates[current->roomNumber] = dates;
+			}
+		}
+		current = current->next;
 	}
 };

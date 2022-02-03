@@ -65,7 +65,7 @@ public:
 	int getLength();
 
 	//return map with dates that each room is filled
-	void getOccupiedDatesFromDay(map<string, string>& roomOccupiedDates, tm date);
+	void getOccupiedDatesFromDay(map<string, string> &roomOccupiedDates, tm date);
 
 	//print guests which are staying on that date
 	void printDateGuests();

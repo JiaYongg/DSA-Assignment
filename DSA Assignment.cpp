@@ -263,6 +263,7 @@ int main()
 
             case 4:
             {
+                //NOTE! For booked bookings, room has not been occupied yet therefore it is not shown
                 tm selectedDate;
                 char selectedDateInput[] = "";
                 // display guest staying in hotel function
@@ -281,10 +282,9 @@ int main()
                 {
                     roomScheduleMap[p.first].getOccupiedDatesFromMonth(roomOccupiedDates, selectedDate);
                 }
-                cout <<"Marker"<<endl;
                 for (const auto& p :roomOccupiedDates)
                 {
-                    cout<< p.first << '\t' << p.second << std::endl;
+                    cout<< p.first << ":"<<'\t' << p.second.substr(0,p.second.size()-2) << std::endl;
                 }
                 cout << endl;
                 // display room occupied by month function
@@ -316,6 +316,8 @@ int main()
 
             case 6:
             {
+ 
+                break;
                 // search most popular room type function
             }
 
