@@ -53,7 +53,7 @@ bool BookingDict::add(Booking b)
 	if (items[index] == NULL)
 	{
 		items[index] = new BST(); // instantiate a new BST for the index
-		BinaryNode* newBinaryNode;
+		BinaryNode* newBinaryNode = new BinaryNode();
 		newBinaryNode->item = b;
 		items[index]->insert(b);
 	}

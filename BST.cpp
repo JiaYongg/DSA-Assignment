@@ -249,4 +249,5 @@ bool BST::checkIn(tm date, string guestName, string roomType)
 	BinaryNode* b = search(date, guestName, roomType);
 	b->item.bookingStatus = "Checked In";
 	// need to assign room to the guest who just checked in also need to check if the room is avail.
+	return true;
 }

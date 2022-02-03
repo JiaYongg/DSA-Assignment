@@ -56,6 +56,6 @@ public:
 	bool isBalanced(BinaryNode *t);
 
 	// change status from booked to checked in
-	bool checkIn(KeyType key, string guestName, string roomType);
+	bool checkIn(tm key, string guestName, string roomType);
 };
 
