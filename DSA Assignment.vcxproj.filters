@@ -36,9 +36,6 @@
     <ClCompile Include="BookingDict.h">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="DSA Assignment DE.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="RoomScheduleLinkedList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

@@ -7,7 +7,7 @@
 using namespace std;
 
 typedef tm KeyType;
-
+int firstHash = NULL;
 
 class BookingDict
 {

@@ -6,7 +6,7 @@
 #include <sstream>
 #include <string>
 #include "BookingDict.h"
-#include "RoomScheduleDictionary.h"
+//#include "RoomScheduleDictionary.h"
 #include "Room.h"
 #include "Booking.h"
 #include <string.h>
@@ -20,7 +20,7 @@ using namespace std;
 void menu();
 
 BookingDict bookingDictionary;
-RoomScheduleDictionary dynamicRoomNameDictionary; //(dynamic number of this)
+RoomScheduleDictionary dynamicRoomNameDictionary(5,"testRoomType"); //(dynamic number of this)
 //Delu
 //Exec
 //Presi
@@ -48,49 +48,50 @@ int main()
     //When date change, we need to cancel bookings that are overdue checkYstdOverdue()
     
     //File I/O Bookings.csv
-    fstream bookingsFile("Bookings.csv", ios::in);
-    vector<vector<string>> content;
-    vector<string> row;
-    string line, word;
+    //fstream bookingsFile("Bookings.csv", ios::in);
+    //vector<vector<string>> content;
+    //vector<string> row;
+    //string line, word;
 
-    if (bookingsFile.is_open())
-    {
-        while (getline(bookingsFile, line))
-        {
-            row.clear();
+    //if (bookingsFile.is_open())
+    //{
+    //    while (getline(bookingsFile, line))
+    //    {
+    //        row.clear();
 
-            stringstream str(line);
+    //        stringstream str(line);
 
-            while (getline(str, word, ','))
-                row.push_back(word);
-            content.push_back(row);
-        }
-    }
+    //        while (getline(str, word, ','))
+    //            row.push_back(word);
+    //        content.push_back(row);
+    //    }
+    //}
 
-    for (int i = 1; i < content.size(); i++)
-    {
-        Booking b;
-        tm date;
-        b.bookingID = stoi(content[i][0]); // stoi converts string to int
-        sscanf_s(content[i][1].c_str(), "%d/%d/%4d  %d:%d:%d", &date.tm_mday, &date.tm_mon, &date.tm_year, &date.tm_hour, &date.tm_min, &date.tm_sec);
-        b.bookingDate = date;
-        b.bookingGuestName = content[i][2];
-        b.bookingRoomNumber = content[i][3];
-        b.bookingRoomType = content[i][4];
-        b.bookingStatus = content[i][5];
-        sscanf_s(content[i][6].c_str(), "%d/%d/%4d  %d:%d:%d", &date.tm_mday, &date.tm_mon, &date.tm_year, &date.tm_hour, &date.tm_min, &date.tm_sec);
-        b.checkinDate = date;
-        sscanf_s(content[i][7].c_str(), "%d/%d/%4d  %d:%d:%d", &date.tm_mday, &date.tm_mon, &date.tm_year, &date.tm_hour, &date.tm_min, &date.tm_sec);
-        b.checkOutDate = date;
-        b.bookingGuestNumber = stoi(content[i][8]);
-        b.bookingSpecialRequest = content[i][9];
+    //for (int i = 1; i < content.size(); i++)
+    //{
+    //    Booking b;
+    //    tm date;
+    //    b.bookingID = stoi(content[i][0]); // stoi converts string to int
+    //    sscanf_s(content[i][1].c_str(), "%d/%d/%4d  %d:%d:%d", &date.tm_mday, &date.tm_mon, &date.tm_year, &date.tm_hour, &date.tm_min, &date.tm_sec);
+    //    b.bookingDate = date;
+    //    b.bookingGuestName = content[i][2];
+    //    b.bookingRoomNumber = content[i][3];
+    //    b.bookingRoomType = content[i][4];
+    //    b.bookingStatus = content[i][5];
+    //    sscanf_s(content[i][6].c_str(), "%d/%d/%4d  %d:%d:%d", &date.tm_mday, &date.tm_mon, &date.tm_year, &date.tm_hour, &date.tm_min, &date.tm_sec);
+    //    b.checkinDate = date;
+    //    sscanf_s(content[i][7].c_str(), "%d/%d/%4d  %d:%d:%d", &date.tm_mday, &date.tm_mon, &date.tm_year, &date.tm_hour, &date.tm_min, &date.tm_sec);
+    //    b.checkOutDate = date;
+    //    b.bookingGuestNumber = stoi(content[i][8]);
+    //    b.bookingSpecialRequest = content[i][9];
 
-        // list.add(b)
-        bookingDictionary.add(b);
-        cout << "\n";
-    }
+    //    // list.add(b)
+    //    bookingDictionary.add(b);
+    //    cout << "\n";
+    //}
 
     // File I/O Rooms.csv
+    Room* roomArray[20];
     fstream roomsFile("Rooms.csv", ios::in);
     vector<vector<string>> roomsContent;
     vector<string> roomsRow;
@@ -121,10 +122,11 @@ int main()
         r.roomNumber = roomsContent[i][0];
         r.roomTypeName = roomsContent[i][1];
         r.roomTypeCost = stoi(roomsContent[i][2]);
-
-
+        string roomNo = r.roomNumber.substr(5, 3);
+        int index = stoi(roomNo);
+        roomArray[index] = &r;
         //dynamicRoomNameDictionary.add(r);
-        cout << "\n";
+        cout << r.roomNumber << "\n";
     }
 
 

@@ -34,10 +34,10 @@ int RoomScheduleDictionary::hash(KeyType key){
 	key.tm_year -= 1900;
 	key.tm_mon -= 1;
 	time_t time = mktime(&key) / 86400;
-	if (firstHash == NULL) {
-		firstHash = (int) time;
+	if (firstHashRoom == NULL) {
+		firstHashRoom = (int) time;
 	}
-	return time-firstHash;
+	return time-firstHashRoom;
 };
 
 // add a new item with the specified key to the RoomScheduleDictionary
