@@ -3,7 +3,10 @@
 // constructor
 BookingDict::BookingDict() 
 {
-	items[MAX_SIZE] = NULL;
+	for (int i = 0; i < MAX_SIZE; i++)
+	{
+		items[i] = NULL;
+	}
 	size = NULL;
 };
 
@@ -18,8 +21,18 @@ BookingDict::~BookingDict()
 //hash unix time from checkInDate
 int BookingDict::hash(KeyType key)
 {
+
 	key.tm_year -= 1900;
 	key.tm_mon -= 1;
+	key.tm_min = 0;
+	key.tm_sec = 0;
+	key.tm_hour = 0;
+	//printf("tm_hour:  %d\n", key.tm_hour);
+	//printf("tm_min:  %d\n", key.tm_min);
+	//printf("tm_sec:  %d\n", key.tm_sec);
+	//printf("tm_mday:  %d\n", key.tm_mday);
+	//printf("tm_mon:  %d\n", key.tm_mon);
+	//printf("tm_year:  %d\n", key.tm_year);
 	time_t time = mktime(&key) / 86400;
 	if (firstHash == NULL)
 		firstHash = (int) time;
@@ -43,7 +56,7 @@ bool BookingDict::checkIn(KeyType key, string guestName, string roomType)
 bool BookingDict::add(Booking b)
 {
 	int index = hash(b.checkinDate);
-
+	cout << index << endl;
 	if (items[index] == NULL)
 	{
 		items[index] = new BST(); // instantiate a new BST for the index

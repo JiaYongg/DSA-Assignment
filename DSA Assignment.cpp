@@ -84,14 +84,13 @@ int main()
         b.checkOutDate = date;
         b.bookingGuestNumber = stoi(content[i][8]);
 
-        if (content[i].size() == 9)
+        if (content[i].size() == 10)
         {
-            bookingDictionary.add(b);
-            continue;
+            b.bookingSpecialRequest = content[i][9];
         }
-        b.bookingSpecialRequest = content[i][9];
-
-        bookingDictionary.add(b);
+        if (b.bookingStatus != "Checked Out") {
+            bookingDictionary.add(b);
+        }
     }
 
 
@@ -130,8 +129,6 @@ int main()
         string roomNo = r.roomNumber.substr(5, 3);
         int index = stoi(roomNo);
         roomArray[index] = &r;
-        //dynamicRoomNameDictionary.add(r);
-        cout << r.roomNumber << "\n";
     }
 
 

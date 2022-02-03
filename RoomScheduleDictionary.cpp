@@ -33,6 +33,9 @@ RoomScheduleDictionary::~RoomScheduleDictionary(){
 int RoomScheduleDictionary::hash(KeyType key){
 	key.tm_year -= 1900;
 	key.tm_mon -= 1;
+	key.tm_min = 0;
+	key.tm_sec = 0;
+	key.tm_hour = 0;
 	time_t time = mktime(&key) / 86400;
 	if (firstHashRoom == NULL) {
 		firstHashRoom = (int) time;

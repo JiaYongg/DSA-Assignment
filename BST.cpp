@@ -45,6 +45,7 @@ void BST::insert(Booking b)
 
 void BST::insert(BinaryNode* &t, Booking b)
 {
+	cout << t <<b.bookingGuestName<< endl;
 	if (t == NULL)
 	{
 		BinaryNode *newNode = new BinaryNode;
