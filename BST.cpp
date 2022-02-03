@@ -45,9 +45,6 @@ void BST::insert(Booking b)
 
 void BST::insert(BinaryNode* &t, Booking b)
 {
-	time_t checkindate = mktime(&t->item.checkinDate);
-	time_t inputdate = mktime(&b.checkinDate);
-	double diff = difftime(checkindate, inputdate);
 	if (t == NULL)
 	{
 		BinaryNode *newNode = new BinaryNode;
@@ -56,10 +53,18 @@ void BST::insert(BinaryNode* &t, Booking b)
 		newNode->right = NULL;
 		t = newNode;
 	}
-	else if (diff < 0)
-		insert(t->left, b);  // insert in left subtree
-	else
-		insert(t->right, b); // insert in right subtree	
+	else 
+	{
+		time_t checkindate = mktime(&t->item.checkinDate);
+		time_t inputdate = mktime(&b.checkinDate);
+		double diff = difftime(checkindate, inputdate);
+
+		if (diff < 0)
+			insert(t->left, b);  // insert in left subtree
+		else
+			insert(t->right, b); // insert in right subtree	
+	}
+
 
 	t = balance(t);				// balance the tree (AVL Tree function)
 }

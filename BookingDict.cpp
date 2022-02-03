@@ -18,12 +18,6 @@ BookingDict::~BookingDict()
 //hash unix time from checkInDate
 int BookingDict::hash(KeyType key)
 {
-	//int total = charvalue(key[0]);
-	//for (int i = 1;i < key.length();i++) {
-	//	total = total * 52 + charvalue(key[i]);
-	//	total %= MAX_SIZE;
-	//}
-	//return total;
 	key.tm_year -= 1900;
 	key.tm_mon -= 1;
 	time_t time = mktime(&key) / 86400;

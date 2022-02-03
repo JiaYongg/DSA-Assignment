@@ -48,86 +48,91 @@ int main()
     //When date change, we need to cancel bookings that are overdue checkYstdOverdue()
     
     //File I/O Bookings.csv
-    //fstream bookingsFile("Bookings.csv", ios::in);
-    //vector<vector<string>> content;
-    //vector<string> row;
-    //string line, word;
-
-    //if (bookingsFile.is_open())
-    //{
-    //    while (getline(bookingsFile, line))
-    //    {
-    //        row.clear();
-
-    //        stringstream str(line);
-
-    //        while (getline(str, word, ','))
-    //            row.push_back(word);
-    //        content.push_back(row);
-    //    }
-    //}
-
-    //for (int i = 1; i < content.size(); i++)
-    //{
-    //    Booking b;
-    //    tm date;
-    //    b.bookingID = stoi(content[i][0]); // stoi converts string to int
-    //    sscanf_s(content[i][1].c_str(), "%d/%d/%4d  %d:%d:%d", &date.tm_mday, &date.tm_mon, &date.tm_year, &date.tm_hour, &date.tm_min, &date.tm_sec);
-    //    b.bookingDate = date;
-    //    b.bookingGuestName = content[i][2];
-    //    b.bookingRoomNumber = content[i][3];
-    //    b.bookingRoomType = content[i][4];
-    //    b.bookingStatus = content[i][5];
-    //    sscanf_s(content[i][6].c_str(), "%d/%d/%4d  %d:%d:%d", &date.tm_mday, &date.tm_mon, &date.tm_year, &date.tm_hour, &date.tm_min, &date.tm_sec);
-    //    b.checkinDate = date;
-    //    sscanf_s(content[i][7].c_str(), "%d/%d/%4d  %d:%d:%d", &date.tm_mday, &date.tm_mon, &date.tm_year, &date.tm_hour, &date.tm_min, &date.tm_sec);
-    //    b.checkOutDate = date;
-    //    b.bookingGuestNumber = stoi(content[i][8]);
-    //    b.bookingSpecialRequest = content[i][9];
-
-    //    // list.add(b)
-    //    bookingDictionary.add(b);
-    //    cout << "\n";
-    //}
-
-    // File I/O Rooms.csv
-    Room* roomArray[20];
-    fstream roomsFile("Rooms.csv", ios::in);
-    vector<vector<string>> roomsContent;
-    vector<string> roomsRow;
+    fstream bookingsFile("Bookings.csv", ios::in);
+    vector<vector<string>> content;
+    vector<string> row;
     string line, word;
 
-    if (roomsFile.is_open())
+    if (bookingsFile.is_open())
     {
-        while (getline(roomsFile, line))
+        while (getline(bookingsFile, line))
         {
-            roomsRow.clear();
+            row.clear();
 
             stringstream str(line);
 
             while (getline(str, word, ','))
-                roomsRow.push_back(word);
-            roomsContent.push_back(roomsRow);
+                row.push_back(word);
+            content.push_back(row);
         }
     }
 
-    for (int i = 1; i < roomsContent.size(); i++)
+    for (int i = 1; i < content.size(); i++)
     {
-        // reads row by row in excel
-        //room
-        //ignore checkout
-        //check if overdue, mark as cancel
-        //load into main and room hashtable
-        Room r;
-        r.roomNumber = roomsContent[i][0];
-        r.roomTypeName = roomsContent[i][1];
-        r.roomTypeCost = stoi(roomsContent[i][2]);
-        string roomNo = r.roomNumber.substr(5, 3);
-        int index = stoi(roomNo);
-        roomArray[index] = &r;
-        //dynamicRoomNameDictionary.add(r);
-        cout << r.roomNumber << "\n";
+        Booking b;
+        tm date;
+        b.bookingID = stoi(content[i][0]); // stoi converts string to int
+        sscanf_s(content[i][1].c_str(), "%d/%d/%4d  %d:%d:%d", &date.tm_mday, &date.tm_mon, &date.tm_year, &date.tm_hour, &date.tm_min, &date.tm_sec);
+        b.bookingDate = date;
+        b.bookingGuestName = content[i][2];
+        b.bookingRoomNumber = content[i][3];
+        b.bookingRoomType = content[i][4];
+        b.bookingStatus = content[i][5];
+        sscanf_s(content[i][6].c_str(), "%d/%d/%4d  %d:%d:%d", &date.tm_mday, &date.tm_mon, &date.tm_year, &date.tm_hour, &date.tm_min, &date.tm_sec);
+        b.checkinDate = date;
+        sscanf_s(content[i][7].c_str(), "%d/%d/%4d  %d:%d:%d", &date.tm_mday, &date.tm_mon, &date.tm_year, &date.tm_hour, &date.tm_min, &date.tm_sec);
+        b.checkOutDate = date;
+        b.bookingGuestNumber = stoi(content[i][8]);
+
+        if (content[i].size() == 9)
+        {
+            bookingDictionary.add(b);
+            continue;
+        }
+        b.bookingSpecialRequest = content[i][9];
+
+        bookingDictionary.add(b);
     }
+
+
+    // File I/O Rooms.csv
+    //Room* roomArray[20];
+    //fstream roomsFile("Rooms.csv", ios::in);
+    //vector<vector<string>> roomsContent;
+    //vector<string> roomsRow;
+    //string line, word;
+
+    //if (roomsFile.is_open())
+    //{
+    //    while (getline(roomsFile, line))
+    //    {
+    //        roomsRow.clear();
+
+    //        stringstream str(line);
+
+    //        while (getline(str, word, ','))
+    //            roomsRow.push_back(word);
+    //        roomsContent.push_back(roomsRow);
+    //    }
+    //}
+
+    //for (int i = 1; i < roomsContent.size(); i++)
+    //{
+    //    // reads row by row in excel
+    //    //room
+    //    //ignore checkout
+    //    //check if overdue, mark as cancel
+    //    //load into main and room hashtable
+    //    Room r;
+    //    r.roomNumber = roomsContent[i][0];
+    //    r.roomTypeName = roomsContent[i][1];
+    //    r.roomTypeCost = stoi(roomsContent[i][2]);
+    //    string roomNo = r.roomNumber.substr(5, 3);
+    //    int index = stoi(roomNo);
+    //    roomArray[index] = &r;
+    //    //dynamicRoomNameDictionary.add(r);
+    //    cout << r.roomNumber << "\n";
+    //}
 
 
 
