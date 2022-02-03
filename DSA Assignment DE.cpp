@@ -11,7 +11,7 @@
 #include <string.h>
 #include <vector>
 #include <chrono>
-
+#include <sstream>
 
 //#include "Dictionary.h"
 using namespace std;
@@ -90,6 +90,7 @@ int main()
     //}
 
     // File I/O Rooms.csv
+    Room* roomArray[20];
     fstream roomsFile("Rooms.csv", ios::in);
     vector<vector<string>> roomsContent;
     vector<string> roomsRow;
@@ -116,14 +117,14 @@ int main()
         //ignore checkout
         //check if overdue, mark as cancel
         //load into main and room hashtable
-        Rooms r;
+        Room r;
         r.roomNumber = roomsContent[i][0];
         r.roomTypeName = roomsContent[i][1];
         r.roomTypeCost = stoi(roomsContent[i][2]);
-
-
-        dynamicRoomNameDictionary.add(r);
-        cout << "\n";
+        int index = (int) r.roomNumber.substr(5, 3);
+        roomArray[index] = r;
+        //dynamicRoomNameDictionary.add(r);
+        cout <<r.roomNumber<< "\n";
     }
 
 
