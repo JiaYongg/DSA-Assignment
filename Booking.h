@@ -18,4 +18,6 @@ public:
 	string bookingSpecialRequest;
 	// constructor
 	Booking();
+	Booking(int bookID, tm bookDate, string bookGuestName, string bookRoomNum, string bookRoomType, string bookStatus,
+	tm bookCheckInDate, tm bookCheckOutDate, int bookGuestNumber, string bookSpecialReq);
 };

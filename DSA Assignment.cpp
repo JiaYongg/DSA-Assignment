@@ -21,8 +21,6 @@ using namespace std;
 
 void menu();
 
-
-
 //Delu
 //Exec
 //Presi
@@ -120,6 +118,7 @@ int main()
         }
     }
 
+    int bookID = 0;
     for (int i = 1; i < content.size(); i++)
     {
         Booking b;
@@ -147,13 +146,19 @@ int main()
             //Add to RoomScheduleDictionary
             roomScheduleMap[b.bookingRoomType].add(b.checkinDate,b.checkOutDate, b.bookingGuestName, b.bookingRoomNumber);
         }
+        bookID = b.bookingID; // sets bookID to the last booking ID in excel
     }
    
+    // current date of program is 1st April 2021
+    char currentDate[] = "01/04/2021";
+    tm currentDatetm;
+    sscanf_s(currentDate, "%d/%d/%4d", &currentDatetm.tm_mday, &currentDatetm.tm_mon, &currentDatetm.tm_year);
 
     //Menu
     bool flag = true;
     while (flag)
     {
+        cout << "Current date (dd/mm/yyyy/) is : " << currentDatetm.tm_mday << "/" << currentDatetm.tm_mon << "/" << currentDatetm.tm_year << endl;
         menu();
         int option = 0;
         cout << "Pick an option: ";
@@ -169,8 +174,8 @@ int main()
                 char checkInInput[] = "";
                 string guestName, roomType;
                
-
-                cout << "Enter Check In Date: ";
+                cout << "----------------Check In Guest-------------------\n";
+                cout << "Enter Check In Date (dd/mm/yyyy/): ";
                 cin >> checkInInput;
                 sscanf_s(checkInInput, "%d/%d/%4d", &checkInDate.tm_mday, &checkInDate.tm_mon, &checkInDate.tm_year);
 
@@ -199,12 +204,15 @@ int main()
                 char checkInInput[] = "";
                 char checkOutInput[] = "";
                 string guestName, roomType, status, specialReq;
-                int bookingID, numOfGuest;
+                int numOfGuest;
 
-                // bookingID is +1 of latest record in excel
+                // bookID is +1 of latest record in excel
+                bookID += 1;
 
                 // bookingDate is datetime.now of program's current date
+                bookingDate = currentDatetm;
 
+                cout << "----------------Add Booking-------------------\n";
                 cout << "Enter Guest Name: ";
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 getline(cin, guestName);
@@ -213,12 +221,13 @@ int main()
                 getline(cin, roomType);
 
                 // status defaults to "Booked" upon completion of booking
+                status = "Booked";
 
-                cout << "Enter Check In Date: ";
+                cout << "Enter Check In Date (dd/mm/yyyy/): ";
                 cin >> checkInInput;
                 sscanf_s(checkInInput, "%d/%d/%4d", &checkInDate.tm_mday, &checkInDate.tm_mon, &checkInDate.tm_year);
 
-                cout << "Enter Check Out Date: ";
+                cout << "Enter Check Out Date (dd/mm/yyyy/): ";
                 cin >> checkInInput;
                 sscanf_s(checkOutInput, "%d/%d/%4d", &checkOutDate.tm_mday, &checkOutDate.tm_mon, &checkOutDate.tm_year);
 
@@ -226,17 +235,25 @@ int main()
                 cin >> numOfGuest;
 
                 string yn;
-                cout << "Any Special Request?\n y/n";
+                cout << "Any Special Request? (y/n): ";
                 cin >> yn;
-                if (yn == "y")
+
+                if (yn != "y")
+                {
+                    specialReq = "";
+                }
+                else
                 {
                     cout << "Enter Special Request: ";
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
                     getline(cin, specialReq);
                 }
 
-                //Booking b(bookingID, bookingDate, guestName, roomNum, roomType, status, checkInDate, checkOutDate, numOfGuest, specialReq);
+                Booking b(bookID, bookingDate, guestName, "", roomType, status, checkInDate, checkOutDate, numOfGuest, specialReq);
 
-                //bookingDictionary.add(b);
+                // write to excel once done
+
+                bookingDictionary.add(b);
 
                 break;
             }
@@ -246,6 +263,7 @@ int main()
                 tm selectedDate;
                 char selectedDateInput[] = "";
                 // display guest staying in hotel function
+                cout << "----------------Display Guest staying in Hotel-------------------\n";
                 cout << "Enter Date (dd/mm/yyyy/): ";
                 cin >> selectedDateInput;
                 selectedDate.tm_min = 0;
@@ -267,6 +285,7 @@ int main()
                 tm selectedDate;
                 char selectedDateInput[] = "";
                 // display guest staying in hotel function
+                cout << "----------------Display Room Occupied by Month-------------------\n";
                 cout << "Enter Date (mm/yyyy): ";
                 cin >> selectedDateInput;
                 selectedDate.tm_min = 0;
@@ -298,6 +317,7 @@ int main()
                 char checkInInput[] = "";
                 string guestName, roomType;
 
+                cout << "----------------Delete Booking-------------------\n";
                 cout << "Enter Guest Name: ";
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 getline(cin, guestName);
@@ -305,7 +325,7 @@ int main()
                 cout << "Enter Room Type: ";
                 getline(cin, roomType);
 
-                cout << "Enter Check In Date: ";
+                cout << "Enter Check In Date (dd/mm/yyyy/): ";
                 cin >> checkInInput;
                 sscanf_s(checkInInput, "%d/%d/%4d", &checkInDate.tm_mday, &checkInDate.tm_mon, &checkInDate.tm_year);
 
@@ -340,7 +360,7 @@ int main()
                 tm checkInDate;
                 char checkInInput[] = "";
                 string guestName, roomType;
-
+                cout << "----------------Get Guest-------------------\n";
                 cout << "Enter Guest Name: ";
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 getline(cin, guestName);
@@ -348,7 +368,7 @@ int main()
                 cout << "Enter Room Type: ";
                 getline(cin, roomType);
 
-                cout << "Enter Check In Date: ";
+                cout << "Enter Check In Date (dd/mm/yyyy/): ";
                 cin >> checkInInput;
                 sscanf_s(checkInInput, "%d/%d/%4d", &checkInDate.tm_mday, &checkInDate.tm_mon, &checkInDate.tm_year);
 
@@ -360,8 +380,16 @@ int main()
                     cout << "\nBooking not found" << endl;
                 break;
             }
-            case 10: {
-                //easter egg
+            case 10: 
+            {
+                char currentInput[] = "";
+                tm currentDate;
+                cout << "----------------Change Current Date-------------------\n";
+                cout << "Enter Date (dd/mm/yyyy/) to change to: ";
+                cin >> currentInput;
+                sscanf_s(currentInput, "%d/%d/%4d", &currentDate.tm_mday, &currentDate.tm_mon, &currentDate.tm_year);
+                currentDatetm = currentDate;
+                break;
             }
             case 0:
             {
@@ -388,11 +416,10 @@ void menu()
     cout << "[7] Check in Guest without booking\n";
     cout << "[8] Display bookings given range\n";
     cout << "[9] Get guest (use breakpoint to see result)\n";
+    cout << "[10] Change Current Date\n";
     cout << "[0] Exit\n";
     cout << "----------------------------------------------\n";
 }
-
-
 
 //// https://www.cplusplus.com/reference/ctime/tm/ for info about time structure (tm)
 //tm result;
@@ -411,3 +438,7 @@ void menu()
 //
 //time_t time = mktime(&result);
 //cout << time << '\n';
+
+//char currentDate[] = "01/04/2021";
+//tm currentDatetm;
+//sscanf_s(currentDate, "%d/%d/%4d", &currentDatetm.tm_mday, &currentDatetm.tm_mon, &currentDatetm.tm_year);
