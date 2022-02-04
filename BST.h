@@ -29,8 +29,8 @@ public:
 	void remove(BinaryNode* &root, tm date, string guestName, string roomType);
 
 	//// traverse the binary search tree in inorder
-	//void inorder();
-	//void inorder(BinaryNode* t);
+	void inorder(tm start, tm end);
+	void inorder(BinaryNode* t, tm start, tm end);
 
 	//// traverse the binary search tree in preorder
 	//void preorder();
@@ -57,5 +57,8 @@ public:
 
 	// change status from booked to checked in
 	bool checkIn(tm key, string guestName, string roomType);
+
+	// print all bookings in range
+	void printRange(tm start, tm end);
 };
 

@@ -73,23 +73,46 @@ void BST::insert(BinaryNode* &t, Booking b)
 
 
 //// traverse the binary search tree in inorder
-//void BST::inorder()
-//{
-//	if (isEmpty())
-//		cout << "No item found" << endl;
-//	else
-//		inorder(root);
-//}
-//
-//void BST::inorder(BinaryNode* t)
-//{
-//	if (t != NULL)
-//	{
-//		inorder(t->left);
-//		cout << t->item << endl;
-//		inorder(t->right);
-//	}
-//}
+void BST::inorder(tm start, tm end)
+{
+	if (isEmpty())
+		cout << "No item found" << endl;
+	else
+		inorder(root,start, end);
+}
+
+void BST::inorder(BinaryNode* t, tm start, tm end)
+{
+	if (t != NULL)
+	{
+		start.tm_year -= 1900;
+		start.tm_mon -= 1;
+		start.tm_min = 0;
+		start.tm_sec = 0;
+		start.tm_hour = 0;
+		end.tm_year -= 1900;
+		end.tm_mon -= 1;
+
+		t->item.checkinDate.tm_year -= 1900;
+		t->item.checkinDate.tm_mon -= 1;
+		t->item.checkOutDate.tm_year -= 1900;
+		t->item.checkOutDate.tm_mon -= 1;
+		time_t start_t = mktime(&start);
+		time_t end_t = mktime(&end);
+
+		time_t bstStart_t = mktime(&t->item.checkinDate);
+		time_t bstEnd_t = mktime(&t->item.checkOutDate);
+
+		double inputStartAndBstEnd = difftime(start_t, bstEnd_t);
+
+		double inputEndAndBstStart = difftime(end_t, bstStart_t);
+
+		if (inputStartAndBstEnd < 0 && inputEndAndBstStart >= 0)
+			cout << t->item.bookingID << t->item.bookingGuestNumber << t->item.bookingRoomNumber << t->item.bookingRoomType << endl;
+		inorder(t->left,start, end);
+		inorder(t->right, start, end);
+	}
+}
 //// traverse the binary search tree in preorder
 //void BST::preorder()
 //{
@@ -266,4 +289,9 @@ bool BST::checkIn(tm date, string guestName, string roomType)
 
 	// need to assign room to the guest who just checked in also need to check if the room is avail.
 	return true;
+}
+
+void BST::printRange(tm start, tm end)
+{
+	inorder(start, end);
 }

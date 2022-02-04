@@ -153,5 +153,12 @@ void BookingDict::printPopular()
 //loop through all booking in that range, print
 void BookingDict::printRange(tm start, tm end)
 {
+	for (int i = 0; i < MAX_SIZE; i++)
+	{
+		if (items[i] != NULL)
+		{
+			items[i]->printRange(start, end);
+		}
 
+	}
 }
