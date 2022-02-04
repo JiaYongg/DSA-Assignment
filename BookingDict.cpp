@@ -11,6 +11,8 @@ BookingDict::BookingDict()
 	size = NULL;
 };
 
+
+
 // destructor is to remove dynamic memory
 // static memory is destroyed when program ends. But not dynamic memory
 // auto called by program, programmer does not call this destructor
