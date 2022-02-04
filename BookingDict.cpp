@@ -108,8 +108,13 @@ Booking BookingDict::get(KeyType key, string guestName, string roomType)
 	if (items[index] != NULL)
 	{
 		// remove booking > get that removed booking = error - need to handle/fix
-		Booking b = items[index]->search(key, guestName, roomType)->item;
-		return b;
+		BinaryNode* b = items[index]->search(key, guestName, roomType);
+		if (b == NULL) {
+			Booking c;
+			//make some values to tell the program its null
+			return c;
+		}
+		return b->item;
 	}
 }
 
