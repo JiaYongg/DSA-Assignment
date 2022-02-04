@@ -352,7 +352,12 @@ int main()
                 cin >> checkInInput;
                 sscanf_s(checkInInput, "%d/%d/%4d", &checkInDate.tm_mday, &checkInDate.tm_mon, &checkInDate.tm_year);
 
-                bookingDictionary.get(checkInDate, guestName, roomType);
+                Booking b = bookingDictionary.get(checkInDate, guestName, roomType);
+
+                if (b.bookingGuestName != "Not Found")
+                    cout << "\nBooking ID: " << b.bookingID << "\nGuest name : " << b.bookingGuestName << endl;
+                else
+                    cout << "\nBooking not found" << endl;
                 break;
             }
             case 10: {

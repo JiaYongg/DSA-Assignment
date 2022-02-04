@@ -112,6 +112,7 @@ Booking BookingDict::get(KeyType key, string guestName, string roomType)
 		if (b == NULL) {
 			Booking c;
 			//make some values to tell the program its null
+			c.bookingGuestName = "Not Found";
 			return c;
 		}
 		return b->item;
