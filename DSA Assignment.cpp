@@ -1,7 +1,7 @@
 // Group 12
 // Chua Dong En, S10202623A
 // Poh Jia Yong, S10202579J
-
+#pragma once
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -10,6 +10,7 @@
 //#include "RoomScheduleDictionary.h"
 #include "Room.h"
 #include "Booking.h"
+#include <map>
 #include <string.h>
 #include <vector>
 #include <chrono>
@@ -20,8 +21,8 @@ using namespace std;
 
 void menu();
 
-BookingDict bookingDictionary;
-RoomScheduleDictionary dynamicRoomNameDictionary(5,"testRoomType"); //(dynamic number of this)
+
+
 //Delu
 //Exec
 //Presi
@@ -45,9 +46,60 @@ RoomScheduleDictionary dynamicRoomNameDictionary(5,"testRoomType"); //(dynamic n
 
 int main()
 {
+
+    //Contains all rooms (index = room no. -101)
+    Room roomArray[20];
+    //Contains all room types and count of how many rooms they have, used to dynamically generate RoomScheduleDictionaries
+    map<string, int> roomTypeMap;
+    //Contains all RoomScheduleDictionaries 
+    map<string, RoomScheduleDictionary> roomScheduleMap;
+    // File I/O Rooms.csv
+    fstream roomsFile("Rooms.csv", ios::in);
+    vector<vector<string>> roomsContent;
+    vector<string> roomsRow;
+    string roomsLine, roomsWord;
+
+    //Read rooms file into lines
+    if (roomsFile.is_open())
+    {
+        while (getline(roomsFile, roomsLine))
+        {
+            roomsRow.clear();
+
+            stringstream str(roomsLine);
+
+            while (getline(str, roomsWord, ','))
+                roomsRow.push_back(roomsWord);
+            roomsContent.push_back(roomsRow);
+        }
+    }
+
+    //Loop through lines of rooms and store them into roomArray and roomTypeMap
+    for (int i = 1; i < roomsContent.size(); i++)
+    {
+        Room r;
+        r.roomNumber = roomsContent[i][0];
+        r.roomTypeName = roomsContent[i][1];
+        r.roomTypeCost = stoi(roomsContent[i][2]);
+        string roomNo = r.roomNumber.substr(5, 3);
+        int index = stoi(roomNo)-101;
+        roomArray[index] = r;
+        roomTypeMap[r.roomTypeName] += 1;
+    }
+
+    //Loop through roomTypeMap and dynamically create RoomScheduleDictionaries in roomScheduleMap
+    for (const auto& p : roomTypeMap)
+    {
+        RoomScheduleDictionary dynamicRoomTypeDictionary(p.second, p.first);
+        roomScheduleMap[p.first] = dynamicRoomTypeDictionary;
+    }
+
+    //check if overdue, mark as cancel
+    
     //Date changer
     //When date change, we need to cancel bookings that are overdue checkYstdOverdue()
     
+    BookingDict bookingDictionary;
     //File I/O Bookings.csv
     fstream bookingsFile("Bookings.csv", ios::in);
     vector<vector<string>> content;
@@ -91,48 +143,12 @@ int main()
         }
         if (b.bookingStatus != "Checked Out") {
             bookingDictionary.add(b);
+
+            //Add to RoomScheduleDictionary
+            roomScheduleMap[b.bookingRoomType].add(b.checkinDate,b.checkOutDate, b.bookingGuestName, b.bookingRoomNumber);
         }
     }
-
-
-    // File I/O Rooms.csv
-    Room* roomArray[20];
-    fstream roomsFile("Rooms.csv", ios::in);
-    vector<vector<string>> roomsContent;
-    vector<string> roomsRow;
-    string roomsLine, roomsWord;
-
-    if (roomsFile.is_open())
-    {
-        while (getline(roomsFile, roomsLine))
-        {
-            roomsRow.clear();
-
-            stringstream str(roomsLine);
-
-            while (getline(str, roomsWord, ','))
-                roomsRow.push_back(roomsWord);
-            roomsContent.push_back(roomsRow);
-        }
-    }
-
-    for (int i = 1; i < roomsContent.size(); i++)
-    {
-        // reads row by row in excel
-        //room
-        //ignore checkout
-        //check if overdue, mark as cancel
-        //load into main and room hashtable
-        Room r;
-        r.roomNumber = roomsContent[i][0];
-        r.roomTypeName = roomsContent[i][1];
-        r.roomTypeCost = stoi(roomsContent[i][2]);
-        string roomNo = r.roomNumber.substr(5, 3);
-        int index = stoi(roomNo);
-        roomArray[index] = &r;
-    }
-
-
+   
 
     //Menu
     bool flag = true;
@@ -227,12 +243,50 @@ int main()
 
             case 3:
             {
+                tm selectedDate;
+                char selectedDateInput[] = "";
                 // display guest staying in hotel function
+                cout << "Enter Date (dd/mm/yyyy/): ";
+                cin >> selectedDateInput;
+                selectedDate.tm_min = 0;
+                selectedDate.tm_sec = 0;
+                selectedDate.tm_hour = 0;
+                sscanf_s(selectedDateInput, "%d/%d/%4d", &selectedDate.tm_mday, &selectedDate.tm_mon, &selectedDate.tm_year);
+                //Loop through each roomScheduleDict in roomScheduleMap using roomTypeMap
+                for (const auto& p : roomTypeMap)
+                {
+                    roomScheduleMap[p.first].printDateGuests(selectedDate);
+                }
+                cout << endl;
                 break;
             }
 
             case 4:
             {
+                //NOTE! For booked bookings, room has not been occupied yet therefore it is not shown
+                tm selectedDate;
+                char selectedDateInput[] = "";
+                // display guest staying in hotel function
+                cout << "Enter Date (mm/yyyy): ";
+                cin >> selectedDateInput;
+                selectedDate.tm_min = 0;
+                selectedDate.tm_sec = 0;
+                selectedDate.tm_hour = 0;
+                sscanf_s(selectedDateInput, "%d/%4d", &selectedDate.tm_mon, &selectedDate.tm_year);
+                map<string, string> roomOccupiedDates;
+                for (int i = 0; i < 20; i++) {
+                    string roomNumber = roomArray[i].roomNumber;
+                    roomOccupiedDates[roomNumber] = "";
+                }
+                for (const auto& p : roomTypeMap)
+                {
+                    roomScheduleMap[p.first].getOccupiedDatesFromMonth(roomOccupiedDates, selectedDate);
+                }
+                for (const auto& p :roomOccupiedDates)
+                {
+                    cout<< p.first << ":"<<'\t' << p.second.substr(0,p.second.size()-2) << std::endl;
+                }
+                cout << endl;
                 // display room occupied by month function
                 break;
             }
@@ -255,13 +309,15 @@ int main()
                 cin >> checkInInput;
                 sscanf_s(checkInInput, "%d/%d/%4d", &checkInDate.tm_mday, &checkInDate.tm_mon, &checkInDate.tm_year);
 
-                bookingDictionary.remove(checkInDate, guestName, roomType, dynamicRoomNameDictionary);
+                bookingDictionary.remove(checkInDate, guestName, roomType, roomScheduleMap[roomType]);
 
                 break;
             }
 
             case 6:
             {
+ 
+                break;
                 // search most popular room type function
             }
 
@@ -298,6 +354,9 @@ int main()
 
                 bookingDictionary.get(checkInDate, guestName, roomType);
                 break;
+            }
+            case 10: {
+                //easter egg
             }
             case 0:
             {
