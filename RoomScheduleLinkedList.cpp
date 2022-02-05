@@ -39,21 +39,28 @@ void RoomScheduleLinkedList::remove(string guestName, string roomNumber, tm date
 	while (current != NULL) {
 		time_t currentDate = mktime(&current->date);
 		time_t compareDate = mktime(&date);
+		//cout << date.tm_mday << "\t" << difftime(currentDate, compareDate) << roomScheduleLinkedListSize <<endl;
 		if (current->guestName == guestName && current->roomNumber == roomNumber && difftime(currentDate,compareDate)==0) {
 			if (roomScheduleLinkedListSize==1) {
-				current = NULL;
+				firstNode = NULL;
 			}
 			else if (roomScheduleLinkedListSize == 2){
-				current = current->next;
+				firstNode = current->next;
 			}
 			else {
 				current->next = current->next->next;
 			}
 			roomScheduleLinkedListSize--;
+			//cout << date.tm_mday << "\t" << difftime(currentDate, compareDate) << roomScheduleLinkedListSize<< endl;
 			return;
 		}
 		current = current->next;
 	}
+	//current = firstNode;
+	//while (current != NULL) {
+	//	cout << current->guestName << endl;
+	//	current = current->next;
+	//}
 	return;
 };
 
@@ -101,12 +108,19 @@ void RoomScheduleLinkedList::printDateGuests() {
 
 //return map with dates that each room is filled
 void  RoomScheduleLinkedList::getOccupiedDatesFromDay(map<string, string> &roomOccupiedDates, tm date) {
+
 	Node* current = firstNode;
 	while (current != NULL) {
 		if (current->roomNumber != " ") {
 			if (current->roomNumber != "") {
 				string dates = roomOccupiedDates[current->roomNumber];
-				dates += std::to_string(current->date.tm_mday % 31) + ", ";
+				if (current->date.tm_mday != 31) {
+					dates += std::to_string(current->date.tm_mday % 31) + ", ";
+				}
+				else {
+					dates += std::to_string(31) + ", ";
+				}
+
 				roomOccupiedDates[current->roomNumber] = dates;
 			}
 		}

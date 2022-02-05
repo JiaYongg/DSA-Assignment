@@ -184,7 +184,8 @@ void RoomScheduleDictionary::getOccupiedDatesFromMonth(map<string, string> &room
 	endOfMonth.tm_sec = 0;
 	endOfMonth.tm_hour = 0;
 	time_t startMonthTime = mktime(&month);
-	time_t endMonthTime = mktime(&endOfMonth) - 86400;
+	//time_t endMonthTime = mktime(&endOfMonth) - 86400;
+	time_t endMonthTime = mktime(&endOfMonth);
 	//change checkInDate back to original date to be hashed later
 	month.tm_year += 1900;
 	month.tm_mon += 1;

@@ -313,6 +313,7 @@ int main()
                 for (const auto& p :roomOccupiedDates)
                 {
                     cout<< p.first << ":"<<'\t' << p.second.substr(0,p.second.size()-2) << std::endl;
+                    //cout<< p.first << ":"<<'\t' << p.second << std::endl;
                 }
                 cout << endl;
                 // display room occupied by month function
@@ -356,7 +357,7 @@ int main()
                 bookingDictionary.printPopular(popularRoomTypeMap);
                 for (const auto& p : popularRoomTypeMap)
                 {
-                    cout << popularRoomTypeMap[p.first] << endl;
+                    cout <<p.first<<"  \t" << popularRoomTypeMap[p.first] << endl;
                 }
 
                 break;
