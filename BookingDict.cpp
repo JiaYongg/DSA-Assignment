@@ -158,7 +158,8 @@ void BookingDict::printPopular()
 
 }
 
-//loop through all booking in that range, print
+// loop through all booking in that range and prints all the bookings in that range
+// check every index of the array, if not empty, loop through the BST and print out the Booking ID and Guest Name.
 void BookingDict::printRange(tm start, tm end)
 {
 	start.tm_year -= 1900;

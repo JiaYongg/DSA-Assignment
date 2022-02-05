@@ -105,8 +105,10 @@ void BST::inorder(BinaryNode* t, tm start, tm end)
 
 		double inputEndAndBstStart = difftime(end_t, bstStart_t);
 
+		// check if the input range and the booking range overlaps
+		// prints out the Booking ID and Guest Name if overlaps(in range)
 		if (inputStartAndBstEnd < 0 && inputEndAndBstStart >= 0)
-			cout << "Booking ID: " << t->item.bookingID << " " << t->item.checkinDate.tm_mday << t->item.checkOutDate.tm_mday << endl;
+			cout << "Booking ID: " << t->item.bookingID << " "  << t->item.bookingGuestName << endl;
 		inorder(t->left,start, end);
 		inorder(t->right, start, end);
 	}
