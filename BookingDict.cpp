@@ -24,6 +24,13 @@ BookingDict::~BookingDict()
 //hash unix time from checkInDate
 int BookingDict::hash(KeyType key)
 {
+	if (!(key.tm_year < 1000)) {
+		key.tm_year -= 1900;
+		key.tm_mon -= 1;
+		key.tm_min = 0;
+		key.tm_sec = 0;
+		key.tm_hour = 0;
+	}
 	time_t time = mktime(&key) / 86400;
 	if (firstHash == NULL)
 		firstHash = (int) time;
@@ -33,13 +40,13 @@ int BookingDict::hash(KeyType key)
 // called from main method and hash the checkInDate provided
 // once hashed, check if that specific index on the hash table is NULL
 // if not NULL, call the checkIn method from the BST
-bool BookingDict::checkIn(KeyType key, string guestName, string roomType)
+bool BookingDict::checkIn(KeyType key, string guestName, string roomType, map<string, RoomScheduleDictionary> &roomScheduleDictMap)
 {
 	int index = hash(key);
 
 	if (items[index] != NULL)
 	{
-		items[index]->checkIn(key, guestName, roomType);
+		items[index]->checkIn(key, guestName, roomType,  roomScheduleDictMap);
 	}
 	return true;
 }
@@ -49,31 +56,35 @@ bool BookingDict::checkIn(KeyType key, string guestName, string roomType)
 // if NULL, add the Booking to the tree as the first node
 // else add the booking to the tree
 //hash, add to tree
-bool BookingDict::add(Booking b)
+bool BookingDict::add(Booking b, map<string, RoomScheduleDictionary> &roomScheduleDictMap)
 {
-	b.checkinDate.tm_year -= 1900;
-	b.checkinDate.tm_mon -= 1;
-	b.checkinDate.tm_min = 0;
-	b.checkinDate.tm_sec = 0;
-	b.checkinDate.tm_hour = 0;
-
-	b.checkOutDate.tm_year -= 1900;
-	b.checkOutDate.tm_mon -= 1;
-	b.checkOutDate.tm_min = 0;
-	b.checkOutDate.tm_sec = 0;
-	b.checkOutDate.tm_hour = 0;
 
 	int index = hash(b.checkinDate);
+	if (!(b.checkinDate.tm_year < 1000)) {
+		b.checkinDate.tm_year -= 1900;
+		b.checkinDate.tm_mon -= 1;
+		b.checkinDate.tm_min = 0;
+		b.checkinDate.tm_sec = 0;
+		b.checkinDate.tm_hour = 0;
+	}
+	if (!(b.checkOutDate.tm_year < 1000)) {
+		b.checkOutDate.tm_year -= 1900;
+		b.checkOutDate.tm_mon -= 1;
+		b.checkOutDate.tm_min = 0;
+		b.checkOutDate.tm_sec = 0;
+		b.checkOutDate.tm_hour = 0;
+	}
+
 	//cout << index << endl;
 	if (items[index] == NULL)
 	{
 		items[index] = new BST(); // instantiate a new BST for the index
-		BinaryNode* newBinaryNode = new BinaryNode();
-		newBinaryNode->item = b;
-		items[index]->insert(b);
+		//BinaryNode* newBinaryNode = new BinaryNode();
+		//newBinaryNode->item = b;
+		items[index]->insert(b,roomScheduleDictMap);
 	}
 	else
-		items[index]->insert(b);
+		items[index]->insert(b,roomScheduleDictMap);
 
 	return true;
 };
@@ -84,15 +95,16 @@ bool BookingDict::add(Booking b)
 // once found, free up the bookingRoomNumber from the Booking by removing from the RoomScheduleDictionary object
 // remove the Booking object from the tree after free-ing up the room
 // hash, remove from tree, remove from room date dict
-void BookingDict::remove(KeyType key, string guestName, string roomType, RoomScheduleDictionary rsd)
+void BookingDict::remove(KeyType key, string guestName, string roomType, map<string, RoomScheduleDictionary> &roomScheduleDictMap)
 {
+
 	int index = hash(key);
 
 	if (items[index] != NULL)
 	{
 		Booking b = items[index]->search(key, guestName, roomType)->item;
 		string roomNum = b.bookingRoomNumber;
-		rsd.remove(key, guestName, roomNum);
+		roomScheduleDictMap[b.bookingRoomType].remove(b.checkinDate,b.checkOutDate, guestName, roomNum);
 		items[index]->remove(key, guestName, roomType);
 	}
 };
@@ -153,7 +165,7 @@ int BookingDict::getLength(){
 //------------------- Other useful functions -----------------
 
 //loop through all booking, add to linkedlist, print most popular
-void BookingDict::printPopular(map<string, int> roomTypeMap)
+void BookingDict::printPopular(map<string, int> &roomTypeMap)
 {
 	for (int i = 0; i < MAX_SIZE; i++)
 	{

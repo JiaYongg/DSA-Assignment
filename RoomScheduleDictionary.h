@@ -57,7 +57,7 @@ public:
 	//       size of RoomScheduleDictionary is decreased by 1
 	//
 	//hash, check if null, remove info to list
-	void remove(KeyType newKey, string guestName, string roomNumber);
+	void remove(tm startDate, tm endDate, string guestName, string roomNumber);
 
 
 	// get an item with the specified key in the RoomScheduleDictionary (retrieve)

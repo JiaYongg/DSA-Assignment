@@ -43,7 +43,7 @@ public:
 	// return the item with the specified key from the Dictionary
 	//
 	// change status from booked to checked in
-	bool checkIn(KeyType key, string guestName, string roomType);
+	bool checkIn(KeyType key, string guestName, string roomType, map<string, RoomScheduleDictionary> &roomScheduleDictMap);
 
 	// add a new item with the specified key to the Dictionary
 	// pre : none
@@ -51,7 +51,7 @@ public:
 	//       size of Dictionary is increased by 1
 	//
 	// hash, add to tree
-	bool add(Booking b);
+	bool add(Booking b, map<string, RoomScheduleDictionary> &roomScheduleDictMap);
 
 	// remove an item with the specified key in the Dictionary
 	// pre : key must exist in the Dictionary
@@ -59,7 +59,7 @@ public:
 	//       size of Dictionary is decreased by 1
 	//
 	// hash, remove from tree, remove from room date dict
-	void remove(KeyType key, string guestName, string roomType, RoomScheduleDictionary rsd);
+	void remove(KeyType key, string guestName, string roomType, map<string,RoomScheduleDictionary> &roomScheduleDictMap);
 
 
 	// get an item with the specified key in the Dictionary (retrieve)
@@ -87,7 +87,7 @@ public:
 	int getLength();
 
 	//loop through all booking, add to linkedlist, print most popular
-	void printPopular(map<string, int> roomTypeMap);
+	void printPopular(map<string, int> &roomTypeMap);
 	//------------------- Other useful functions -----------------
 
 	//// display the items in the Dictionary

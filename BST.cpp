@@ -22,17 +22,21 @@ BinaryNode* BST::search(BinaryNode* t, tm date, string guestName, string roomTyp
 		return NULL;
 	else
 	{
-		t->item.checkinDate.tm_year -= 1900;
-		t->item.checkinDate.tm_mon -= 1;
-		t->item.checkinDate.tm_hour = 0;
-		t->item.checkinDate.tm_min = 0;
-		t->item.checkinDate.tm_sec = 0;
+		if (!(t->item.checkinDate.tm_year < 1000)) {
+			t->item.checkinDate.tm_year -= 1900;
+			t->item.checkinDate.tm_mon -= 1;
+			t->item.checkinDate.tm_hour = 0;
+			t->item.checkinDate.tm_min = 0;
+			t->item.checkinDate.tm_sec = 0;
+		}
+		if (!(date.tm_year < 1000)) {
+			date.tm_year -= 1900;
+			date.tm_mon -= 1;
+			date.tm_hour = 0;
+			date.tm_min = 0;
+			date.tm_sec = 0;
+		}
 		time_t checkindate = mktime(&t->item.checkinDate);
-		date.tm_year -= 1900;
-		date.tm_mon -= 1;
-		date.tm_hour = 0;
-		date.tm_min = 0;
-		date.tm_sec = 0;
 		time_t inputdate = mktime(&date);
 		double diff = difftime(checkindate, inputdate);
 		// use difftime to find the difference between the input date and the current iteration date
@@ -50,9 +54,15 @@ BinaryNode* BST::search(BinaryNode* t, tm date, string guestName, string roomTyp
 
 
 // insert a Booking object to the binary search tree
-void BST::insert(Booking b)
+void BST::insert(Booking b, map<string, RoomScheduleDictionary>& roomScheduleDictMap)
 {
-	insert(root, b);
+	int roomAvail = roomScheduleDictMap[b.bookingRoomType].getAvailableRoomNumber(b.checkinDate);
+	//cout << b.bookingGuestName << endl;
+	if (roomAvail > 0) {
+		insert(root, b);
+		roomScheduleDictMap[b.bookingRoomType].add(b.checkinDate, b.checkOutDate, b.bookingGuestName, b.bookingRoomNumber);
+	}
+
 }
 
 void BST::insert(BinaryNode* &t, Booking b)
@@ -145,7 +155,7 @@ void BST::inorder(BinaryNode* t, tm start, tm end)
 //}
 
 
-void BST::inorderpopular(map<string, int> roomTypeMap)
+void BST::inorderpopular(map<string, int> &roomTypeMap)
 {
 	if (isEmpty())
 		cout << "No item found" << endl;
@@ -153,7 +163,7 @@ void BST::inorderpopular(map<string, int> roomTypeMap)
 		inorderpopular(root, roomTypeMap);
 }
 
-void BST::inorderpopular(BinaryNode* t, map<string, int> roomTypeMap)
+void BST::inorderpopular(BinaryNode* t, map<string, int> &roomTypeMap)
 {
 	if (t != NULL)
 	{
@@ -328,7 +338,7 @@ void BST::remove(BinaryNode* &t, tm date, string guestName, string roomType)
 // change status from "Booked" to "Checked In" in tree and validates if the status is already "Checked In"
 // check if room is available, assign room to the guest who just checked in if room available
 // else not available, check in fails
-bool BST::checkIn(tm date, string guestName, string roomType)
+bool BST::checkIn(tm date, string guestName, string roomType, map<string, RoomScheduleDictionary>& roomScheduleDictMap)
 {
 	BinaryNode* b = search(date, guestName, roomType);
 	if (b->item.bookingStatus == "Checked In")
@@ -343,7 +353,7 @@ bool BST::checkIn(tm date, string guestName, string roomType)
 	return true;
 }
 
-void BST::printPopular(map<string, int> roomTypeMap)
+void BST::printPopular(map<string, int> &roomTypeMap)
 {
 	inorderpopular(roomTypeMap);
 }

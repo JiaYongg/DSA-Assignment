@@ -1,12 +1,17 @@
 // BST.h - Specification of Binary Search Tree
+
 #pragma once
+
 #include<iostream>
+#include <string>
 #include <map>
+#include "BinaryNode.h"
+#include "RoomScheduleDictionary.h"
+#include "AVL_Tree.h"		// AVL Tree functions
+#include <string.h>
 using namespace std;
 
-#include "BinaryNode.h"
-#include "AVL_Tree.h"		// AVL Tree functions
-#include "RoomScheduleDictionary.h"
+class RoomScheduleDictionary;
 
 class BST
 {
@@ -14,7 +19,6 @@ private:
 	BinaryNode* root;		// root of the BST
 
 public:
-
 	// constructor
 	BST();
 
@@ -23,7 +27,7 @@ public:
 	BinaryNode* search(BinaryNode* t, tm date, string guestName, string roomType);
 
 	// insert an item to the binary search tree
-	void insert(Booking b);
+	void insert(Booking b, map<string, RoomScheduleDictionary> &roomScheduleDictMap);
 	void insert(BinaryNode* &root, Booking b);
 
 	// delete an item from the binary search tree
@@ -39,8 +43,8 @@ public:
 	//void inorderoverdue(BinaryNode* t, tm current, RoomScheduleDictionary& rsd);
 
 	// traverse through the bst to check for most popular room type
-	void inorderpopular(map<string, int> roomTypeMap);
-	void inorderpopular(BinaryNode* t, map<string, int> roomTypeMap);
+	void inorderpopular(map<string, int> &roomTypeMap);
+	void inorderpopular(BinaryNode* t, map<string, int> &roomTypeMap);
 
 	//// traverse the binary search tree in preorder
 	//void preorder();
@@ -66,10 +70,10 @@ public:
 	//bool isBalanced(BinaryNode *t);
 
 	// change status from booked to checked in
-	bool checkIn(tm key, string guestName, string roomType);
+	bool checkIn(tm key, string guestName, string roomType, map<string, RoomScheduleDictionary> &roomScheduleDictMap);
 
 	//loop through all booking, add to linkedlist, print most popular
-	void printPopular(map<string, int> roomTypeMap);
+	void printPopular(map<string, int> &roomTypeMap);
 
 	// print all bookings in range
 	void printRange(tm start, tm end);

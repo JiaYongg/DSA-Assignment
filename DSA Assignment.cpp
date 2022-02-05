@@ -141,10 +141,10 @@ int main()
             b.bookingSpecialRequest = content[i][9];
         }
         if (b.bookingStatus != "Checked Out") {
-            bookingDictionary.add(b);
-
+            bookingDictionary.add(b,roomScheduleMap);
+            
             //Add to RoomScheduleDictionary
-            roomScheduleMap[b.bookingRoomType].add(b.checkinDate,b.checkOutDate, b.bookingGuestName, b.bookingRoomNumber);
+            //roomScheduleMap[b.bookingRoomType].add(b.checkinDate,b.checkOutDate, b.bookingGuestName, b.bookingRoomNumber);
         }
         bookID = b.bookingID; // sets bookID to the last booking ID in excel
     }
@@ -191,7 +191,7 @@ int main()
                 cout << "Enter Room Type: ";
                 getline(cin, roomType);
 
-                bool checkInStatus = bookingDictionary.checkIn(checkInDate, guestName, roomType);
+                bool checkInStatus = bookingDictionary.checkIn(checkInDate, guestName, roomType, roomScheduleMap);
 
                 if (checkInStatus)
                     cout << "Checked In Sucessfully! \n";
@@ -262,7 +262,7 @@ int main()
 
                 // write to excel once done
 
-                bookingDictionary.add(b);
+                bookingDictionary.add(b,roomScheduleMap);
 
                 break;
             }
@@ -341,7 +341,7 @@ int main()
                 checkInDate.tm_hour = 0;
                 sscanf_s(checkInInput, "%d/%d/%4d", &checkInDate.tm_mday, &checkInDate.tm_mon, &checkInDate.tm_year);
 
-                bookingDictionary.remove(checkInDate, guestName, roomType, roomScheduleMap[roomType]);
+                bookingDictionary.remove(checkInDate, guestName, roomType, roomScheduleMap);
 
                 break;
             }
@@ -354,7 +354,7 @@ int main()
                     popularRoomTypeMap[p.first] = 0;
                 }
                 bookingDictionary.printPopular(popularRoomTypeMap);
-                for (const auto& p : roomTypeMap)
+                for (const auto& p : popularRoomTypeMap)
                 {
                     cout << popularRoomTypeMap[p.first] << endl;
                 }
@@ -425,8 +425,8 @@ int main()
 
                 // write to excel once done
                 
-                bookingDictionary.add(b);
-                bookingDictionary.checkIn(b.checkinDate, b.bookingGuestName, b.bookingRoomType);
+                bookingDictionary.add(b,roomScheduleMap);
+                bookingDictionary.checkIn(b.checkinDate, b.bookingGuestName, b.bookingRoomType,roomScheduleMap);
                 break;
             }
 
@@ -508,6 +508,23 @@ int main()
 
                 }
             }
+            case 12: {
+                char currentInput[] = "";
+                tm currentDate;
+                cout << "----------------No. of availble rooms-------------------\n";
+                cout << "Enter Date (dd/mm/yyyy/) to change to: ";
+                cin >> currentInput;
+                currentDate.tm_min = 0;
+                currentDate.tm_sec = 0;
+                currentDate.tm_hour = 0;
+                sscanf_s(currentInput, "%d/%d/%4d", &currentDate.tm_mday, &currentDate.tm_mon, &currentDate.tm_year);
+                for (const auto& p : roomTypeMap)
+                {
+                    cout << p.first<< "\t:"<< roomScheduleMap[p.first].getAvailableRoomNumber(currentDate)<<endl;
+                }
+                cout << endl;
+                break;
+            }
             case 0:
             {
                 flag = false;
@@ -529,13 +546,14 @@ void menu()
     cout << "[4] Display rooms occupied - by month\n";
     // Additional Features
     cout << "[5] Delete Booking\n";
-    cout << "[6] Search most popular room type\n";
+    cout << "[6] Search most popular room type (From running dataset)\n";
     cout << "[7] Check in Guest without booking\n";
     cout << "[8] Display bookings given range\n";
     // Extra Features for Convenience
     cout << "[9] Get guest (use breakpoint to see result)\n";
     cout << "[10] Change Current Date\n";
     cout << "[11] Update Bookings.csv file\n";
+    cout << "[12] Show no. of available rooms\n";
     cout << "[0] Exit\n";
     cout << "----------------------------------------------\n";
 }

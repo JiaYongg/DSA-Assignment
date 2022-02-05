@@ -39,11 +39,13 @@ RoomScheduleDictionary::~RoomScheduleDictionary(){
 };
 
 int RoomScheduleDictionary::hash(KeyType key){
-	key.tm_year -= 1900;
-	key.tm_mon -= 1;
-	key.tm_min = 0;
-	key.tm_sec = 0;
-	key.tm_hour = 0;
+	if (!(key.tm_year < 1000)) {
+		key.tm_year -= 1900;
+		key.tm_mon -= 1;
+		key.tm_min = 0;
+		key.tm_sec = 0;
+		key.tm_hour = 0;
+	}
 	time_t time = mktime(&key) / 86400;
 	if (firstHashRoom == NULL) {
 		firstHashRoom = (int) time;
@@ -59,24 +61,30 @@ int RoomScheduleDictionary::hash(KeyType key){
 	// add entry for every date from checkin to checkout exclusive, check if null, add info to list
 bool RoomScheduleDictionary::add(tm checkInDate, tm checkOutDate, string guestName, string roomNumber){
 	//change to time_t for comparsion and looping
-	checkInDate.tm_year -= 1900;
-	checkInDate.tm_mon -= 1;
-	checkInDate.tm_min = 0;
-	checkInDate.tm_sec = 0;
-	checkInDate.tm_hour = 0;
-	checkOutDate.tm_year -= 1900;
-	checkOutDate.tm_mon -= 1;
-	checkOutDate.tm_min = 0;
-	checkOutDate.tm_sec = 0;
-	checkOutDate.tm_hour = 0;
+	if (!(checkInDate.tm_year < 1000)) {
+		checkInDate.tm_year -= 1900;
+		checkInDate.tm_mon -= 1;
+		checkInDate.tm_min = 0;
+		checkInDate.tm_sec = 0;
+		checkInDate.tm_hour = 0;
+	}
+	if (!(checkOutDate.tm_year < 1000)) {
+		checkOutDate.tm_year -= 1900;
+		checkOutDate.tm_mon -= 1;
+		checkOutDate.tm_min = 0;
+		checkOutDate.tm_sec = 0;
+		checkOutDate.tm_hour = 0;
+	}
+
 	time_t checkInTime = mktime(&checkInDate);
 	time_t checkOutTime = mktime(&checkOutDate);
-	//change checkInDate back to original date to be hashed later
+	////change checkInDate back to original date to be hashed later
 	checkInDate.tm_year += 1900;
 	checkInDate.tm_mon += 1;
 	tm currentDate = checkInDate;
 	//add for all dates from checkInDate to checkOutDate
 	while (checkInTime < checkOutTime) {
+
 		int index = hash(currentDate);
 		if (items[index] == NULL) {
 			items[index] = new RoomScheduleLinkedList();
@@ -85,6 +93,7 @@ bool RoomScheduleDictionary::add(tm checkInDate, tm checkOutDate, string guestNa
 		else {
 			items[index]->add(guestName, roomNumber, currentDate);
 		}
+		
 		currentDate.tm_mday += 1;
 		checkInTime += 86400;
 	}
@@ -95,17 +104,35 @@ bool RoomScheduleDictionary::add(tm checkInDate, tm checkOutDate, string guestNa
 // pre : key must exist in the RoomScheduleDictionary
 // post: item is removed from the RoomScheduleDictionary
 //       size of RoomScheduleDictionary is decreased by 1
-void RoomScheduleDictionary::remove(KeyType newKey, string guestName, string roomNumber){
-	int index = hash(newKey);
-	//Node* newNode = new Node;
-	//newNode->date = newKey;
-	//newNode->guestName = guestName;
-	//newNode->next = NULL;
-	if (items[index] == NULL) {
-		return;
-	}
-	else {
-		items[index]->remove(guestName, roomNumber, newKey);
+void RoomScheduleDictionary::remove(tm checkInDate, tm checkOutDate, string guestName, string roomNumber){
+	//change to time_t for comparsion and looping
+	//checkInDate.tm_year -= 1900;
+	//checkInDate.tm_mon -= 1;
+	//checkInDate.tm_min = 0;
+	//checkInDate.tm_sec = 0;
+	//checkInDate.tm_hour = 0;
+	//checkOutDate.tm_year -= 1900;
+	//checkOutDate.tm_mon -= 1;
+	//checkOutDate.tm_min = 0;
+	//checkOutDate.tm_sec = 0;
+	//checkOutDate.tm_hour = 0;
+	time_t checkInTime = mktime(&checkInDate);
+	time_t checkOutTime = mktime(&checkOutDate);
+	////change checkInDate back to original date to be hashed later
+	checkInDate.tm_year += 1900;
+	checkInDate.tm_mon += 1;
+	tm currentDate = checkInDate;
+	//add for all dates from checkInDate to checkOutDate
+	while (checkInTime < checkOutTime) {
+		int index = hash(currentDate);
+		if (items[index] == NULL) {
+			continue;
+		}
+		else {
+			items[index]->remove(guestName, roomNumber, currentDate);
+		}
+		currentDate.tm_mday += 1;
+		checkInTime += 86400;
 	}
 	return;
 };
@@ -118,7 +145,10 @@ void RoomScheduleDictionary::remove(KeyType newKey, string guestName, string roo
 //hash, check if null, get MaxValue - list.size
 int RoomScheduleDictionary::getAvailableRoomNumber(KeyType key) {
 	int index = hash(key);
-	return MaxRoom - items[index]->getLength();
+	if (items[index] != NULL) {
+		return MaxRoom - items[index]->getLength();
+	}
+	return MaxRoom;
 };
 
 //hash, get list of stayees and the room they are in
