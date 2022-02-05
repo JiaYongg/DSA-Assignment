@@ -153,9 +153,15 @@ int BookingDict::getLength(){
 //------------------- Other useful functions -----------------
 
 //loop through all booking, add to linkedlist, print most popular
-void BookingDict::printPopular()
+void BookingDict::printPopular(map<string, int> roomTypeMap)
 {
-
+	for (int i = 0; i < MAX_SIZE; i++)
+	{
+		if (items[i] != NULL)
+		{
+			items[i]->printPopular(roomTypeMap);
+		}
+	}
 }
 
 // loop through all booking in that range and prints all the bookings in that range
@@ -181,4 +187,19 @@ void BookingDict::printRange(tm start, tm end)
 	}
 }
 
-//void BookingDict:: 
+//void BookingDict::checkOverdue(tm currentDate, RoomScheduleDictionary& rsd)
+//{
+//	currentDate.tm_year -= 1900;
+//	currentDate.tm_mon -= 1;
+//	currentDate.tm_min = 0;
+//	currentDate.tm_sec = 0;
+//	currentDate.tm_hour = 0;
+//
+//	for (int i = 0; i < MAX_SIZE; i++)
+//	{
+//		if (items[i] != NULL)
+//		{
+//			items[i]->inorderoverdue(currentDate, rsd);
+//		}
+//	}
+//}

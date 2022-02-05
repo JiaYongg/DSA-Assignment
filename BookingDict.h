@@ -5,6 +5,7 @@
 #include "RoomScheduleDictionary.h"
 #include<iostream>
 #include "BinaryNode.h"
+
 using namespace std;
 
 typedef tm KeyType;
@@ -86,14 +87,15 @@ public:
 	int getLength();
 
 	//loop through all booking, add to linkedlist, print most popular
-	void printPopular();
+	void printPopular(map<string, int> roomTypeMap);
 	//------------------- Other useful functions -----------------
 
 	//// display the items in the Dictionary
 	//void print();
 
-
 	//loop through all booking in that range, print
 	void printRange(tm start, tm end);
 
+	// check yesterday overdue
+	//void checkOverdue(tm currentDate, RoomScheduleDictionary &rsd);
 };

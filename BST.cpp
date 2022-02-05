@@ -113,6 +113,58 @@ void BST::inorder(BinaryNode* t, tm start, tm end)
 		inorder(t->right, start, end);
 	}
 }
+
+//void BST::inorderoverdue(tm current, RoomScheduleDictionary& rsd)
+//{
+//	if (isEmpty())
+//		cout << "No item found" << endl;
+//	else
+//		inorderoverdue(root, current, rsd);
+//}
+//
+//void BST::inorderoverdue(BinaryNode* t, tm current, RoomScheduleDictionary& rsd)
+//{
+//	if (t != NULL)
+//	{
+//		if (t->item.bookingStatus == "Booking")
+//		{
+//			time_t checkInDate = mktime(&t->item.checkinDate);
+//			time_t inputCheckInDate = mktime(&current);
+//			double diff = difftime(checkInDate, inputCheckInDate);
+//			if (diff < 0)
+//			{
+//				t->item.bookingStatus == "Overdue";
+//				// toadd: remove booking from roomschedule
+//				// free up the room
+//			}
+//		}
+//
+//		inorderoverdue(t->left, current, rsd);
+//		inorderoverdue(t->right, current, rsd);
+//	}
+//}
+
+
+void BST::inorderpopular(map<string, int> roomTypeMap)
+{
+	if (isEmpty())
+		cout << "No item found" << endl;
+	else
+		inorderpopular(root, roomTypeMap);
+}
+
+void BST::inorderpopular(BinaryNode* t, map<string, int> roomTypeMap)
+{
+	if (t != NULL)
+	{
+
+		roomTypeMap[t->item.bookingRoomType] += 1;
+
+		inorderpopular(t->left, roomTypeMap);
+		inorderpopular(t->right, roomTypeMap);
+	}
+}
+
 //// traverse the binary search tree in preorder
 //void BST::preorder()
 //{
@@ -157,59 +209,59 @@ bool BST::isEmpty()
 	return (root == NULL);
 }
 
-// count the number of nodes in the binary search tree
-int BST::countNodes()
-{
-	return countNodes(root);
-}
-
-int BST::countNodes(BinaryNode* t)
-{
-	if (t == NULL)
-		return 0;
-	else
-		return 1 + countNodes(t->left) + countNodes(t->right);
-}
-
-// compute the height of the binary search tree
-int BST::getHeight()
-{
-	return getHeight(root);
-}
-
-int BST::getHeight(BinaryNode* t)
-{
-	if (t == NULL)
-		return 0;
-	else
-	{
-		// return 1 + max(getHeight(t->left), getHeight(t->right));
-		int leftHeight = getHeight(t->left);
-		int rightHeight = getHeight(t->right);
-		return 1 + max(leftHeight, rightHeight);
-	}
-}
-
-// check if the binary search tree is balanced
-bool BST::isBalanced()
-{
-	return isBalanced(root);
-}
-
-bool BST::isBalanced(BinaryNode *t)
-{
-	if (t == NULL)
-		return true;
-	else
-	{
-		int leftHeight = getHeight(t->left);	// height of left sub-tree
-		int rightHeight = getHeight(t->right);	// height of right sub-tree
-		bool isBalancedNode = (abs(leftHeight - rightHeight) <= 1);
-		bool isBalancedLeft = isBalanced(t->left);
-		bool isBalancedRight = isBalanced(t->right);
-		return (isBalancedNode && isBalancedLeft && isBalancedRight);
-	}
-}
+//// count the number of nodes in the binary search tree
+//int BST::countNodes()
+//{
+//	return countNodes(root);
+//}
+//
+//int BST::countNodes(BinaryNode* t)
+//{
+//	if (t == NULL)
+//		return 0;
+//	else
+//		return 1 + countNodes(t->left) + countNodes(t->right);
+//}
+//
+//// compute the height of the binary search tree
+//int BST::getHeight()
+//{
+//	return getHeight(root);
+//}
+//
+//int BST::getHeight(BinaryNode* t)
+//{
+//	if (t == NULL)
+//		return 0;
+//	else
+//	{
+//		// return 1 + max(getHeight(t->left), getHeight(t->right));
+//		int leftHeight = getHeight(t->left);
+//		int rightHeight = getHeight(t->right);
+//		return 1 + max(leftHeight, rightHeight);
+//	}
+//}
+//
+//// check if the binary search tree is balanced
+//bool BST::isBalanced()
+//{
+//	return isBalanced(root);
+//}
+//
+//bool BST::isBalanced(BinaryNode *t)
+//{
+//	if (t == NULL)
+//		return true;
+//	else
+//	{
+//		int leftHeight = getHeight(t->left);	// height of left sub-tree
+//		int rightHeight = getHeight(t->right);	// height of right sub-tree
+//		bool isBalancedNode = (abs(leftHeight - rightHeight) <= 1);
+//		bool isBalancedLeft = isBalanced(t->left);
+//		bool isBalancedRight = isBalanced(t->right);
+//		return (isBalancedNode && isBalancedLeft && isBalancedRight);
+//	}
+//}
 
 // delete a Booking from the binary search tree
 void BST::remove(tm date, string guestName, string roomType)
@@ -291,7 +343,17 @@ bool BST::checkIn(tm date, string guestName, string roomType)
 	return true;
 }
 
+void BST::printPopular(map<string, int> roomTypeMap)
+{
+	inorderpopular(roomTypeMap);
+}
+
 void BST::printRange(tm start, tm end)
 {
 	inorder(start, end);
 }
+
+//void BST::checkOverDue(tm current, RoomScheduleDictionary &rsd)
+//{
+//	inorderoverdue(current, rsd);
+//}

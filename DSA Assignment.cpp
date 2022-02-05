@@ -348,7 +348,17 @@ int main()
 
             case 6:
             {
- 
+                map<string, int> popularRoomTypeMap;
+                for (const auto& p : roomTypeMap)
+                {
+                    popularRoomTypeMap[p.first] = 0;
+                }
+                bookingDictionary.printPopular(popularRoomTypeMap);
+                for (const auto& p : roomTypeMap)
+                {
+                    cout << popularRoomTypeMap[p.first] << endl;
+                }
+
                 break;
                 // search most popular room type function
             }
