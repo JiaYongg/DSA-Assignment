@@ -24,18 +24,6 @@ BookingDict::~BookingDict()
 //hash unix time from checkInDate
 int BookingDict::hash(KeyType key)
 {
-
-	key.tm_year -= 1900;
-	key.tm_mon -= 1;
-	key.tm_min = 0;
-	key.tm_sec = 0;
-	key.tm_hour = 0;
-	//printf("tm_hour:  %d\n", key.tm_hour);
-	//printf("tm_min:  %d\n", key.tm_min);
-	//printf("tm_sec:  %d\n", key.tm_sec);
-	//printf("tm_mday:  %d\n", key.tm_mday);
-	//printf("tm_mon:  %d\n", key.tm_mon);
-	//printf("tm_year:  %d\n", key.tm_year);
 	time_t time = mktime(&key) / 86400;
 	if (firstHash == NULL)
 		firstHash = (int) time;
@@ -63,6 +51,18 @@ bool BookingDict::checkIn(KeyType key, string guestName, string roomType)
 //hash, add to tree
 bool BookingDict::add(Booking b)
 {
+	b.checkinDate.tm_year -= 1900;
+	b.checkinDate.tm_mon -= 1;
+	b.checkinDate.tm_min = 0;
+	b.checkinDate.tm_sec = 0;
+	b.checkinDate.tm_hour = 0;
+
+	b.checkOutDate.tm_year -= 1900;
+	b.checkOutDate.tm_mon -= 1;
+	b.checkOutDate.tm_min = 0;
+	b.checkOutDate.tm_sec = 0;
+	b.checkOutDate.tm_hour = 0;
+
 	int index = hash(b.checkinDate);
 	//cout << index << endl;
 	if (items[index] == NULL)
@@ -117,6 +117,14 @@ Booking BookingDict::get(KeyType key, string guestName, string roomType)
 		}
 		return b->item;
 	}
+	else
+	{
+		// current index in hash table is null
+		Booking c;
+		//make some values to tell the program its null
+		c.bookingGuestName = "Not Found";
+		return c;
+	}
 }
 
 //hash, check yesterday overdue
@@ -153,12 +161,23 @@ void BookingDict::printPopular()
 //loop through all booking in that range, print
 void BookingDict::printRange(tm start, tm end)
 {
+	start.tm_year -= 1900;
+	start.tm_mon -= 1;
+	start.tm_min = 0;
+	start.tm_sec = 0;
+	start.tm_hour = 0;
+	end.tm_year -= 1900;
+	end.tm_mon -= 1;
+	end.tm_min = 0;
+	end.tm_sec = 0;
+	end.tm_hour = 0;
 	for (int i = 0; i < MAX_SIZE; i++)
 	{
 		if (items[i] != NULL)
 		{
 			items[i]->printRange(start, end);
 		}
-
 	}
 }
+
+//void BookingDict:: 

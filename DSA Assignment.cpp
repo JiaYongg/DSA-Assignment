@@ -487,6 +487,17 @@ int main()
                 currentDatetm = currentDate;
                 break;
             }
+            case 11:
+            {
+                fstream fout;
+
+                fout.open("Bookingsnew.csv", ios::out);
+
+                for (int i = 0; i < MAX_SIZE; i++)
+                {
+
+                }
+            }
             case 0:
             {
                 flag = false;
@@ -511,8 +522,10 @@ void menu()
     cout << "[6] Search most popular room type\n";
     cout << "[7] Check in Guest without booking\n";
     cout << "[8] Display bookings given range\n";
+    // Extra Features for Convenience
     cout << "[9] Get guest (use breakpoint to see result)\n";
     cout << "[10] Change Current Date\n";
+    cout << "[11] Update Bookings.csv file\n";
     cout << "[0] Exit\n";
     cout << "----------------------------------------------\n";
 }

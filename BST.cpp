@@ -22,7 +22,17 @@ BinaryNode* BST::search(BinaryNode* t, tm date, string guestName, string roomTyp
 		return NULL;
 	else
 	{
+		t->item.checkinDate.tm_year -= 1900;
+		t->item.checkinDate.tm_mon -= 1;
+		t->item.checkinDate.tm_hour = 0;
+		t->item.checkinDate.tm_min = 0;
+		t->item.checkinDate.tm_sec = 0;
 		time_t checkindate = mktime(&t->item.checkinDate);
+		date.tm_year -= 1900;
+		date.tm_mon -= 1;
+		date.tm_hour = 0;
+		date.tm_min = 0;
+		date.tm_sec = 0;
 		time_t inputdate = mktime(&date);
 		double diff = difftime(checkindate, inputdate);
 		// use difftime to find the difference between the input date and the current iteration date
@@ -85,18 +95,6 @@ void BST::inorder(BinaryNode* t, tm start, tm end)
 {
 	if (t != NULL)
 	{
-		start.tm_year -= 1900;
-		start.tm_mon -= 1;
-		start.tm_min = 0;
-		start.tm_sec = 0;
-		start.tm_hour = 0;
-		end.tm_year -= 1900;
-		end.tm_mon -= 1;
-
-		t->item.checkinDate.tm_year -= 1900;
-		t->item.checkinDate.tm_mon -= 1;
-		t->item.checkOutDate.tm_year -= 1900;
-		t->item.checkOutDate.tm_mon -= 1;
 		time_t start_t = mktime(&start);
 		time_t end_t = mktime(&end);
 
@@ -108,7 +106,7 @@ void BST::inorder(BinaryNode* t, tm start, tm end)
 		double inputEndAndBstStart = difftime(end_t, bstStart_t);
 
 		if (inputStartAndBstEnd < 0 && inputEndAndBstStart >= 0)
-			cout << t->item.bookingID << t->item.bookingGuestNumber << t->item.bookingRoomNumber << t->item.bookingRoomType << endl;
+			cout << "Booking ID: " << t->item.bookingID << " " << t->item.checkinDate.tm_mday << t->item.checkOutDate.tm_mday << endl;
 		inorder(t->left,start, end);
 		inorder(t->right, start, end);
 	}
