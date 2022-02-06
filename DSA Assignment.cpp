@@ -24,25 +24,6 @@ using namespace std;
 void addToCsv(Booking b);
 void menu();
 
-//Delu
-//Exec
-//Presi
-//Rooms roomArray[dynamic]
-//
-////include string linked list for dates
-////linked list (roomType, count)
-//
-////array size 20 of [roomNumber,string concat dates]
-//[roomDateDictionaries] > items/
-//items > [Node, 1, 2, 3, 4]
-//Node > take guest , date, store into array
-//void printDate(tm Date);
-//
-////array size 20 of [roomNumber,string concat dates]
-//[roomDateDictionaries] > items
-//items > [Node, 1, 2, 3, 4]
-//Node > take roomNo,date, store into array 
-//void printMonth(/*month*/);
 
 
 int main()
@@ -587,18 +568,10 @@ void addToCsv(Booking b)
     oss << put_time(&b.checkOutDate, "%d-%m-%Y");
     string checkout = oss.str();
     string csvBookObj;
-    if (b.bookingID == 101)
-    {
-        csvBookObj = to_string(b.bookingID) + "," + bookdate + "," + b.bookingGuestName + "," + b.bookingRoomNumber + ","
-            + b.bookingRoomType + "," + b.bookingStatus + "," + checkin + "," + checkout + "," + to_string(b.bookingGuestNumber)
-            + "," + b.bookingSpecialRequest;
-    }
-    else
-    {
-        csvBookObj = "\n" + to_string(b.bookingID) + "," + bookdate + "," + b.bookingGuestName + "," + b.bookingRoomNumber + ","
-            + b.bookingRoomType + "," + b.bookingStatus + "," + checkin + "," + checkout + "," + to_string(b.bookingGuestNumber)
-            + "," + b.bookingSpecialRequest;
-    }
+
+    csvBookObj = "\n" + to_string(b.bookingID) + "," + bookdate + "," + b.bookingGuestName + "," + b.bookingRoomNumber + ","
+        + b.bookingRoomType + "," + b.bookingStatus + "," + checkin + "," + checkout + "," + to_string(b.bookingGuestNumber)
+        + "," + b.bookingSpecialRequest;
 
     fout << csvBookObj;
 }
