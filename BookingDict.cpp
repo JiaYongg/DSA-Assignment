@@ -202,6 +202,9 @@ void BookingDict::printRange(tm start, tm end)
 
 // Group 12
 // Poh Jia Yong, S10202579J
+// mainly used to check if booking has expired using the currentDate
+// changes the booking status to "Overdue" if it is expired(check in date passed the currentDate)
+// loop through all booking, 
 void BookingDict::checkOverdue(tm currentDate, map<string, RoomScheduleDictionary>& roomScheduleDictMap)
 {
 	currentDate.tm_year -= 1900;
