@@ -5,6 +5,7 @@
 #include<iostream>
 #include "Booking.h"
 #include <string.h>
+#include <vector>
 using namespace std;
 #include<map>
 
@@ -82,4 +83,5 @@ public:
 	//return map of room no. and occupied dates
 	void getOccupiedDatesFromMonth(map<string, string> &roomOccupiedDates, tm month);
 
+	map<string, int> getAvailrooms(tm checkInDate, tm checkOutDate);
 };

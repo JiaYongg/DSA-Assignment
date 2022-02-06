@@ -5,6 +5,7 @@
 #include "RoomScheduleDictionary.h"
 #include<iostream>
 #include "BinaryNode.h"
+#include "Room.h"
 
 using namespace std;
 
@@ -43,7 +44,7 @@ public:
 	// return the item with the specified key from the Dictionary
 	//
 	// change status from booked to checked in
-	bool checkIn(KeyType key, string guestName, string roomType, map<string, RoomScheduleDictionary> &roomScheduleDictMap);
+	bool checkIn(KeyType key, string guestName, string roomType, map<string, RoomScheduleDictionary> &roomScheduleDictMap, Room roomArray[20]);
 
 	// add a new item with the specified key to the Dictionary
 	// pre : none

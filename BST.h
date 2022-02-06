@@ -9,6 +9,7 @@
 #include "RoomScheduleDictionary.h"
 #include "AVL_Tree.h"		// AVL Tree functions
 #include <string.h>
+#include "Room.h"
 using namespace std;
 
 class RoomScheduleDictionary;
@@ -70,7 +71,7 @@ public:
 	//bool isBalanced(BinaryNode *t);
 
 	// change status from booked to checked in
-	bool checkIn(tm key, string guestName, string roomType, map<string, RoomScheduleDictionary> &roomScheduleDictMap);
+	bool checkIn(tm key, string guestName, string roomType, map<string, RoomScheduleDictionary> &roomScheduleDictMap, Room roomArray[20]);
 
 	//loop through all booking, add to linkedlist, print most popular
 	void printPopular(map<string, int> &roomTypeMap);

@@ -196,7 +196,7 @@ int main()
                 cout << "Enter Room Type: ";
                 getline(cin, roomType);
 
-                bool checkInStatus = bookingDictionary.checkIn(checkInDate, guestName, roomType, roomScheduleMap);
+                bool checkInStatus = bookingDictionary.checkIn(checkInDate, guestName, roomType, roomScheduleMap,roomArray);
 
                 if (checkInStatus)
                     cout << "Checked In Sucessfully! \n";
@@ -432,7 +432,7 @@ int main()
                 // write to excel once done
                 
                 bookingDictionary.add(b,roomScheduleMap);
-                bookingDictionary.checkIn(b.checkinDate, b.bookingGuestName, b.bookingRoomType,roomScheduleMap);
+                bookingDictionary.checkIn(b.checkinDate, b.bookingGuestName, b.bookingRoomType,roomScheduleMap,roomArray);
 
                 addToCsv(b);
 

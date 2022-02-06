@@ -254,3 +254,41 @@ void RoomScheduleDictionary::getOccupiedDatesFromMonth(map<string, string> &room
 //	}
 //	std::cout << s<<endl;
 //};
+
+map<string, int> RoomScheduleDictionary::getAvailrooms(tm checkInDate, tm checkOutDate) {
+	//change to time_t for comparsion and looping
+	if (!(checkInDate.tm_year < 1000)) {
+		checkInDate.tm_year -= 1900;
+		checkInDate.tm_mon -= 1;
+		checkInDate.tm_min = 0;
+		checkInDate.tm_sec = 0;
+		checkInDate.tm_hour = 0;
+	}
+	if (!(checkOutDate.tm_year < 1000)) {
+		checkOutDate.tm_year -= 1900;
+		checkOutDate.tm_mon -= 1;
+		checkOutDate.tm_min = 0;
+		checkOutDate.tm_sec = 0;
+		checkOutDate.tm_hour = 0;
+	}
+	time_t checkInTime = mktime(&checkInDate);
+	time_t checkOutTime = mktime(&checkOutDate);
+	////change checkInDate back to original date to be hashed later
+	checkInDate.tm_year += 1900;
+	checkInDate.tm_mon += 1;
+	tm currentDate = checkInDate;
+	//add for all dates from checkInDate to checkOutDate
+	map<string, int> occupiedRoomsMap;
+	while (checkInTime < checkOutTime) {
+		int index = hash(currentDate);
+		if (items[index] == NULL) {
+			continue;
+		}
+		else {
+			items[index]->getOccupiedRooms(occupiedRoomsMap);
+		}
+		currentDate.tm_mday += 1;
+		checkInTime += 86400;
+	}
+	return occupiedRoomsMap;
+};

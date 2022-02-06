@@ -127,3 +127,15 @@ void  RoomScheduleLinkedList::getOccupiedDatesFromDay(map<string, string> &roomO
 		current = current->next;
 	}
 };
+
+void RoomScheduleLinkedList::getOccupiedRooms(map<string, int> &occupiedRoomsMap) {
+	Node* current = firstNode;
+	while (current != NULL) {
+		if (current->roomNumber != " ") {
+			if (current->roomNumber != "") {
+				occupiedRoomsMap[current->roomNumber] = 1;
+			}
+		}
+		current = current->next;
+	}
+};

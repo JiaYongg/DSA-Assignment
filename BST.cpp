@@ -338,18 +338,43 @@ void BST::remove(BinaryNode* &t, tm date, string guestName, string roomType)
 // change status from "Booked" to "Checked In" in tree and validates if the status is already "Checked In"
 // check if room is available, assign room to the guest who just checked in if room available
 // else not available, check in fails
-bool BST::checkIn(tm date, string guestName, string roomType, map<string, RoomScheduleDictionary>& roomScheduleDictMap)
+bool BST::checkIn(tm date, string guestName, string roomType, map<string, RoomScheduleDictionary>& roomScheduleDictMap, Room roomArray[20])
 {
 	BinaryNode* b = search(date, guestName, roomType);
-	if (b->item.bookingStatus == "Checked In")
+	if (b == NULL) {
 		return false;
+	}
+	if (b->item.bookingStatus == "Checked In") {
+		return false;
+	}
 	else
 	{
 		b->item.bookingStatus = "Checked In";
+		// need to assign room to the guest who just checked in also need to check if the room is avail.
+	    map<string,int> occupiedRooms = roomScheduleDictMap[b->item.bookingRoomType].getAvailrooms(b->item.checkinDate, b->item.checkOutDate);
+		if (occupiedRooms.size() != 0) {
+			for (int i = 0; i < 20; i++) {
+				for (const auto& p : occupiedRooms)
+				{
+					if (roomArray[i].roomTypeName == b->item.bookingRoomType) {
+						if (roomArray[i].roomNumber != p.first) {
+							b->item.bookingRoomNumber = roomArray[i].roomNumber;
+						}
+					}
+				}
+			}
+		}
+		else {
+			for (int i = 0; i < 20; i++) {
+				if (roomArray[i].roomTypeName == b->item.bookingRoomType) {
+						b->item.bookingRoomNumber = roomArray[i].roomNumber;
+				}
+			}
+		}
+		
+		cout << "Checked in to: "<<b->item.bookingRoomNumber<<endl;
 		return true;
 	}
-
-	// need to assign room to the guest who just checked in also need to check if the room is avail.
 	return true;
 }
 

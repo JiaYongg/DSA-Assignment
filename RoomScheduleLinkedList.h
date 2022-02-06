@@ -73,6 +73,8 @@ public:
 	// display the items in the RoomScheduleLinkedList
 	void print();
 
+	void getOccupiedRooms(map<string, int> &occupiedRoomsMap);
+
 	// void replace(int index, string item);
 	// int search(string item);
 };

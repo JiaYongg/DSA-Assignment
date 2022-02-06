@@ -40,15 +40,15 @@ int BookingDict::hash(KeyType key)
 // called from main method and hash the checkInDate provided
 // once hashed, check if that specific index on the hash table is NULL
 // if not NULL, call the checkIn method from the BST
-bool BookingDict::checkIn(KeyType key, string guestName, string roomType, map<string, RoomScheduleDictionary> &roomScheduleDictMap)
+bool BookingDict::checkIn(KeyType key, string guestName, string roomType, map<string, RoomScheduleDictionary> &roomScheduleDictMap, Room roomArray[20])
 {
 	int index = hash(key);
 
 	if (items[index] != NULL)
 	{
-		items[index]->checkIn(key, guestName, roomType,  roomScheduleDictMap);
+		return items[index]->checkIn(key, guestName, roomType,  roomScheduleDictMap, roomArray);
 	}
-	return true;
+	return false;
 }
 
 // called from main method and hash the checkInDate provided
