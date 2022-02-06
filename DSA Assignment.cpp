@@ -214,17 +214,17 @@ int main()
 
                 cout << "Enter Check In Date (dd/mm/yyyy/): ";
                 cin >> checkInInput;
+                sscanf_s(checkInInput, "%d/%d/%4d", &checkInDate.tm_mday, &checkInDate.tm_mon, &checkInDate.tm_year);
                 checkInDate.tm_min = 0;
                 checkInDate.tm_sec = 0;
                 checkInDate.tm_hour = 0;
-                sscanf_s(checkInInput, "%d/%d/%4d", &checkInDate.tm_mday, &checkInDate.tm_mon, &checkInDate.tm_year);
 
                 cout << "Enter Check Out Date (dd/mm/yyyy/): ";
                 cin >> checkOutInput;
+                sscanf_s(checkOutInput, "%d/%d/%4d", &checkOutDate.tm_mday, &checkOutDate.tm_mon, &checkOutDate.tm_year);
                 checkOutDate.tm_min = 0;
                 checkOutDate.tm_sec = 0;
                 checkOutDate.tm_hour = 0;
-                sscanf_s(checkOutInput, "%d/%d/%4d", &checkOutDate.tm_mday, &checkOutDate.tm_mon, &checkOutDate.tm_year);
 
                 cout << "Enter Number of Guest(s): ";
                 cin >> numOfGuest;
@@ -323,10 +323,10 @@ int main()
 
                 cout << "Enter Check In Date (dd/mm/yyyy/): ";
                 cin >> checkInInput;
+                sscanf_s(checkInInput, "%d/%d/%4d", &checkInDate.tm_mday, &checkInDate.tm_mon, &checkInDate.tm_year);
                 checkInDate.tm_min = 0;
                 checkInDate.tm_sec = 0;
                 checkInDate.tm_hour = 0;
-                sscanf_s(checkInInput, "%d/%d/%4d", &checkInDate.tm_mday, &checkInDate.tm_mon, &checkInDate.tm_year);
 
                 bookingDictionary.remove(checkInDate, guestName, roomType, roomScheduleMap);
 
@@ -335,6 +335,7 @@ int main()
 
             case 6:
             {
+                // search most popular room type function
                 map<string, int> popularRoomTypeMap;
                 for (const auto& p : roomTypeMap)
                 {
@@ -347,7 +348,6 @@ int main()
                 }
 
                 break;
-                // search most popular room type function
             }
 
             case 7:
@@ -378,17 +378,17 @@ int main()
 
                 cout << "Enter Check In Date (dd/mm/yyyy/): ";
                 cin >> checkInInput;
+                sscanf_s(checkInInput, "%d/%d/%4d", &checkInDate.tm_mday, &checkInDate.tm_mon, &checkInDate.tm_year);
                 checkInDate.tm_min = 0;
                 checkInDate.tm_sec = 0;
                 checkInDate.tm_hour = 0;
-                sscanf_s(checkInInput, "%d/%d/%4d", &checkInDate.tm_mday, &checkInDate.tm_mon, &checkInDate.tm_year);
 
                 cout << "Enter Check Out Date (dd/mm/yyyy/): ";
                 cin >> checkOutInput;
+                sscanf_s(checkOutInput, "%d/%d/%4d", &checkOutDate.tm_mday, &checkOutDate.tm_mon, &checkOutDate.tm_year);
                 checkOutDate.tm_min = 0;
                 checkOutDate.tm_sec = 0;
                 checkOutDate.tm_hour = 0;
-                sscanf_s(checkOutInput, "%d/%d/%4d", &checkOutDate.tm_mday, &checkOutDate.tm_mon, &checkOutDate.tm_year);
 
                 cout << "Enter Number of Guest(s): ";
                 cin >> numOfGuest;

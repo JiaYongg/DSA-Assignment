@@ -106,6 +106,20 @@ void BookingDict::remove(KeyType key, string guestName, string roomType, map<str
 		string roomNum = b.bookingRoomNumber;
 		roomScheduleDictMap[b.bookingRoomType].remove(b.checkinDate,b.checkOutDate, guestName, roomNum);
 		items[index]->remove(key, guestName, roomType);
+
+		BinaryNode* bNode = items[index]->search(key, guestName, roomType);
+
+		if (bNode == NULL)
+		{
+			cout << "--------------------------------------\n";
+			cout << "Booking deleted successfully!\n";
+		}
+		else
+		{
+			cout << "--------------------------------------\n";
+			cout << "Failed to delete booking.\n";
+		}
+
 	}
 };
 
