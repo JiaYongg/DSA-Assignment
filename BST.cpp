@@ -10,7 +10,7 @@ BST::BST()
 	root = NULL;
 }
 
-// search for a Booking in the binary search tree
+// search for a Booking object in the binary search tree
 BinaryNode* BST::search(tm date, string guestName, string roomType)
 {
 	return search(root, date, guestName, roomType);
@@ -58,7 +58,7 @@ void BST::insert(Booking b, map<string, RoomScheduleDictionary>& roomScheduleDic
 {
 	if (b.bookingStatus != "Checked In") {
 		int roomAvail = roomScheduleDictMap[b.bookingRoomType].getAvailableRoomNumber(b.checkinDate,b.checkOutDate);
-		//cout << "Booking" << b.bookingGuestName << endl;
+		// check if there are any rooms available
 		if (roomAvail > 0) {
 			insert(root, b);
 			roomScheduleDictMap[b.bookingRoomType].add(b.checkinDate, b.checkOutDate, b.bookingGuestName, b.bookingRoomNumber,b.bookingID);
@@ -68,7 +68,6 @@ void BST::insert(Booking b, map<string, RoomScheduleDictionary>& roomScheduleDic
 		}
 	}
 	else {
-		//cout << "Checked in" << b.bookingGuestName << endl;
 		insert(root, b);
 		roomScheduleDictMap[b.bookingRoomType].add(b.checkinDate, b.checkOutDate, b.bookingGuestName, b.bookingRoomNumber,b.bookingID);
 	}
@@ -78,11 +77,11 @@ void BST::insert(Booking b, map<string, RoomScheduleDictionary>& roomScheduleDic
 
 void BST::insert(BinaryNode* &t, Booking b)
 {
-	//cout << t <<b.bookingGuestName<< endl;
+	// if the BST is empty, create a new node to be the first Booking object of the BST
 	if (t == NULL)
 	{
 		BinaryNode *newNode = new BinaryNode;
-		newNode->item = b;
+		newNode->item = b; // booking obj to be the tree.item
 		newNode->left = NULL;
 		newNode->right = NULL;
 		t = newNode;
@@ -92,7 +91,8 @@ void BST::insert(BinaryNode* &t, Booking b)
 		time_t checkindate = mktime(&t->item.checkinDate);
 		time_t inputdate = mktime(&b.checkinDate);
 		double diff = difftime(checkindate, inputdate);
-
+		// check if the bst.item(booking) check in date is greter than the input bst.item(booking) check in date
+		// if no, put on the left subtree, else put in right subtree
 		if (diff < 0)
 			insert(t->left, b);  // insert in left subtree
 		else
@@ -103,7 +103,7 @@ void BST::insert(BinaryNode* &t, Booking b)
 }
 
 
-//// traverse the binary search tree in inorder
+// traverse the binary search tree in inorder
 void BST::inorder(tm start, tm end)
 {
 	if (isEmpty())
@@ -126,6 +126,8 @@ void BST::inorder(BinaryNode* t, tm start, tm end)
 
 		double inputEndAndBstStart = difftime(end_t, bstStart_t);
 
+		// find the difference between the check in date input and the bst.item(booking) check out date
+		// find the difference between the check out date input and the bst.item(booking) check in date
 		// check if the input range and the booking range overlaps
 		// prints out the Booking ID and Guest Name if overlaps(in range)
 		if (inputStartAndBstEnd < 0 && inputEndAndBstStart >= 0)
@@ -135,6 +137,7 @@ void BST::inorder(BinaryNode* t, tm start, tm end)
 	}
 }
 
+// traverse the binary search tree in inorder
 void BST::inorderoverdue(tm current, RoomScheduleDictionary& rsd)
 {
 	if (isEmpty())
@@ -143,6 +146,9 @@ void BST::inorderoverdue(tm current, RoomScheduleDictionary& rsd)
 		inorderoverdue(root, current, rsd);
 }
 
+// check if the booking is overdue when date is changed
+// if it is overdue, set the bst.item(booking) status to "Overdue"
+// and remove the booking from RoomScheduleDictionary and free up the room
 void BST::inorderoverdue(BinaryNode* t, tm current, RoomScheduleDictionary& rsd)
 {
 	if (t != NULL)
@@ -156,9 +162,9 @@ void BST::inorderoverdue(BinaryNode* t, tm current, RoomScheduleDictionary& rsd)
 			{
 				// Set status to "Overdue"
 				t->item.bookingStatus == "Overdue";
-				// Remove booking from roomschedule
+				// Remove booking from roomschedule and free up the room that was occupied
 				rsd.remove(t->item.checkinDate, t->item.checkOutDate, t->item.bookingGuestName, t->item.bookingRoomNumber);
-				// free up the room
+				
 			}
 		}
 
@@ -167,6 +173,7 @@ void BST::inorderoverdue(BinaryNode* t, tm current, RoomScheduleDictionary& rsd)
 	}
 }
 
+// traverse the binary search tree in inorder
 void BST::inorderpopular(map<string, int> &roomTypeMap)
 {
 	if (isEmpty())
@@ -175,11 +182,13 @@ void BST::inorderpopular(map<string, int> &roomTypeMap)
 		inorderpopular(root, roomTypeMap);
 }
 
+// increase the room counter for each room type by 1 to be used to see which room has the most count
+// which translates to which room type is the most popular
 void BST::inorderpopular(BinaryNode* t, map<string, int> &roomTypeMap)
 {
+	// if node is not empty, increase the room counter by 1
 	if (t != NULL)
 	{
-
 		roomTypeMap[t->item.bookingRoomType] += 1;
 
 		inorderpopular(t->left, roomTypeMap);
@@ -193,7 +202,7 @@ bool BST::isEmpty()
 	return (root == NULL);
 }
 
-// delete a Booking from the binary search tree
+// delete a Booking object from the binary search tree
 void BST::remove(tm date, string guestName, string roomType)
 {
 	remove(root, date, guestName, roomType);
@@ -270,12 +279,13 @@ bool BST::checkIn(tm date, string guestName, string roomType, map<string, RoomSc
 	else
 	{
 		b->item.bookingStatus = "Checked In";
-		// need to assign room to the guest who just checked in also need to check if the room is avail.
+		// check if the room is available in the room type and assign a room to the guest who just checked in if the room is available
 	    map<string,int> occupiedRooms = roomScheduleDictMap[b->item.bookingRoomType].getAvailrooms(b->item.checkinDate, b->item.checkOutDate);
 		if (occupiedRooms.size() != 0) {
 			for (int i = 0; i < 20; i++) {
 				for (const auto& p : occupiedRooms)
 				{
+					// Loops through to check if the current room type name exists in the room array provided
 					if (roomArray[i].roomTypeName == b->item.bookingRoomType) {
 						if (roomArray[i].roomNumber != p.first) {
 							b->item.bookingRoomNumber = roomArray[i].roomNumber;

@@ -21,7 +21,7 @@ BookingDict::~BookingDict()
 
 };
 
-//hash unix time from checkInDate
+// hash unix time from checkInDate, returns an integer that can be used as the index of the array
 int BookingDict::hash(KeyType key)
 {
 	if (!(key.tm_year < 1000)) {
@@ -55,10 +55,9 @@ bool BookingDict::checkIn(KeyType key, string guestName, string roomType, map<st
 // once hashed, check if that specific index on the hash table is NULL
 // if NULL, add the Booking to the tree as the first node
 // else add the booking to the tree
-//hash, add to tree
+// hash, add to tree
 bool BookingDict::add(Booking b, map<string, RoomScheduleDictionary> &roomScheduleDictMap)
 {
-
 	int index = hash(b.checkinDate);
 	if (!(b.checkinDate.tm_year < 1000)) {
 		b.checkinDate.tm_year -= 1900;
@@ -75,12 +74,9 @@ bool BookingDict::add(Booking b, map<string, RoomScheduleDictionary> &roomSchedu
 		b.checkOutDate.tm_hour = 0;
 	}
 
-	//cout << index << endl;
 	if (items[index] == NULL)
 	{
 		items[index] = new BST(); // instantiate a new BST for the index
-		//BinaryNode* newBinaryNode = new BinaryNode();
-		//newBinaryNode->item = b;
 		items[index]->insert(b,roomScheduleDictMap);
 	}
 	else
@@ -97,7 +93,6 @@ bool BookingDict::add(Booking b, map<string, RoomScheduleDictionary> &roomSchedu
 // hash, remove from tree, remove from room date dict
 void BookingDict::remove(KeyType key, string guestName, string roomType, map<string, RoomScheduleDictionary> &roomScheduleDictMap)
 {
-
 	int index = hash(key);
 
 	if (items[index] != NULL)
@@ -119,7 +114,6 @@ void BookingDict::remove(KeyType key, string guestName, string roomType, map<str
 			cout << "--------------------------------------\n";
 			cout << "Failed to delete booking.\n";
 		}
-
 	}
 };
 
