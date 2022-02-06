@@ -4,6 +4,8 @@
 #include <string>
 #include<map>
 
+// Group 12
+// Chua Dong En, S10202623A
 // constructor
 RoomScheduleDictionary::RoomScheduleDictionary(int maxRoom, string roomType) {
 	MaxRoom = maxRoom;
@@ -14,6 +16,8 @@ RoomScheduleDictionary::RoomScheduleDictionary(int maxRoom, string roomType) {
 	}
 };
 
+// Group 12
+// Chua Dong En, S10202623A
 //default constructor
 RoomScheduleDictionary::RoomScheduleDictionary() {
 	for (int i = 0; i < MAX_SIZE; i++)
@@ -22,11 +26,15 @@ RoomScheduleDictionary::RoomScheduleDictionary() {
 	}
 };
 
+// Group 12
+// Chua Dong En, S10202623A
 //destructor
 RoomScheduleDictionary::~RoomScheduleDictionary(){
 	//I didnt do 
 };
 
+// Group 12
+// Chua Dong En, S10202623A
 //hash date for index
 int RoomScheduleDictionary::hash(KeyType key){
 	//if date is not formatted yet ,format
@@ -47,6 +55,8 @@ int RoomScheduleDictionary::hash(KeyType key){
 	return time-firstHashRoom;
 };
 
+// Group 12
+// Chua Dong En, S10202623A
 //add new room schedules within date range
 bool RoomScheduleDictionary::add(tm checkInDate, tm checkOutDate, string guestName, string roomNumber,int bid){
 	//if date is not formatted yet ,format
@@ -93,6 +103,8 @@ bool RoomScheduleDictionary::add(tm checkInDate, tm checkOutDate, string guestNa
 	return true;
 };
 
+// Group 12
+// Chua Dong En, S10202623A
 //remove room schedules from dict within a date range
 void RoomScheduleDictionary::remove(tm checkInDate, tm checkOutDate, string guestName, string roomNumber){
 	//if date is not formatted yet ,format
@@ -133,6 +145,8 @@ void RoomScheduleDictionary::remove(tm checkInDate, tm checkOutDate, string gues
 	return;
 };
 
+// Group 12
+// Chua Dong En, S10202623A
 //get no. of avail rooms within date range
 int RoomScheduleDictionary::getAvailableRoomNumber(tm checkInDate, tm checkOutDate) {
 	//if date is not formatted yet ,format
@@ -180,6 +194,8 @@ int RoomScheduleDictionary::getAvailableRoomNumber(tm checkInDate, tm checkOutDa
 	return MaxRoom;
 };
 
+// Group 12
+// Chua Dong En, S10202623A
 //print guests which are staying on that date
 void RoomScheduleDictionary::printDateGuests(tm key) {
 	//hash date for index
@@ -191,6 +207,8 @@ void RoomScheduleDictionary::printDateGuests(tm key) {
 	}
 };
 
+// Group 12
+// Chua Dong En, S10202623A
 //return map of room no. and occupied dates
 void RoomScheduleDictionary::getOccupiedDatesFromMonth(map<string, string> &roomOccupiedDates, tm month) {
 	//change to time_t for comparsion and looping
@@ -230,6 +248,8 @@ void RoomScheduleDictionary::getOccupiedDatesFromMonth(map<string, string> &room
 	}
 };
 
+// Group 12
+// Chua Dong En, S10202623A
 //return map of occupied rooms
 map<string, int> RoomScheduleDictionary::getOccupiedRooms(tm checkInDate, tm checkOutDate) {
 	//if date is not formatted yet ,format

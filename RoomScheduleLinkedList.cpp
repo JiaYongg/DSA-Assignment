@@ -4,15 +4,22 @@
 #include <iostream>
 #include<map>
 using namespace std;
+
+// Group 12
+// Chua Dong En, S10202623A
 // constructor
 RoomScheduleLinkedList::RoomScheduleLinkedList() {
 	firstNode = NULL;
 	roomScheduleLinkedListSize = 0;
 };
 
+// Group 12
+// Chua Dong En, S10202623A
 // destructor
 RoomScheduleLinkedList::~RoomScheduleLinkedList() {};
 
+// Group 12
+// Chua Dong En, S10202623A
 // add an item to the back of the RoomScheduleLinkedList (append)
 bool RoomScheduleLinkedList::add(string guestName, string roomNumber, tm date,int bid) {
 	//initialize new node
@@ -41,6 +48,8 @@ bool RoomScheduleLinkedList::add(string guestName, string roomNumber, tm date,in
 	return true;
 };
 
+// Group 12
+// Chua Dong En, S10202623A
 // remove an item at a specified position in the RoomScheduleLinkedList
 void RoomScheduleLinkedList::remove(string guestName, string roomNumber, tm date) {
 	Node* current = firstNode;
@@ -83,6 +92,8 @@ void RoomScheduleLinkedList::remove(string guestName, string roomNumber, tm date
 	return;
 };
 
+// Group 12
+// Chua Dong En, S10202623A
 // check if the RoomScheduleLinkedList is empty
 bool RoomScheduleLinkedList::isEmpty() {
 	if (roomScheduleLinkedListSize == 0) {
@@ -91,11 +102,15 @@ bool RoomScheduleLinkedList::isEmpty() {
 	return false;
 };
 
+// Group 12
+// Chua Dong En, S10202623A
 // check the roomScheduleLinkedListSize of the RoomScheduleLinkedList
 int RoomScheduleLinkedList::getLength() {
 	return roomScheduleLinkedListSize;
 };
 
+// Group 12
+// Chua Dong En, S10202623A
 // display all the items in the RoomScheduleLinkedList
 void RoomScheduleLinkedList::print() {
 	Node* current = firstNode;
@@ -105,6 +120,8 @@ void RoomScheduleLinkedList::print() {
 	}
 };
 
+// Group 12
+// Chua Dong En, S10202623A
 //print guests which are staying on that date
 void RoomScheduleLinkedList::printDateGuests() {
 	Node* current = firstNode;
@@ -114,6 +131,8 @@ void RoomScheduleLinkedList::printDateGuests() {
 	}
 };
 
+// Group 12
+// Chua Dong En, S10202623A
 //fill map with dates that each room is occupied
 void  RoomScheduleLinkedList::getOccupiedDatesFromDay(map<string, string> &roomOccupiedDates, tm date) {
 
@@ -140,6 +159,8 @@ void  RoomScheduleLinkedList::getOccupiedDatesFromDay(map<string, string> &roomO
 	}
 };
 
+// Group 12
+// Chua Dong En, S10202623A
 //fill map with occupied room numbers (no date needed)
 void RoomScheduleLinkedList::getOccupiedRooms(map<string, int> &occupiedRoomsMap) {
 	Node* current = firstNode;
@@ -153,6 +174,8 @@ void RoomScheduleLinkedList::getOccupiedRooms(map<string, int> &occupiedRoomsMap
 	}
 };
 
+// Group 12
+// Chua Dong En, S10202623A
 //fill map with bookingIDs of occupied rooms
 void RoomScheduleLinkedList::getBookedRooms(map<int, int>& occupiedRoomsMap) {
 	Node* current = firstNode;

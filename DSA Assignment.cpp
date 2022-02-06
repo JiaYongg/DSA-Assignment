@@ -146,6 +146,8 @@ int main()
             // Basic Features
             case 1: 
             {
+                // Group 12
+                // Poh Jia Yong, S10202579J
                 //Check in guest function
                 tm checkInDate;
                 char checkInInput[] = "";
@@ -178,6 +180,8 @@ int main()
                 
             case 2:
             {
+                // Group 12
+                // Poh Jia Yong, S10202579J
                 // Add booking function
                 tm bookingDate, checkInDate, checkOutDate;
                 char checkInInput[] = "";
@@ -248,6 +252,9 @@ int main()
 
             case 3:
             {
+
+                // Group 12
+                // Chua Dong En, S10202623A
                 // Display guest staying in hotel function
                 tm selectedDate;
                 char selectedDateInput[] = "";
@@ -269,6 +276,8 @@ int main()
 
             case 4:
             {
+                // Group 12
+                // Chua Dong En, S10202623A
                 //NOTE! For booked bookings, room has not been occupied yet therefore it is not shown
                 // Display room occupied by month function
                 tm selectedDate;
@@ -300,6 +309,8 @@ int main()
             // Additional Features
             case 5:
             {
+                // Group 12
+                // Poh Jia Yong, S10202579J
                 // Delete booking function
                 tm checkInDate;
                 char checkInInput[] = "";
@@ -327,6 +338,9 @@ int main()
 
             case 6:
             {
+
+                // Group 12
+                // Chua Dong En, S10202623A
                 // Search for most popular room type function
                 map<string, int> popularRoomTypeMap;
                 for (const auto& p : roomTypeMap)
@@ -344,6 +358,8 @@ int main()
 
             case 7:
             {
+                // Group 12
+                // Poh Jia Yong, S10202579J
                 // Check in guest without booking function
                 tm bookingDate, checkInDate, checkOutDate;
                 char checkInInput[] = "";
@@ -415,6 +431,8 @@ int main()
 
             case 8:
             {
+                // Group 12
+                // Poh Jia Yong, S10202579J
                 // Display bookings given range function
                 tm startDate, endDate;
                 char startInput[] = "";
@@ -441,6 +459,8 @@ int main()
             // Extra Features
             case 9:
             {
+                // Group 12
+                // Poh Jia Yong, S10202579J
                 // Get Guest Booking function
                 tm checkInDate;
                 char checkInInput[] = "";
@@ -467,6 +487,9 @@ int main()
             }
             case 10: 
             {
+                // Group 12
+                // Chua Dong En, S10202623A
+                // Poh Jia Yong, S10202579J
                 // Change Current Date
                 // Check if overdue, mark as cancel
                 // Date changer
@@ -516,6 +539,8 @@ void menu()
 
 void addToCsv(Booking b)
 {
+    // Group 12
+        // Poh Jia Yong, S10202579J
     fstream fout;
 
     fout.open("Bookings.csv", ios::app);

@@ -3,6 +3,8 @@
 #include "AVL_Tree.h"
 #define max(x,y) ((x > y)? x : y)
 
+// Group 12
+// Poh Jia Yong, S10202579J
 // balance a BST in postorder sequence
 void balanceTree(BinaryNode* &t)
 {
@@ -16,6 +18,9 @@ void balanceTree(BinaryNode* &t)
 
 // --------------------------- AVL Tree functions ----------------------------------
 
+
+// Group 12
+// Poh Jia Yong, S10202579J
 // balance a node
 BinaryNode* balance(BinaryNode* t)
 {
@@ -41,6 +46,8 @@ BinaryNode* balance(BinaryNode* t)
 	return t;
 }
 
+// Group 12
+// Poh Jia Yong, S10202579J
 // left_rotation 
 BinaryNode* rotateLeft(BinaryNode* node)	// left rotation 
 {
@@ -51,6 +58,8 @@ BinaryNode* rotateLeft(BinaryNode* node)	// left rotation
 	return temp;
 }
 
+// Group 12
+// Poh Jia Yong, S10202579J
 // right_rotation 
 BinaryNode* rotateRight(BinaryNode* node)	// right rotation
 {
@@ -61,6 +70,8 @@ BinaryNode* rotateRight(BinaryNode* node)	// right rotation
 	return temp;
 }
 
+// Group 12
+// Poh Jia Yong, S10202579J
 // left_right_rotation 
 BinaryNode* rotateLeftRight(BinaryNode* node)  // left-right rotation
 {
@@ -69,7 +80,8 @@ BinaryNode* rotateLeftRight(BinaryNode* node)  // left-right rotation
 	return rotateRight(node);
 }
 
-
+// Group 12
+// Poh Jia Yong, S10202579J
 // right_left_rotation
 BinaryNode* rotateRightLeft(BinaryNode* node)  // right-left rotation
 {
@@ -78,7 +90,8 @@ BinaryNode* rotateRightLeft(BinaryNode* node)  // right-left rotation
 	return rotateLeft(node);
 }
 
-
+// Group 12
+// Poh Jia Yong, S10202579J
 // check the difference in number of nodes in left and right subtrees
 // left heavy  : diff > +1
 // right heavy : diff < -1
@@ -90,6 +103,8 @@ int diff(BinaryNode* t)
 	return b_factor;
 }
 
+// Group 12
+// Poh Jia Yong, S10202579J
 int getHeight(BinaryNode* t)
 {
 	if (t == NULL)

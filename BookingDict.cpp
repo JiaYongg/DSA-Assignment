@@ -3,6 +3,9 @@
 #pragma once
 #include "BookingDict.h"
 #include <string>
+
+// Group 12
+// Poh Jia Yong, S10202579J
 // constructor
 BookingDict::BookingDict() 
 {
@@ -13,8 +16,8 @@ BookingDict::BookingDict()
 	size = NULL;
 };
 
-
-
+// Group 12
+// Poh Jia Yong, S10202579J
 // destructor is to remove dynamic memory
 // static memory is destroyed when program ends. But not dynamic memory
 // auto called by program, programmer does not call this destructor
@@ -23,6 +26,8 @@ BookingDict::~BookingDict()
 
 };
 
+// Group 12
+// Poh Jia Yong, S10202579J
 // hash unix time from checkInDate, returns an integer that can be used as the index of the array
 int BookingDict::hash(KeyType key)
 {
@@ -39,6 +44,8 @@ int BookingDict::hash(KeyType key)
 	return time - firstHash;
 };
 
+// Group 12
+// Poh Jia Yong, S10202579J
 // called from main method and hash the checkInDate provided
 // once hashed, check if that specific index on the hash table is NULL
 // if not NULL, call the checkIn method from the BST
@@ -53,6 +60,8 @@ bool BookingDict::checkIn(KeyType key, string guestName, string roomType, map<st
 	return false;
 }
 
+// Group 12
+// Poh Jia Yong, S10202579J
 // called from main method and hash the checkInDate provided
 // once hashed, check if that specific index on the hash table is NULL
 // if NULL, add the Booking to the tree as the first node
@@ -87,6 +96,8 @@ bool BookingDict::add(Booking b, map<string, RoomScheduleDictionary> &roomSchedu
 	return true;
 };
 
+// Group 12
+// Poh Jia Yong, S10202579J
 // called from main method and hash the checkInDate provided
 // once hashed, check if that specific index on the hash table is NULL
 // if not NULL, call the search method from the BST to search for the specific Booking object to delete
@@ -119,6 +130,8 @@ void BookingDict::remove(KeyType key, string guestName, string roomType, map<str
 	}
 };
 
+// Group 12
+// Poh Jia Yong, S10202579J
 // called from main method and hash the checkInDate provided
 // once hashed, check if that specific index on the hash table is NULL
 // if not NULL, search for the booking in the BST and return the Booking object
@@ -148,6 +161,8 @@ Booking BookingDict::get(KeyType key, string guestName, string roomType)
 	}
 }
 
+// Group 12
+// Poh Jia Yong, S10202579J
 //loop through all booking, add to linkedlist, print most popular
 void BookingDict::printPopular(map<string, int> &roomTypeMap)
 {
@@ -160,6 +175,8 @@ void BookingDict::printPopular(map<string, int> &roomTypeMap)
 	}
 }
 
+// Group 12
+// Poh Jia Yong, S10202579J
 // loop through all booking in that range and prints all the bookings in that range
 // check every index of the array, if not empty, loop through the BST and print out the Booking ID and Guest Name.
 void BookingDict::printRange(tm start, tm end)
@@ -183,6 +200,8 @@ void BookingDict::printRange(tm start, tm end)
 	}
 }
 
+// Group 12
+// Poh Jia Yong, S10202579J
 void BookingDict::checkOverdue(tm currentDate, map<string, RoomScheduleDictionary>& roomScheduleDictMap)
 {
 	currentDate.tm_year -= 1900;

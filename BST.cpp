@@ -4,18 +4,24 @@
 #include <time.h>
 #define max(x,y) ((x > y)? x : y)
 
+// Group 12
+// Poh Jia Yong, S10202579J
 // constructor
 BST::BST()
 {
 	root = NULL;
 }
 
+// Group 12
+// Poh Jia Yong, S10202579J
 // search for a Booking object in the binary search tree
 BinaryNode* BST::search(tm date, string guestName, string roomType)
 {
 	return search(root, date, guestName, roomType);
 }
 
+// Group 12
+// Poh Jia Yong, S10202579J
 BinaryNode* BST::search(BinaryNode* t, tm date, string guestName, string roomType)
 {
 	if (t == NULL)	// Booking not found
@@ -53,6 +59,8 @@ BinaryNode* BST::search(BinaryNode* t, tm date, string guestName, string roomTyp
 }
 
 
+// Group 12
+// Poh Jia Yong, S10202579J
 // insert a Booking object to the binary search tree
 void BST::insert(Booking b, map<string, RoomScheduleDictionary>& roomScheduleDictMap)
 {
@@ -75,6 +83,8 @@ void BST::insert(Booking b, map<string, RoomScheduleDictionary>& roomScheduleDic
 
 }
 
+// Group 12
+// Poh Jia Yong, S10202579J
 void BST::insert(BinaryNode* &t, Booking b)
 {
 	// if the BST is empty, create a new node to be the first Booking object of the BST
@@ -103,6 +113,8 @@ void BST::insert(BinaryNode* &t, Booking b)
 }
 
 
+// Group 12
+// Poh Jia Yong, S10202579J
 // traverse the binary search tree in inorder
 void BST::inorder(tm start, tm end)
 {
@@ -112,6 +124,8 @@ void BST::inorder(tm start, tm end)
 		inorder(root,start, end);
 }
 
+// Group 12
+// Poh Jia Yong, S10202579J
 void BST::inorder(BinaryNode* t, tm start, tm end)
 {
 	if (t != NULL)
@@ -137,6 +151,8 @@ void BST::inorder(BinaryNode* t, tm start, tm end)
 	}
 }
 
+// Group 12
+// Poh Jia Yong, S10202579J
 // traverse the binary search tree in inorder
 void BST::inorderoverdue(tm current, map<string, RoomScheduleDictionary>& roomScheduleDictMap)
 {
@@ -146,6 +162,8 @@ void BST::inorderoverdue(tm current, map<string, RoomScheduleDictionary>& roomSc
 		inorderoverdue(root, current, roomScheduleDictMap);
 }
 
+// Group 12
+// Poh Jia Yong, S10202579J
 // check if the booking is overdue when date is changed
 // if it is overdue, set the bst.item(booking) status to "Overdue"
 // and remove the booking from RoomScheduleDictionary and free up the room
@@ -174,6 +192,8 @@ void BST::inorderoverdue(BinaryNode* t, tm current, map<string, RoomScheduleDict
 	}
 }
 
+// Group 12
+// Poh Jia Yong, S10202579J
 // traverse the binary search tree in inorder
 void BST::inorderpopular(map<string, int> &roomTypeMap)
 {
@@ -183,6 +203,8 @@ void BST::inorderpopular(map<string, int> &roomTypeMap)
 		inorderpopular(root, roomTypeMap);
 }
 
+// Group 12
+// Poh Jia Yong, S10202579J
 // increase the room counter for each room type by 1 to be used to see which room has the most count
 // which translates to which room type is the most popular
 void BST::inorderpopular(BinaryNode* t, map<string, int> &roomTypeMap)
@@ -197,12 +219,16 @@ void BST::inorderpopular(BinaryNode* t, map<string, int> &roomTypeMap)
 	}
 }
 
+// Group 12
+// Poh Jia Yong, S10202579J
 // check if the binary search tree is empty
 bool BST::isEmpty()
 {
 	return (root == NULL);
 }
 
+// Group 12
+// Poh Jia Yong, S10202579J
 // delete a Booking object from the binary search tree
 void BST::remove(tm date, string guestName, string roomType)
 {
@@ -210,6 +236,8 @@ void BST::remove(tm date, string guestName, string roomType)
 	balanceTree(root);			// AVL Tree function
 }
 
+// Group 12
+// Poh Jia Yong, S10202579J
 void BST::remove(BinaryNode* &t, tm date, string guestName, string roomType)
 {
 	if (t != NULL)
@@ -265,6 +293,8 @@ void BST::remove(BinaryNode* &t, tm date, string guestName, string roomType)
 	}
 }
 
+// Group 12
+// Poh Jia Yong, S10202579J
 // change status from "Booked" to "Checked In" in tree and validates if the status is already "Checked In"
 // check if room is available, assign room to the guest who just checked in if room available
 // else not available, check in fails
@@ -309,16 +339,22 @@ bool BST::checkIn(tm date, string guestName, string roomType, map<string, RoomSc
 	return true;
 }
 
+// Group 12
+// Poh Jia Yong, S10202579J
 void BST::printPopular(map<string, int> &roomTypeMap)
 {
 	inorderpopular(roomTypeMap);
 }
 
+// Group 12
+// Poh Jia Yong, S10202579J
 void BST::printRange(tm start, tm end)
 {
 	inorder(start, end);
 }
 
+// Group 12
+// Poh Jia Yong, S10202579J
 void BST::checkOverDue(tm current, map<string, RoomScheduleDictionary>& roomScheduleDictMap)
 {
 	inorderoverdue(current, roomScheduleDictMap);
