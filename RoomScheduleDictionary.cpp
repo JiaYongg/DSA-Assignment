@@ -34,13 +34,14 @@ RoomScheduleDictionary::~RoomScheduleDictionary(){
 	{
 		if (items[i] != NULL)
 		{
-			RoomScheduleLinkedList*  temp = items[i];
+			RoomScheduleLinkedList* temp = items[i];
 			while (temp != NULL)
 			{
 				delete temp;
 				items[i] = NULL;
 			}
 		}
+	}
 };
 
 // Group 12
