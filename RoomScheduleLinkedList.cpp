@@ -44,16 +44,16 @@ bool RoomScheduleLinkedList::add(string guestName, string roomNumber, tm date,in
 // remove an item at a specified position in the RoomScheduleLinkedList
 void RoomScheduleLinkedList::remove(string guestName, string roomNumber, tm date) {
 	Node* current = firstNode;
+	//if date is not formatted yet ,format
+	if (!(date.tm_year < 1000)) {
+		date.tm_year -= 1900;
+		date.tm_mon -= 1;
+		date.tm_min = 0;
+		date.tm_sec = 0;
+		date.tm_hour = 0;
+	}
 	//traverse through and remove
 	while (current != NULL) {
-		//if date is not formatted yet ,format
-		if (!(date.tm_year < 1000)) {
-			date.tm_year -= 1900;
-			date.tm_mon -= 1;
-			date.tm_min = 0;
-			date.tm_sec = 0;
-			date.tm_hour = 0;
-		}
 		//unix time for time comparison
 		time_t currentDate = mktime(&current->date);
 		time_t compareDate = mktime(&date);
