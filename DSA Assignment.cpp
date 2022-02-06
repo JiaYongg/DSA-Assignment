@@ -9,7 +9,6 @@
 #include <iomanip>
 #include <ostream>
 #include "BookingDict.h"
-//#include "RoomScheduleDictionary.h"
 #include "Room.h"
 #include "Booking.h"
 #include <map>
@@ -23,8 +22,6 @@ using namespace std;
 
 void addToCsv(Booking b);
 void menu();
-
-
 
 int main()
 {
@@ -75,11 +72,6 @@ int main()
         RoomScheduleDictionary dynamicRoomTypeDictionary(p.second, p.first);
         roomScheduleMap[p.first] = dynamicRoomTypeDictionary;
     }
-
-    //check if overdue, mark as cancel
-    
-    //Date changer
-    //When date change, we need to cancel bookings that are overdue checkYstdOverdue()
     
     BookingDict bookingDictionary;
     //File I/O Bookings.csv
@@ -88,6 +80,7 @@ int main()
     vector<string> row;
     string line, word;
 
+    //Read bookings file into lines
     if (bookingsFile.is_open())
     {
         while (getline(bookingsFile, line))
@@ -101,8 +94,9 @@ int main()
             content.push_back(row);
         }
     }
-
+    //bookID to be used as the last entry for excel for add
     int bookID = 0;
+    //Loop through lines of bookings and store them into bookDictionary if the booking status is anything but "Checked Out"
     for (int i = 1; i < content.size(); i++)
     {
         Booking b;
@@ -126,14 +120,11 @@ int main()
         }
         if (b.bookingStatus != "Checked Out") {
             bookingDictionary.add(b,roomScheduleMap);
-            
-            //Add to RoomScheduleDictionary
-            //roomScheduleMap[b.bookingRoomType].add(b.checkinDate,b.checkOutDate, b.bookingGuestName, b.bookingRoomNumber);
         }
         bookID = b.bookingID; // sets bookID to the last booking ID in excel
     }
    
-    // current date of program is 1st April 2021
+    // Current date of program is 1st April 2021
     char currentDate[] = "01/04/2021 00:00:00";
     tm currentDatetm;
     sscanf_s(currentDate, "%d/%d/%4d  %d:%d:%d", &currentDatetm.tm_mday, &currentDatetm.tm_mon, &currentDatetm.tm_year, 
@@ -155,7 +146,7 @@ int main()
             // Basic Features
             case 1: 
             {
-                //check in guest function
+                //Check in guest function
                 tm checkInDate;
                 char checkInInput[] = "";
                 string guestName, roomType;
@@ -188,7 +179,7 @@ int main()
                 
             case 2:
             {
-                // add booking function
+                // Add booking function
                 tm bookingDate, checkInDate, checkOutDate;
                 char checkInInput[] = "";
                 char checkOutInput[] = "";
@@ -248,16 +239,16 @@ int main()
 
                 bookingDictionary.add(b,roomScheduleMap);
 
-                // write to excel once done
+                // Write to excel once done
                 addToCsv(b);
                 break;
             }
 
             case 3:
             {
+                // Display guest staying in hotel function
                 tm selectedDate;
                 char selectedDateInput[] = "";
-                // display guest staying in hotel function
                 cout << "----------------Display Guest staying in Hotel-------------------\n";
                 cout << "Enter Date (dd/mm/yyyy/): ";
                 cin >> selectedDateInput;
@@ -277,9 +268,9 @@ int main()
             case 4:
             {
                 //NOTE! For booked bookings, room has not been occupied yet therefore it is not shown
+                // Display room occupied by month function
                 tm selectedDate;
                 char selectedDateInput[] = "";
-                // display guest staying in hotel function
                 cout << "----------------Display Room Occupied by Month-------------------\n";
                 cout << "Enter Date (mm/yyyy): ";
                 cin >> selectedDateInput;
@@ -302,13 +293,12 @@ int main()
                     //cout<< p.first << ":"<<'\t' << p.second << std::endl;
                 }
                 cout << endl;
-                // display room occupied by month function
                 break;
             }
             // Additional Features
             case 5:
             {
-                // delete booking function
+                // Delete booking function
                 tm checkInDate;
                 char checkInInput[] = "";
                 string guestName, roomType;
@@ -335,7 +325,7 @@ int main()
 
             case 6:
             {
-                // search most popular room type function
+                // Search for most popular room type function
                 map<string, int> popularRoomTypeMap;
                 for (const auto& p : roomTypeMap)
                 {
@@ -352,7 +342,7 @@ int main()
 
             case 7:
             {
-                // check in guest without booking function
+                // Check in guest without booking function
                 tm bookingDate, checkInDate, checkOutDate;
                 char checkInInput[] = "";
                 char checkOutInput[] = "";
@@ -415,14 +405,15 @@ int main()
                 bookingDictionary.add(b,roomScheduleMap);
                 bookingDictionary.checkIn(b.checkinDate, b.bookingGuestName, b.bookingRoomType,roomScheduleMap,roomArray);
 
-                addToCsv(b);
+                Booking newBooking = bookingDictionary.get(b.checkinDate, b.bookingGuestName, b.bookingRoomType);
+                addToCsv(newBooking);
 
                 break;
             }
 
             case 8:
             {
-                // display bookings given range function
+                // Display bookings given range function
                 tm startDate, endDate;
                 char startInput[] = "";
                 char endInput[] = "";
@@ -445,10 +436,10 @@ int main()
                 bookingDictionary.printRange(startDate, endDate);
                 break;
             }
-
+            // Extra Features
             case 9:
             {
-                // Get Guest Booking
+                // Get Guest Booking function
                 tm checkInDate;
                 char checkInInput[] = "";
                 string guestName, roomType;
@@ -474,6 +465,10 @@ int main()
             }
             case 10: 
             {
+                // Change Current Date
+                // Check if overdue, mark as cancel
+                // Date changer
+                // When date change, we need to cancel bookings that are overdue checkYstdOverdue()
                 char currentInput[] = "";
                 tm currentDate;
                 cout << "----------------Change Current Date-------------------\n";
@@ -484,31 +479,7 @@ int main()
                 currentDate.tm_hour = 0;
                 sscanf_s(currentInput, "%d/%d/%4d", &currentDate.tm_mday, &currentDate.tm_mon, &currentDate.tm_year);
                 currentDatetm = currentDate;
-                break;
-            }
-            case 11: {
-                //tm startDate, endDate;
-                //char startInput[] = "";
-                //char endInput[] = "";
-                //cout << "----------------No. of availble rooms-------------------\n";
-                //cout << "Enter Start Date (dd/mm/yyyy/): ";
-                //cin >> startInput;
-                //startDate.tm_min = 0;
-                //startDate.tm_sec = 0;
-                //startDate.tm_hour = 0;
-                //sscanf_s(startInput, "%d/%d/%4d", &startDate.tm_mday, &startDate.tm_mon, &startDate.tm_year);
-
-                //cout << "Enter End Date (dd/mm/yyyy/): ";
-                //cin >> endInput;
-                //endDate.tm_min = 0;
-                //endDate.tm_sec = 0;
-                //endDate.tm_hour = 0;
-                //sscanf_s(endInput, "%d/%d/%4d", &endDate.tm_mday, &endDate.tm_mon, &endDate.tm_year);
-                //for (const auto& p : roomTypeMap)
-                //{
-                //    cout << p.first<< "\t:"<< roomScheduleMap[p.first].getAvailableRoomNumber(startDate,endDate)<<endl;
-                //}
-                //cout << endl;
+                //bookingDictionary.checkOverdue(currentDatetm, roomScheduleMap);
                 break;
             }
             case 0:
@@ -519,7 +490,6 @@ int main()
             }
         }
     }
-    
 }
 
 void menu() 
@@ -538,7 +508,6 @@ void menu()
     // Extra Features
     cout << "[9] Get Guest Booking\n";
     cout << "[10] Change Current Date\n";
-    cout << "[11] Show no. of available rooms\n";
     cout << "[0] Exit\n";
     cout << "----------------------------------------------\n";
 }
@@ -575,24 +544,3 @@ void addToCsv(Booking b)
 
     fout << csvBookObj;
 }
-//// https://www.cplusplus.com/reference/ctime/tm/ for info about time structure (tm)
-//tm result;
-//char aString[] = "03/04/2020  06:09:02";
-//sscanf_s(aString, "%d/%d/%4d  %d:%d:%d",
-//    &result.tm_mday, &result.tm_mon, &result.tm_year, &result.tm_hour, &result.tm_min, &result.tm_sec);
-//printf("tm_hour:  %d\n", result.tm_hour);
-//printf("tm_min:  %d\n", result.tm_min);
-//printf("tm_sec:  %d\n", result.tm_sec);
-//printf("tm_mday:  %d\n", result.tm_mday);
-//printf("tm_mon:  %d\n", result.tm_mon);
-//printf("tm_year:  %d\n", result.tm_year);
-//
-//result.tm_year -= 1900;
-//result.tm_mon -= 1;
-//
-//time_t time = mktime(&result);
-//cout << time << '\n';
-
-//char currentDate[] = "01/04/2021";
-//tm currentDatetm;
-//sscanf_s(currentDate, "%d/%d/%4d", &currentDatetm.tm_mday, &currentDatetm.tm_mon, &currentDatetm.tm_year);

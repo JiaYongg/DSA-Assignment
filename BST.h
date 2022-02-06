@@ -40,35 +40,15 @@ public:
 	void inorder(BinaryNode* t, tm start, tm end);
 
 	// traverse through the bst to check for overdue bookings
-	//void inorderoverdue(tm current, RoomScheduleDictionary &rsd);
-	//void inorderoverdue(BinaryNode* t, tm current, RoomScheduleDictionary& rsd);
+	void inorderoverdue(tm current, RoomScheduleDictionary &rsd);
+	void inorderoverdue(BinaryNode* t, tm current, RoomScheduleDictionary& rsd);
 
 	// traverse through the bst to check for most popular room type
 	void inorderpopular(map<string, int> &roomTypeMap);
 	void inorderpopular(BinaryNode* t, map<string, int> &roomTypeMap);
 
-	//// traverse the binary search tree in preorder
-	//void preorder();
-	//void preorder(BinaryNode* t);
-
-	//// traverse the binary search tree in postorder
-	//void postorder();
-	//void postorder(BinaryNode* t);
-
 	// check if the binary search tree is empty
 	bool isEmpty();
-
-	// count the number of nodes in the binary search tree
-	//int countNodes();
-	//int countNodes(BinaryNode* t);
-
-	//// compute the height of the binary search tree
-	//int getHeight();
-	//int getHeight(BinaryNode* t);
-
-	//// check if the binary search tree is balanced
-	//bool isBalanced();
-	//bool isBalanced(BinaryNode *t);
 
 	// change status from booked to checked in
 	bool checkIn(tm key, string guestName, string roomType, map<string, RoomScheduleDictionary> &roomScheduleDictMap, Room roomArray[20]);
@@ -79,6 +59,7 @@ public:
 	// print all bookings in range
 	void printRange(tm start, tm end);
 
-	//void checkOverDue(tm current, RoomScheduleDictionary &rsd);
+
+	void checkOverDue(tm current, RoomScheduleDictionary &rsd);
 };
 

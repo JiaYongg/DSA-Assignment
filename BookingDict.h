@@ -71,10 +71,6 @@ public:
 	//hash, return booking
 	Booking get(KeyType key, string guestName, string roomType);
 
-
-	//hash, check yesterday overdue
-	void checkYtdOverdue(tm currentDate);
-
 	// check if the Dictionary is empty
 	// pre : none
 	// post: none
@@ -98,5 +94,5 @@ public:
 	void printRange(tm start, tm end);
 
 	// check yesterday overdue
-	//void checkOverdue(tm currentDate, RoomScheduleDictionary &rsd);
+	void checkOverdue(tm currentDate, RoomScheduleDictionary &rsd);
 };

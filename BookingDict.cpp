@@ -133,7 +133,6 @@ Booking BookingDict::get(KeyType key, string guestName, string roomType)
 
 	if (items[index] != NULL)
 	{
-		// remove booking > get that removed booking = error - need to handle/fix
 		BinaryNode* b = items[index]->search(key, guestName, roomType);
 		if (b == NULL) {
 			Booking c;
@@ -151,12 +150,6 @@ Booking BookingDict::get(KeyType key, string guestName, string roomType)
 		c.bookingGuestName = "Not Found";
 		return c;
 	}
-}
-
-//hash, check yesterday overdue
-void BookingDict::checkYtdOverdue(tm currentDate)
-{
-
 }
 
 // check if the Dictionary is empty
@@ -213,19 +206,19 @@ void BookingDict::printRange(tm start, tm end)
 	}
 }
 
-//void BookingDict::checkOverdue(tm currentDate, RoomScheduleDictionary& rsd)
-//{
-//	currentDate.tm_year -= 1900;
-//	currentDate.tm_mon -= 1;
-//	currentDate.tm_min = 0;
-//	currentDate.tm_sec = 0;
-//	currentDate.tm_hour = 0;
-//
-//	for (int i = 0; i < MAX_SIZE; i++)
-//	{
-//		if (items[i] != NULL)
-//		{
-//			items[i]->inorderoverdue(currentDate, rsd);
-//		}
-//	}
-//}
+void BookingDict::checkOverdue(tm currentDate, RoomScheduleDictionary& rsd)
+{
+	currentDate.tm_year -= 1900;
+	currentDate.tm_mon -= 1;
+	currentDate.tm_min = 0;
+	currentDate.tm_sec = 0;
+	currentDate.tm_hour = 0;
+
+	for (int i = 0; i < MAX_SIZE; i++)
+	{
+		if (items[i] != NULL)
+		{
+			items[i]->inorderoverdue(currentDate, rsd);
+		}
+	}
+}
