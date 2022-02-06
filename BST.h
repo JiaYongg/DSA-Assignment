@@ -59,7 +59,7 @@ public:
 	// print all bookings in range
 	void printRange(tm start, tm end);
 
-
+	// check if booking is overdue, if overdue, change booking status to "Overdue"
 	void checkOverDue(tm current, map<string, RoomScheduleDictionary>& roomScheduleDictMap);
 };
 

@@ -146,25 +146,6 @@ Booking BookingDict::get(KeyType key, string guestName, string roomType)
 	}
 }
 
-// check if the Dictionary is empty
-// pre : none
-// post: none
-// return true if the Dictionary is empty; otherwise returns false
-bool BookingDict::isEmpty()
-{
-	return size == 0;
-};
-
-// check the size of the Dictionary
-// pre : none
-// post: none
-// return the number of items in the Dictionary
-int BookingDict::getLength(){
-	return size;
-};
-
-//------------------- Other useful functions -----------------
-
 //loop through all booking, add to linkedlist, print most popular
 void BookingDict::printPopular(map<string, int> &roomTypeMap)
 {
