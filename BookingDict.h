@@ -1,5 +1,4 @@
 // Group 12
-// Chua Dong En, S10202623A
 // Poh Jia Yong, S10202579J
 #pragma once
 #include "BST.h"
@@ -44,7 +43,7 @@ public:
 	// hash, remove from tree, remove from room date dict
 	void remove(KeyType key, string guestName, string roomType, map<string,RoomScheduleDictionary> &roomScheduleDictMap);
 
-	//hash, return booking
+	//hash, return bookings
 	Booking get(KeyType key, string guestName, string roomType);
 
 	//loop through all booking, add to linkedlist, print most popular

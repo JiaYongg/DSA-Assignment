@@ -1,5 +1,4 @@
 // Group 12
-// Chua Dong En, S10202623A
 // Poh Jia Yong, S10202579J
 #pragma once
 #include "BookingDict.h"
