@@ -59,7 +59,7 @@ int RoomScheduleDictionary::hash(KeyType key){
 // pre : none
 // post: new item is added to the RoomScheduleDictionary
 	// add entry for every date from checkin to checkout exclusive, check if null, add info to list
-bool RoomScheduleDictionary::add(tm checkInDate, tm checkOutDate, string guestName, string roomNumber){
+bool RoomScheduleDictionary::add(tm checkInDate, tm checkOutDate, string guestName, string roomNumber,int bid){
 	//change to time_t for comparsion and looping
 	if (!(checkInDate.tm_year < 1000)) {
 		checkInDate.tm_year -= 1900;
@@ -84,14 +84,14 @@ bool RoomScheduleDictionary::add(tm checkInDate, tm checkOutDate, string guestNa
 	tm currentDate = checkInDate;
 	//add for all dates from checkInDate to checkOutDate
 	while (checkInTime < checkOutTime) {
-
+		//cout << guestName << "\t" << currentDate.tm_mday << endl;
 		int index = hash(currentDate);
 		if (items[index] == NULL) {
 			items[index] = new RoomScheduleLinkedList();
-			items[index]->add(guestName, roomNumber, currentDate);
+			items[index]->add(guestName, roomNumber, currentDate,bid);
 		}
 		else {
-			items[index]->add(guestName, roomNumber, currentDate);
+			items[index]->add(guestName, roomNumber, currentDate,bid);
 		}
 		
 		currentDate.tm_mday += 1;
@@ -143,10 +143,45 @@ void RoomScheduleDictionary::remove(tm checkInDate, tm checkOutDate, string gues
 // return the item with the specified key from the RoomScheduleDictionary
 //
 //hash, check if null, get MaxValue - list.size
-int RoomScheduleDictionary::getAvailableRoomNumber(KeyType key) {
-	int index = hash(key);
-	if (items[index] != NULL) {
-		return MaxRoom - items[index]->getLength();
+int RoomScheduleDictionary::getAvailableRoomNumber(tm checkInDate, tm checkOutDate) {
+	int index = hash(checkInDate);
+	//change to time_t for comparsion and looping
+	if (!(checkInDate.tm_year < 1000)) {
+		checkInDate.tm_year -= 1900;
+		checkInDate.tm_mon -= 1;
+		checkInDate.tm_min = 0;
+		checkInDate.tm_sec = 0;
+		checkInDate.tm_hour = 0;
+	}
+	if (!(checkOutDate.tm_year < 1000)) {
+		checkOutDate.tm_year -= 1900;
+		checkOutDate.tm_mon -= 1;
+		checkOutDate.tm_min = 0;
+		checkOutDate.tm_sec = 0;
+		checkOutDate.tm_hour = 0;
+	}
+	time_t checkInTime = mktime(&checkInDate);
+	time_t checkOutTime = mktime(&checkOutDate);
+	////change checkInDate back to original date to be hashed later
+	checkInDate.tm_year += 1900;
+	checkInDate.tm_mon += 1;
+	tm currentDate = checkInDate;
+	//add for all dates from checkInDate to checkOutDate
+	map<int, int> occupiedRoomsMap;
+	while (checkInTime < checkOutTime) {
+		int index = hash(currentDate);
+		if (items[index] != NULL) {
+			items[index]->getBookedRooms(occupiedRoomsMap);
+		}
+		currentDate.tm_mday += 1;
+		checkInTime += 86400;
+	}
+	//for (const auto& p : occupiedRoomsMap)
+	//{
+	//	cout << p.first << "  \t" << occupiedRoomsMap[p.first] << endl;
+	//}
+	if (occupiedRoomsMap.size() < MaxRoom) {
+		return MaxRoom - occupiedRoomsMap.size();
 	}
 	return MaxRoom;
 };

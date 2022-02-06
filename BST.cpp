@@ -56,12 +56,23 @@ BinaryNode* BST::search(BinaryNode* t, tm date, string guestName, string roomTyp
 // insert a Booking object to the binary search tree
 void BST::insert(Booking b, map<string, RoomScheduleDictionary>& roomScheduleDictMap)
 {
-	int roomAvail = roomScheduleDictMap[b.bookingRoomType].getAvailableRoomNumber(b.checkinDate);
-	//cout << b.bookingGuestName << endl;
-	if (roomAvail > 0) {
-		insert(root, b);
-		roomScheduleDictMap[b.bookingRoomType].add(b.checkinDate, b.checkOutDate, b.bookingGuestName, b.bookingRoomNumber);
+	if (b.bookingStatus != "Checked In") {
+		int roomAvail = roomScheduleDictMap[b.bookingRoomType].getAvailableRoomNumber(b.checkinDate,b.checkOutDate);
+		//cout << "Booking" << b.bookingGuestName << endl;
+		if (roomAvail > 0) {
+			insert(root, b);
+			roomScheduleDictMap[b.bookingRoomType].add(b.checkinDate, b.checkOutDate, b.bookingGuestName, b.bookingRoomNumber,b.bookingID);
+		}
+		else {
+			cout << "There are no rooms available" << endl;
+		}
 	}
+	else {
+		//cout << "Checked in" << b.bookingGuestName << endl;
+		insert(root, b);
+		roomScheduleDictMap[b.bookingRoomType].add(b.checkinDate, b.checkOutDate, b.bookingGuestName, b.bookingRoomNumber,b.bookingID);
+	}
+	
 
 }
 

@@ -506,20 +506,28 @@ int main()
                 break;
             }
             case 11: {
-                char currentInput[] = "";
-                tm currentDate;
-                cout << "----------------No. of availble rooms-------------------\n";
-                cout << "Enter Date (dd/mm/yyyy/): ";
-                cin >> currentInput;
-                currentDate.tm_min = 0;
-                currentDate.tm_sec = 0;
-                currentDate.tm_hour = 0;
-                sscanf_s(currentInput, "%d/%d/%4d", &currentDate.tm_mday, &currentDate.tm_mon, &currentDate.tm_year);
-                for (const auto& p : roomTypeMap)
-                {
-                    cout << p.first<< "\t:"<< roomScheduleMap[p.first].getAvailableRoomNumber(currentDate)<<endl;
-                }
-                cout << endl;
+                //tm startDate, endDate;
+                //char startInput[] = "";
+                //char endInput[] = "";
+                //cout << "----------------No. of availble rooms-------------------\n";
+                //cout << "Enter Start Date (dd/mm/yyyy/): ";
+                //cin >> startInput;
+                //startDate.tm_min = 0;
+                //startDate.tm_sec = 0;
+                //startDate.tm_hour = 0;
+                //sscanf_s(startInput, "%d/%d/%4d", &startDate.tm_mday, &startDate.tm_mon, &startDate.tm_year);
+
+                //cout << "Enter End Date (dd/mm/yyyy/): ";
+                //cin >> endInput;
+                //endDate.tm_min = 0;
+                //endDate.tm_sec = 0;
+                //endDate.tm_hour = 0;
+                //sscanf_s(endInput, "%d/%d/%4d", &endDate.tm_mday, &endDate.tm_mon, &endDate.tm_year);
+                //for (const auto& p : roomTypeMap)
+                //{
+                //    cout << p.first<< "\t:"<< roomScheduleMap[p.first].getAvailableRoomNumber(startDate,endDate)<<endl;
+                //}
+                //cout << endl;
                 break;
             }
             case 0:

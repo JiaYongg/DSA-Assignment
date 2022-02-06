@@ -12,11 +12,12 @@ RoomScheduleLinkedList::RoomScheduleLinkedList() {
 RoomScheduleLinkedList::~RoomScheduleLinkedList() {};
 
 // add an item to the back of the RoomScheduleLinkedList (append)
-bool RoomScheduleLinkedList::add(string guestName, string roomNumber, tm date) {
+bool RoomScheduleLinkedList::add(string guestName, string roomNumber, tm date,int bid) {
 	Node* newNode = new Node;
 	newNode->date=date ;
 	newNode->guestName = guestName;
 	newNode->roomNumber = roomNumber;
+	newNode->bookingID = bid;
 	newNode->next = NULL;
 
 	if (roomScheduleLinkedListSize == 0) {
@@ -92,7 +93,7 @@ int RoomScheduleLinkedList::getLength() {
 void RoomScheduleLinkedList::print() {
 	Node* current = firstNode;
 	while (current != NULL) {
-		std::cout << current->roomNumber << endl;
+		std::cout << "Occupied by: "<<current->guestName <<" "<< current->roomNumber << endl;
 		current = current->next;
 	}
 };
@@ -136,6 +137,14 @@ void RoomScheduleLinkedList::getOccupiedRooms(map<string, int> &occupiedRoomsMap
 				occupiedRoomsMap[current->roomNumber] = 1;
 			}
 		}
+		current = current->next;
+	}
+};
+
+void RoomScheduleLinkedList::getBookedRooms(map<int, int>& occupiedRoomsMap) {
+	Node* current = firstNode;
+	while (current != NULL) {
+		occupiedRoomsMap[current->bookingID] = 1;
 		current = current->next;
 	}
 };

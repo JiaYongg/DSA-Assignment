@@ -14,6 +14,7 @@ private:
 	{
 		string guestName;	// data item
 		string roomNumber;
+		int bookingID;
 		tm date;
 		Node* next;	// pointer pointing to next item
 	};
@@ -37,7 +38,7 @@ public:
 	// pre : size < MAX_SIZE
 	// post: new item is added to the back of the RoomScheduleLinkedList
 	//       size of RoomScheduleLinkedList is increased by 1
-	bool add(string guestName, string roomNumber, tm date);
+	bool add(string guestName, string roomNumber, tm date,int bid);
 
 	// remove an item at a specified position in the RoomScheduleLinkedList
 	// pre : 1 <= index <= size
@@ -75,6 +76,7 @@ public:
 
 	void getOccupiedRooms(map<string, int> &occupiedRoomsMap);
 
+	void getBookedRooms(map<int, int>& occupiedRoomsMap);
 	// void replace(int index, string item);
 	// int search(string item);
 };

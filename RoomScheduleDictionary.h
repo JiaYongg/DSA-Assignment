@@ -50,7 +50,7 @@ public:
 	//       size of RoomScheduleDictionary is increased by 1
 	// 
 	// add entry for every date from checkin to checkout exclusive, check if null, add info to list
-	bool add(tm checkInDate, tm checkOutDate, string guestName, string roomNumber);
+	bool add(tm checkInDate, tm checkOutDate, string guestName, string roomNumber, int bid);
 
 	// remove an item with the specified key in the RoomScheduleDictionary
 	// pre : key must exist in the RoomScheduleDictionary
@@ -67,7 +67,7 @@ public:
 	// return the item with the specified key from the RoomScheduleDictionary
 	//
 	//hash, check if null, get MaxValue - list.size
-	int getAvailableRoomNumber(KeyType key);
+	int getAvailableRoomNumber(tm checkInDate, tm checkOutDate);
 
 	//hash, get list of stayees and the room they are in
 	RoomScheduleLinkedList getRoomDateInfo(KeyType key);
