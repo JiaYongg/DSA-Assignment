@@ -468,7 +468,6 @@ int main()
             case 9:
             {
                 // Get Guest Booking
-
                 tm checkInDate;
                 char checkInInput[] = "";
                 string guestName, roomType;
@@ -506,18 +505,7 @@ int main()
                 currentDatetm = currentDate;
                 break;
             }
-            case 11:
-            {
-                fstream fout;
-
-                fout.open("Bookings.csv", ios::app);
-
-                for (int i = 0; i < MAX_SIZE; i++)
-                {
-
-                }
-            }
-            case 12: {
+            case 11: {
                 char currentInput[] = "";
                 tm currentDate;
                 cout << "----------------No. of availble rooms-------------------\n";
@@ -561,8 +549,7 @@ void menu()
     // Extra Features
     cout << "[9] Get Guest Booking\n";
     cout << "[10] Change Current Date\n";
-    cout << "[11] Update Bookings.csv file\n";
-    cout << "[12] Show no. of available rooms\n";
+    cout << "[11] Show no. of available rooms\n";
     cout << "[0] Exit\n";
     cout << "----------------------------------------------\n";
 }
