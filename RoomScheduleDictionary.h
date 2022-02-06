@@ -9,20 +9,16 @@
 using namespace std;
 #include<map>
 
+//6 months worth of days
 const int MAX_SIZE = 181;
 typedef tm KeyType;
+//first hash is unix day of 01/03/2021 relative to 1900 Jan 1
 static int firstHashRoom = 18686;
 
 class RoomScheduleDictionary
 {
 private:
-	//struct Node
-	//{
-	//	string guestName;	// data item
-	//	string roomNumber;
-	//	tm date;
-	//	Node* next;
-	//};
+
 
 	//max number of available rooms
 	int MaxRoom;
@@ -37,51 +33,30 @@ public:
 	// set maxroom, items array to occupiedNumber to null
 	RoomScheduleDictionary(int maxRoom,string roomType);
 
+	//default constructor
 	RoomScheduleDictionary();
+
 	// destructor
 	~RoomScheduleDictionary();
 
-	//hash date based off unix time
+	//hash date for index
 	int hash(KeyType key);
 
-	// add a new item with the specified key to the RoomScheduleDictionary
-	// pre : none
-	// post: new item is added to the RoomScheduleDictionary
-	//       size of RoomScheduleDictionary is increased by 1
-	// 
-	// add entry for every date from checkin to checkout exclusive, check if null, add info to list
+	//add new room schedules within date range
 	bool add(tm checkInDate, tm checkOutDate, string guestName, string roomNumber, int bid);
 
-	// remove an item with the specified key in the RoomScheduleDictionary
-	// pre : key must exist in the RoomScheduleDictionary
-	// post: item is removed from the RoomScheduleDictionary
-	//       size of RoomScheduleDictionary is decreased by 1
-	//
-	//hash, check if null, remove info to list
+	//remove room schedules from dict within a date range
 	void remove(tm startDate, tm endDate, string guestName, string roomNumber);
 
-
-	// get an item with the specified key in the RoomScheduleDictionary (retrieve)
-	// pre : key must exist in the RoomScheduleDictionary
-	// post: none
-	// return the item with the specified key from the RoomScheduleDictionary
-	//
-	//hash, check if null, get MaxValue - list.size
+	//get no. of avail rooms within date range
 	int getAvailableRoomNumber(tm checkInDate, tm checkOutDate);
-
-	//hash, get list of stayees and the room they are in
-	RoomScheduleLinkedList getRoomDateInfo(KeyType key);
 
 	//print guests which are staying on that date
 	void printDateGuests(tm key);
-	// check if the RoomScheduleDictionary is empty
-	// pre : none
-	// post: none
-	// return true if the RoomScheduleDictionary is empty; otherwise returns false
-	/*bool isEmpty();*/
 
 	//return map of room no. and occupied dates
 	void getOccupiedDatesFromMonth(map<string, string> &roomOccupiedDates, tm month);
 
-	map<string, int> getAvailrooms(tm checkInDate, tm checkOutDate);
+	//return map of occupied rooms
+	map<string, int> getOccupiedRooms(tm checkInDate, tm checkOutDate);
 };

@@ -13,6 +13,7 @@ RoomScheduleLinkedList::~RoomScheduleLinkedList() {};
 
 // add an item to the back of the RoomScheduleLinkedList (append)
 bool RoomScheduleLinkedList::add(string guestName, string roomNumber, tm date,int bid) {
+	//initialize new node
 	Node* newNode = new Node;
 	newNode->date=date ;
 	newNode->guestName = guestName;
@@ -20,9 +21,11 @@ bool RoomScheduleLinkedList::add(string guestName, string roomNumber, tm date,in
 	newNode->bookingID = bid;
 	newNode->next = NULL;
 
+	//if size 0, change firstNode
 	if (roomScheduleLinkedListSize == 0) {
 		firstNode = newNode;
 	}
+	//if size >0, add to last node
 	else {
 		Node* current = firstNode;
 		while (current->next != NULL) {
@@ -30,17 +33,29 @@ bool RoomScheduleLinkedList::add(string guestName, string roomNumber, tm date,in
 		}
 		current->next = newNode;
 	}
+	//increment size
 	roomScheduleLinkedListSize++;
+	//no data validation hahahaha
 	return true;
 };
 
 // remove an item at a specified position in the RoomScheduleLinkedList
 void RoomScheduleLinkedList::remove(string guestName, string roomNumber, tm date) {
 	Node* current = firstNode;
+	//traverse through and remove
 	while (current != NULL) {
+		//if date is not formatted yet ,format
+		if (!(date.tm_year < 1000)) {
+			date.tm_year -= 1900;
+			date.tm_mon -= 1;
+			date.tm_min = 0;
+			date.tm_sec = 0;
+			date.tm_hour = 0;
+		}
+		//unix time for time comparison
 		time_t currentDate = mktime(&current->date);
 		time_t compareDate = mktime(&date);
-		//cout << date.tm_mday << "\t" << difftime(currentDate, compareDate) << roomScheduleLinkedListSize <<endl;
+		//check if same, if same remove
 		if (current->guestName == guestName && current->roomNumber == roomNumber && difftime(currentDate,compareDate)==0) {
 			if (roomScheduleLinkedListSize==1) {
 				firstNode = NULL;
@@ -49,32 +64,22 @@ void RoomScheduleLinkedList::remove(string guestName, string roomNumber, tm date
 				firstNode = current->next;
 			}
 			else {
-				current->next = current->next->next;
+				Node* temp = firstNode;
+				while (temp->next->bookingID!=current->bookingID) {
+					temp = temp->next;
+				}
+				temp->next = current->next;
+				//removes current from Linked list
 			}
+			//decrement size
 			roomScheduleLinkedListSize--;
-			//cout << date.tm_mday << "\t" << difftime(currentDate, compareDate) << roomScheduleLinkedListSize<< endl;
 			return;
 		}
+		//traverse
 		current = current->next;
 	}
-	//current = firstNode;
-	//while (current != NULL) {
-	//	cout << current->guestName << endl;
-	//	current = current->next;
-	//}
 	return;
 };
-
-//// get an item at a specified position of the RoomScheduleLinkedList (retrieve)
-//string RoomScheduleLinkedList::get(int index) {
-//	if (index <= roomScheduleLinkedListSize && index >= 0) {
-//		Node* current = firstNode;
-//		for (int i = 0;i < index ;i++) {
-//			current = current->next;
-//		}
-//		return current->item;
-//	}
-//};
 
 // check if the RoomScheduleLinkedList is empty
 bool RoomScheduleLinkedList::isEmpty() {
@@ -107,13 +112,16 @@ void RoomScheduleLinkedList::printDateGuests() {
 	}
 };
 
-//return map with dates that each room is filled
+//fill map with dates that each room is occupied
 void  RoomScheduleLinkedList::getOccupiedDatesFromDay(map<string, string> &roomOccupiedDates, tm date) {
 
 	Node* current = firstNode;
+	//traverse
 	while (current != NULL) {
+		//validation
 		if (current->roomNumber != " ") {
 			if (current->roomNumber != "") {
+				//get existing dates for room no. in map, concat new date
 				string dates = roomOccupiedDates[current->roomNumber];
 				if (current->date.tm_mday != 31) {
 					dates += std::to_string(current->date.tm_mday % 31) + ", ";
@@ -121,14 +129,16 @@ void  RoomScheduleLinkedList::getOccupiedDatesFromDay(map<string, string> &roomO
 				else {
 					dates += std::to_string(31) + ", ";
 				}
-
+				//set value to map value
 				roomOccupiedDates[current->roomNumber] = dates;
 			}
 		}
+		//traversal
 		current = current->next;
 	}
 };
 
+//fill map with occupied room numbers (no date needed)
 void RoomScheduleLinkedList::getOccupiedRooms(map<string, int> &occupiedRoomsMap) {
 	Node* current = firstNode;
 	while (current != NULL) {
@@ -141,6 +151,7 @@ void RoomScheduleLinkedList::getOccupiedRooms(map<string, int> &occupiedRoomsMap
 	}
 };
 
+//fill map with bookingIDs of occupied rooms
 void RoomScheduleLinkedList::getBookedRooms(map<int, int>& occupiedRoomsMap) {
 	Node* current = firstNode;
 	while (current != NULL) {
