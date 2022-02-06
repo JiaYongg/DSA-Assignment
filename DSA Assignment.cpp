@@ -6,6 +6,8 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <iomanip>
+#include <ostream>
 #include "BookingDict.h"
 //#include "RoomScheduleDictionary.h"
 #include "Room.h"
@@ -19,6 +21,7 @@
 //#include "Dictionary.h"
 using namespace std;
 
+void addToCsv(Booking b);
 void menu();
 
 //Delu
@@ -150,14 +153,16 @@ int main()
     }
    
     // current date of program is 1st April 2021
-    char currentDate[] = "01/04/2021";
+    char currentDate[] = "01/04/2021 00:00:00";
     tm currentDatetm;
-    sscanf_s(currentDate, "%d/%d/%4d", &currentDatetm.tm_mday, &currentDatetm.tm_mon, &currentDatetm.tm_year);
+    sscanf_s(currentDate, "%d/%d/%4d  %d:%d:%d", &currentDatetm.tm_mday, &currentDatetm.tm_mon, &currentDatetm.tm_year, 
+        &currentDatetm.tm_hour, &currentDatetm.tm_min, &currentDatetm.tm_sec);
 
     //Menu
     bool flag = true;
     while (flag)
     {
+        cout << "--------------------------------------------" << endl;
         cout << "Current date (dd/mm/yyyy/) is : " << currentDatetm.tm_mday << "/" << currentDatetm.tm_mon << "/" << currentDatetm.tm_year << endl;
         menu();
         int option = 0;
@@ -177,10 +182,10 @@ int main()
                 cout << "----------------Check In Guest-------------------\n";
                 cout << "Enter Check In Date (dd/mm/yyyy/): ";
                 cin >> checkInInput;
+                sscanf_s(checkInInput, "%d/%d/%4d", &checkInDate.tm_mday, &checkInDate.tm_mon, &checkInDate.tm_year);
                 checkInDate.tm_min = 0;
                 checkInDate.tm_sec = 0;
                 checkInDate.tm_hour = 0;
-                sscanf_s(checkInInput, "%d/%d/%4d", &checkInDate.tm_mday, &checkInDate.tm_mon, &checkInDate.tm_year);
 
 
                 cout << "Enter Guest Name: ";
@@ -260,10 +265,10 @@ int main()
 
                 Booking b(bookID, bookingDate, guestName, "", roomType, status, checkInDate, checkOutDate, numOfGuest, specialReq);
 
-                // write to excel once done
-
                 bookingDictionary.add(b,roomScheduleMap);
 
+                // write to excel once done
+                addToCsv(b);
                 break;
             }
 
@@ -428,6 +433,9 @@ int main()
                 
                 bookingDictionary.add(b,roomScheduleMap);
                 bookingDictionary.checkIn(b.checkinDate, b.bookingGuestName, b.bookingRoomType,roomScheduleMap);
+
+                addToCsv(b);
+
                 break;
             }
 
@@ -459,7 +467,7 @@ int main()
 
             case 9:
             {
-                // get guest (FOR TESTING PURPOSES TO REMOVE AFTER.)
+                // Get Guest Booking
 
                 tm checkInDate;
                 char checkInInput[] = "";
@@ -502,7 +510,7 @@ int main()
             {
                 fstream fout;
 
-                fout.open("Bookingsnew.csv", ios::out);
+                fout.open("Bookings.csv", ios::app);
 
                 for (int i = 0; i < MAX_SIZE; i++)
                 {
@@ -513,7 +521,7 @@ int main()
                 char currentInput[] = "";
                 tm currentDate;
                 cout << "----------------No. of availble rooms-------------------\n";
-                cout << "Enter Date (dd/mm/yyyy/) to change to: ";
+                cout << "Enter Date (dd/mm/yyyy/): ";
                 cin >> currentInput;
                 currentDate.tm_min = 0;
                 currentDate.tm_sec = 0;
@@ -549,9 +557,9 @@ void menu()
     cout << "[5] Delete Booking\n";
     cout << "[6] Search most popular room type (From running dataset)\n";
     cout << "[7] Check in Guest without booking\n";
-    cout << "[8] Display bookings given range\n";
-    // Extra Features for Convenience
-    cout << "[9] Get guest (use breakpoint to see result)\n";
+    cout << "[8] Display Bookings given range\n";
+    // Extra Features
+    cout << "[9] Get Guest Booking\n";
     cout << "[10] Change Current Date\n";
     cout << "[11] Update Bookings.csv file\n";
     cout << "[12] Show no. of available rooms\n";
@@ -559,6 +567,46 @@ void menu()
     cout << "----------------------------------------------\n";
 }
 
+void addToCsv(Booking b)
+{
+    fstream fout;
+
+    fout.open("Bookings.csv", ios::app);
+    ostringstream oss;
+    b.bookingDate.tm_year -= 1900;
+    b.bookingDate.tm_mon -= 1;
+    oss << put_time(&b.bookingDate, "%d-%m-%Y %H-%M-%S");
+    string bookdate = oss.str();
+
+    oss.str("");
+    oss.clear();
+    b.checkinDate.tm_year -= 1900;
+    b.checkinDate.tm_mon -= 1;
+    oss << put_time(&b.checkinDate, "%d-%m-%Y");
+    string checkin = oss.str();
+
+    oss.str("");
+    oss.clear();
+    b.checkOutDate.tm_year -= 1900;
+    b.checkOutDate.tm_mon -= 1;
+    oss << put_time(&b.checkOutDate, "%d-%m-%Y");
+    string checkout = oss.str();
+    string csvBookObj;
+    if (b.bookingID == 101)
+    {
+        csvBookObj = to_string(b.bookingID) + "," + bookdate + "," + b.bookingGuestName + "," + b.bookingRoomNumber + ","
+            + b.bookingRoomType + "," + b.bookingStatus + "," + checkin + "," + checkout + "," + to_string(b.bookingGuestNumber)
+            + "," + b.bookingSpecialRequest;
+    }
+    else
+    {
+        csvBookObj = "\n" + to_string(b.bookingID) + "," + bookdate + "," + b.bookingGuestName + "," + b.bookingRoomNumber + ","
+            + b.bookingRoomType + "," + b.bookingStatus + "," + checkin + "," + checkout + "," + to_string(b.bookingGuestNumber)
+            + "," + b.bookingSpecialRequest;
+    }
+
+    fout << csvBookObj;
+}
 //// https://www.cplusplus.com/reference/ctime/tm/ for info about time structure (tm)
 //tm result;
 //char aString[] = "03/04/2020  06:09:02";
