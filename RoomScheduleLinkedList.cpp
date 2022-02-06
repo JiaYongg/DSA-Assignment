@@ -1,3 +1,6 @@
+// Group 12
+// Chua Dong En, S10202623A
+// Poh Jia Yong, S10202579J
 #include  "RoomScheduleLinkedList.h"
 #include <iostream>
 #include<map>

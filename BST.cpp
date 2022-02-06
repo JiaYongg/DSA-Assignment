@@ -1,7 +1,8 @@
-// BST.cpp - Implementation of Binary Search Tree
+// Group 12
+// Chua Dong En, S10202623A
+// Poh Jia Yong, S10202579J
 #include "BST.h"
 #include <time.h>
-
 #define max(x,y) ((x > y)? x : y)
 
 // constructor
