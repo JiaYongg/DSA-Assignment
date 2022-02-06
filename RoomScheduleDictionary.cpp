@@ -30,7 +30,17 @@ RoomScheduleDictionary::RoomScheduleDictionary() {
 // Chua Dong En, S10202623A
 //destructor
 RoomScheduleDictionary::~RoomScheduleDictionary(){
-	//I didnt do 
+	for (int i = 0; i < MAX_SIZE; i++)
+	{
+		if (items[i] != NULL)
+		{
+			RoomScheduleLinkedList*  temp = items[i];
+			while (temp != NULL)
+			{
+				delete temp;
+				items[i] = NULL;
+			}
+		}
 };
 
 // Group 12

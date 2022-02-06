@@ -16,7 +16,15 @@ RoomScheduleLinkedList::RoomScheduleLinkedList() {
 // Group 12
 // Chua Dong En, S10202623A
 // destructor
-RoomScheduleLinkedList::~RoomScheduleLinkedList() {};
+RoomScheduleLinkedList::~RoomScheduleLinkedList() {
+	Node* current = firstNode;
+	Node* next;
+	while (current != NULL) {
+		next = current->next;
+		delete current;
+		current = next;
+	}
+};
 
 // Group 12
 // Chua Dong En, S10202623A
