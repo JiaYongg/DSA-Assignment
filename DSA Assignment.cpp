@@ -237,7 +237,10 @@ int main()
 
                 Booking b(bookID, bookingDate, guestName, "", roomType, status, checkInDate, checkOutDate, numOfGuest, specialReq);
 
-                bookingDictionary.add(b,roomScheduleMap);
+                bool added = bookingDictionary.add(b,roomScheduleMap);
+
+                if (added)
+                    cout << "Booking successfully added with the Booking ID of " + to_string(bookID);
 
                 // Write to excel once done
                 addToCsv(b);
