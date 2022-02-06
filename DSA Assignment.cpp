@@ -479,7 +479,7 @@ int main()
                 currentDate.tm_hour = 0;
                 sscanf_s(currentInput, "%d/%d/%4d", &currentDate.tm_mday, &currentDate.tm_mon, &currentDate.tm_year);
                 currentDatetm = currentDate;
-                //bookingDictionary.checkOverdue(currentDatetm, roomScheduleMap);
+                bookingDictionary.checkOverdue(currentDatetm, roomScheduleMap);
                 break;
             }
             case 0:

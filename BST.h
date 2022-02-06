@@ -40,8 +40,8 @@ public:
 	void inorder(BinaryNode* t, tm start, tm end);
 
 	// traverse through the bst to check for overdue bookings
-	void inorderoverdue(tm current, RoomScheduleDictionary &rsd);
-	void inorderoverdue(BinaryNode* t, tm current, RoomScheduleDictionary& rsd);
+	void inorderoverdue(tm current, map<string, RoomScheduleDictionary>& roomScheduleDictMap);
+	void inorderoverdue(BinaryNode* t, tm current, map<string, RoomScheduleDictionary>& roomScheduleDictMap);
 
 	// traverse through the bst to check for most popular room type
 	void inorderpopular(map<string, int> &roomTypeMap);
@@ -60,6 +60,6 @@ public:
 	void printRange(tm start, tm end);
 
 
-	void checkOverDue(tm current, RoomScheduleDictionary &rsd);
+	void checkOverDue(tm current, map<string, RoomScheduleDictionary>& roomScheduleDictMap);
 };
 

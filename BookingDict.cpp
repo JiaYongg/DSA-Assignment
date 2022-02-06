@@ -200,7 +200,7 @@ void BookingDict::printRange(tm start, tm end)
 	}
 }
 
-void BookingDict::checkOverdue(tm currentDate, RoomScheduleDictionary& rsd)
+void BookingDict::checkOverdue(tm currentDate, map<string, RoomScheduleDictionary>& roomScheduleDictMap)
 {
 	currentDate.tm_year -= 1900;
 	currentDate.tm_mon -= 1;
@@ -212,7 +212,7 @@ void BookingDict::checkOverdue(tm currentDate, RoomScheduleDictionary& rsd)
 	{
 		if (items[i] != NULL)
 		{
-			items[i]->inorderoverdue(currentDate, rsd);
+			items[i]->inorderoverdue(currentDate, roomScheduleDictMap);
 		}
 	}
 }

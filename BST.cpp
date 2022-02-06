@@ -138,38 +138,39 @@ void BST::inorder(BinaryNode* t, tm start, tm end)
 }
 
 // traverse the binary search tree in inorder
-void BST::inorderoverdue(tm current, RoomScheduleDictionary& rsd)
+void BST::inorderoverdue(tm current, map<string, RoomScheduleDictionary>& roomScheduleDictMap)
 {
 	if (isEmpty())
 		cout << "No item found" << endl;
 	else
-		inorderoverdue(root, current, rsd);
+		inorderoverdue(root, current, roomScheduleDictMap);
 }
 
 // check if the booking is overdue when date is changed
 // if it is overdue, set the bst.item(booking) status to "Overdue"
 // and remove the booking from RoomScheduleDictionary and free up the room
-void BST::inorderoverdue(BinaryNode* t, tm current, RoomScheduleDictionary& rsd)
+void BST::inorderoverdue(BinaryNode* t, tm current, map<string, RoomScheduleDictionary>& roomScheduleDictMap)
 {
 	if (t != NULL)
 	{
-		if (t->item.bookingStatus == "Booking")
+		if (t->item.bookingStatus == "Booked")
 		{
 			time_t checkInDate = mktime(&t->item.checkinDate);
 			time_t inputCheckInDate = mktime(&current);
 			double diff = difftime(checkInDate, inputCheckInDate);
+			//double diff = difftime(inputCheckInDate,checkInDate);
+			cout << diff<<endl;
 			if (diff < 0)
 			{
 				// Set status to "Overdue"
-				t->item.bookingStatus == "Overdue";
+				t->item.bookingStatus = "Overdue";
 				// Remove booking from roomschedule and free up the room that was occupied
-				rsd.remove(t->item.checkinDate, t->item.checkOutDate, t->item.bookingGuestName, t->item.bookingRoomNumber);
-				
+				roomScheduleDictMap[t->item.bookingRoomType].remove(t->item.checkinDate, t->item.checkOutDate, t->item.bookingGuestName, t->item.bookingRoomNumber);
 			}
 		}
 
-		inorderoverdue(t->left, current, rsd);
-		inorderoverdue(t->right, current, rsd);
+		inorderoverdue(t->left, current, roomScheduleDictMap);
+		inorderoverdue(t->right, current, roomScheduleDictMap);
 	}
 }
 
@@ -280,7 +281,7 @@ bool BST::checkIn(tm date, string guestName, string roomType, map<string, RoomSc
 	{
 		b->item.bookingStatus = "Checked In";
 		// check if the room is available in the room type and assign a room to the guest who just checked in if the room is available
-	    map<string,int> occupiedRooms = roomScheduleDictMap[b->item.bookingRoomType].getAvailrooms(b->item.checkinDate, b->item.checkOutDate);
+	    map<string,int> occupiedRooms = roomScheduleDictMap[b->item.bookingRoomType].getOccupiedRooms(b->item.checkinDate, b->item.checkOutDate);
 		if (occupiedRooms.size() != 0) {
 			for (int i = 0; i < 20; i++) {
 				for (const auto& p : occupiedRooms)
@@ -318,7 +319,7 @@ void BST::printRange(tm start, tm end)
 	inorder(start, end);
 }
 
-void BST::checkOverDue(tm current, RoomScheduleDictionary &rsd)
+void BST::checkOverDue(tm current, map<string, RoomScheduleDictionary>& roomScheduleDictMap)
 {
-	inorderoverdue(current, rsd);
+	inorderoverdue(current, roomScheduleDictMap);
 }

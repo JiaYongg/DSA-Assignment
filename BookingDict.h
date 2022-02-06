@@ -94,5 +94,5 @@ public:
 	void printRange(tm start, tm end);
 
 	// check yesterday overdue
-	void checkOverdue(tm currentDate, RoomScheduleDictionary &rsd);
+	void checkOverdue(tm currentDate, map<string, RoomScheduleDictionary>& roomScheduleDictMap);
 };
