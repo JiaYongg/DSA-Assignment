@@ -152,14 +152,6 @@ int main()
                 string guestName, roomType;
                
                 cout << "----------------Check In Guest-------------------\n";
-                cout << "Enter Check In Date (dd/mm/yyyy/): ";
-                cin >> checkInInput;
-                sscanf_s(checkInInput, "%d/%d/%4d", &checkInDate.tm_mday, &checkInDate.tm_mon, &checkInDate.tm_year);
-                checkInDate.tm_min = 0;
-                checkInDate.tm_sec = 0;
-                checkInDate.tm_hour = 0;
-
-
                 cout << "Enter Guest Name: ";
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 getline(cin, guestName);
@@ -167,6 +159,13 @@ int main()
 
                 cout << "Enter Room Type: ";
                 getline(cin, roomType);
+
+                cout << "Enter Check In Date (dd/mm/yyyy/): ";
+                cin >> checkInInput;
+                sscanf_s(checkInInput, "%d/%d/%4d", &checkInDate.tm_mday, &checkInDate.tm_mon, &checkInDate.tm_year);
+                checkInDate.tm_min = 0;
+                checkInDate.tm_sec = 0;
+                checkInDate.tm_hour = 0;
 
                 bool checkInStatus = bookingDictionary.checkIn(checkInDate, guestName, roomType, roomScheduleMap,roomArray);
 
@@ -240,7 +239,7 @@ int main()
                 bool added = bookingDictionary.add(b,roomScheduleMap);
 
                 if (added)
-                    cout << "Booking successfully added with the Booking ID of " + to_string(bookID);
+                    cout << "Booking successfully added with the Booking ID of " + to_string(bookID) + "\n";
 
                 // Write to excel once done
                 addToCsv(b);
